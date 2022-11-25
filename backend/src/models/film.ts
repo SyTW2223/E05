@@ -7,7 +7,7 @@ interface FilmDocumentInterface extends Document {
   id: number,
   name: string,
   description: string,
-  rating: number | '-'
+  rating: number,
   yearPublication: number
 }
 
@@ -35,7 +35,7 @@ const FilmSchema = new Schema<FilmDocumentInterface>({
   rating: {
     type: Number,
     trim: true,
-    default: '-',
+    default: 0,
     min: 0,
     max: 10
   },
