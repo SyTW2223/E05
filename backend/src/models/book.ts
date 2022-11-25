@@ -9,7 +9,7 @@ interface BookDocumentInterface extends Document {
   description: string,
   numberPages: number,
   publisher: string,
-  rating: number | '-'
+  rating: number
 }
 
 /**
@@ -27,11 +27,6 @@ const BookSchema = new Schema<BookDocumentInterface>({
     unique: true,
     required: [true, 'El libro debe tener un nombre'],
     trim: true,
-    validate: (value: string) => {
-      if (!value.match(/^[A-Z]/)) {
-        throw new Error('The name of the book must start with a capital letter');
-      }
-    },
   },
   description: {
     type: String,
@@ -51,7 +46,7 @@ const BookSchema = new Schema<BookDocumentInterface>({
   rating: {
     type: Number,
     trim: true,
-    default: '-', 
+    default: 0, 
     min: 0,
     max: 10
   },

@@ -26,11 +26,6 @@ const FilmSchema = new Schema<FilmDocumentInterface>({
     unique: true,
     required: [true, 'La pelicula debe tener un nombre'],
     trim: true,
-    validate: (value: string) => {
-      if (!value.match(/^[A-Z]/)) {
-        throw new Error('The name of the film must start with a capital letter');
-      }
-    },
   },
   description: {
     type: String,

@@ -9,7 +9,7 @@ import {User} from '../models/user';
 export const getRouter = express.Router();
 
 /**
- * Consulta de una pelicula mediante query string
+ * Consulta de una pelicula
  */
 getRouter.get('/film', async (req, res) => {
   const filter = req.query.name?{name: req.query.name.toString()}:{};
@@ -26,25 +26,9 @@ getRouter.get('/film', async (req, res) => {
   }
 });
 
-/**
- * Consulta de una pelicula mediante un parámetro
- */
-getRouter.get('/film/:id', async (req, res) => {
-  try {
-    const film = await Film.findById(req.params.id);
-    if (!film) {
-      return res.status(404).send();
-    }
-
-    return res.send(film);
-  } catch (error) {
-    return res.status(500).send();
-  }
-});
-
 
 /**
- * Consulta de una serie mediante query string
+ * Consulta de una serie
  */
 getRouter.get('/serie', async (req, res) => {
   const filter = req.query.name?{name: req.query.name.toString()}:{};
@@ -62,23 +46,7 @@ getRouter.get('/serie', async (req, res) => {
 });
 
 /**
- * Consulta de una serie mediante un parámetro
- */
-getRouter.get('/serie/:id', async (req, res) => {
-  try {
-    const serie = await Serie.findById(req.params.id);
-    if (!serie) {
-      return res.status(404).send();
-    }
-
-    return res.send(serie);
-  } catch (error) {
-    return res.status(500).send();
-  }
-});
-
-/**
- * Consulta de un libro mediante query string
+ * Consulta de un libro 
  */
 getRouter.get('/book', async (req, res) => {
   const filter = req.query.name?{name: req.query.name.toString()}:{};
@@ -95,28 +63,12 @@ getRouter.get('/book', async (req, res) => {
   }
 });
 
-/**
- * Consulta de un libro mediante un parámetro
- */
-getRouter.get('/book/:id', async (req, res) => {
-  try {
-    const book = await Book.findById(req.params.id);
-    if (!book) {
-      return res.status(404).send();
-    }
-
-    return res.send(book);
-  } catch (error) {
-    return res.status(500).send();
-  }
-});
-
 
 /**
- * Consulta de un usuario mediante query string
+ * Consulta de un usuario 
  */
  getRouter.get('/user', async (req, res) => {
-  const filter = req.query.name?{name: req.query.name.toString()}:{};
+  const filter = req.query.username?{username: req.query.username.toString()}:{};
 
   try {
     const user = await User.find(filter);
@@ -125,22 +77,6 @@ getRouter.get('/book/:id', async (req, res) => {
     }
 
     return res.status(404).send();
-  } catch (error) {
-    return res.status(500).send();
-  }
-});
-
-/**
- * Consulta de un usuario mediante un parámetro
- */
-getRouter.get('/user/:id', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).send();
-    }
-
-    return res.send(user);
   } catch (error) {
     return res.status(500).send();
   }

@@ -28,15 +28,9 @@ const UserSchema = new Schema<UserDocumentInterface>({
     unique: true,
     required: [true, 'El usuario debe tener un nombre de usuario'],
     trim: true,
-    validate: (value: string) => {
-      if (!value.match(/^[A-Z]/)) {
-        throw new Error('The name of the user must start with a capital letter');
-      }
-    },
   },
   name: {
     type: String,
-    unique: true,
     required: [true, 'El usuario debe tener un nombre'],
     trim: true,
     validate: (value: string) => {
