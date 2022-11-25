@@ -29,9 +29,9 @@ getRouter.get('/film', async (req, res) => {
 /**
  * Consulta de una pelicula mediante un parámetro
  */
-getRouter.get('/film/:name', async (req, res) => {
+getRouter.get('/film/:id', async (req, res) => {
   try {
-    const film = await Film.findById(req.params.name);
+    const film = await Film.findById(req.params.id);
     if (!film) {
       return res.status(404).send();
     }
@@ -64,9 +64,9 @@ getRouter.get('/serie', async (req, res) => {
 /**
  * Consulta de una serie mediante un parámetro
  */
-getRouter.get('/serie/:name', async (req, res) => {
+getRouter.get('/serie/:id', async (req, res) => {
   try {
-    const serie = await Serie.findById(req.params.name);
+    const serie = await Serie.findById(req.params.id);
     if (!serie) {
       return res.status(404).send();
     }
@@ -98,9 +98,9 @@ getRouter.get('/book', async (req, res) => {
 /**
  * Consulta de un libro mediante un parámetro
  */
-getRouter.get('/book/:name', async (req, res) => {
+getRouter.get('/book/:id', async (req, res) => {
   try {
-    const book = await Book.findById(req.params.name);
+    const book = await Book.findById(req.params.id);
     if (!book) {
       return res.status(404).send();
     }
@@ -133,9 +133,9 @@ getRouter.get('/book/:name', async (req, res) => {
 /**
  * Consulta de un usuario mediante un parámetro
  */
-getRouter.get('/user/:name', async (req, res) => {
+getRouter.get('/user/:id', async (req, res) => {
   try {
-    const user = await User.findById(req.params.name);
+    const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).send();
     }

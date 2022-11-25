@@ -4,16 +4,23 @@ import {Document, Schema, model} from 'mongoose';
  * Interfaz de una película
  */
 interface FilmDocumentInterface extends Document {
+  id: number,
   name: string,
   description: string,
-  details: string[],
-  value: number
+  rating: number | '-'
+  yearPublication: number
 }
 
 /**
  * Esquema de una pelicula de mongoose
  */
 const FilmSchema = new Schema<FilmDocumentInterface>({
+  id: {
+    type: Number,
+    unique: true,
+    required: [true, 'La pelicula debe tener un identificador'],
+    trim: true
+  },
   name: {
     type: String,
     unique: true,
@@ -30,17 +37,18 @@ const FilmSchema = new Schema<FilmDocumentInterface>({
     required: [true, 'La pelicula debe tener una breve descripcion'],
     trim: true,
   },
-  details: {
-    type: [String],
-    trim: true,
-  },
-  value: {
+  rating: {
     type: Number,
     trim: true,
-    default: 0,
+    default: '-',
     min: 0,
     max: 10
   },
+  yearPublication: {
+    type: Number,
+    trim: true,
+    default: null
+  }
 });
 
 /**

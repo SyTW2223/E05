@@ -4,16 +4,23 @@ import {Document, Schema, model} from 'mongoose';
  * Interfaz de una serie
  */
 interface SerieDocumentInterface extends Document {
+  id: number,
   name: string,
   description: string,
-  details: string[],
-  value: number
+  seasons: number,
+  rating: number | '-'
 }
 
 /**
  * Esquema de una serie de mongoose
  */
 const SerieSchema = new Schema<SerieDocumentInterface>({
+  id: {
+    type: Number,
+    unique: true,
+    require: [true, 'La serie debe tener un identificador'],
+    trim: true
+  },
   name: {
     type: String,
     unique: true,
@@ -25,19 +32,19 @@ const SerieSchema = new Schema<SerieDocumentInterface>({
       }
     },
   },
-  description: {
-    type: String,
-    required: [true, 'La serie debe tener una breve descripcion'],
+  seasons: {
+    type: Number,
     trim: true,
+    default: 0,
   },
   details: {
     type: [String],
     trim: true,
   },
-  value: {
+  rating: {
     type: Number,
     trim: true,
-    default: 0,
+    default: '-',
     min: 0,
     max: 10
   },

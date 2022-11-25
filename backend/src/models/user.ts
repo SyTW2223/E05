@@ -4,16 +4,36 @@ import {Document, Schema, model} from 'mongoose';
  * Interfaz de un usuario
  */
 interface UserDocumentInterface extends Document {
+  id: number,
+  username: string,
   name: string,
+  password: string
   email: string,
-  years: number,
-  list: [string]
+  dob: string,
+  list: []
 }
 
 /**
  * Esquema de un usuario de mongoose
  */
 const UserSchema = new Schema<UserDocumentInterface>({
+  id: {
+    type: Number,
+    unique: true,
+    require: [true, 'El usuario debe tener un identificador'],
+    trim: true
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: [true, 'El usuario debe tener un nombre de usuario'],
+    trim: true,
+    validate: (value: string) => {
+      if (!value.match(/^[A-Z]/)) {
+        throw new Error('The name of the user must start with a capital letter');
+      }
+    },
+  },
   name: {
     type: String,
     unique: true,
@@ -30,15 +50,17 @@ const UserSchema = new Schema<UserDocumentInterface>({
     required: [true, 'El usuario debe tener un correo electronico'],
     trim: true,
   },
-  years: {
-    type: Number,
+  password: {
+    type: String,
+    required: [true, 'El usuario debe tener una contraseña'],
     trim: true,
-    default: 10,
-    min: 10,
-    max: 99
+  },
+  dob: {
+    type: String,
+    trim: true,
   },
   list: {
-    type: [String],
+    type: [],
     trim:true
   }
 });

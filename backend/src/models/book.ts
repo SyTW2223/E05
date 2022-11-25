@@ -4,16 +4,24 @@ import {Document, Schema, model} from 'mongoose';
  * Interfaz de un libro
  */
 interface BookDocumentInterface extends Document {
+  id: number,
   name: string,
-  description: string
-  details: string[],
-  value: number
+  description: string,
+  numberPages: number,
+  publisher: string,
+  rating: number | '-'
 }
 
 /**
  * Esquema de un libro de mongoose
  */
 const BookSchema = new Schema<BookDocumentInterface>({
+  id: {
+    type: Number,
+    unique: true,
+    require: [true, 'El libro debe tener un identificador'],
+    trim: true
+  },
   name: {
     type: String,
     unique: true,
@@ -30,14 +38,20 @@ const BookSchema = new Schema<BookDocumentInterface>({
     required: [true, 'El libro debe tener una breve descripcion'],
     trim: true,
   },
-  details: {
-    type: [String],
-    trim: true,
-  },
-  value: {
+  numberPages: {
     type: Number,
     trim: true,
-    default: 0,
+    min: 0,
+    max: 3000
+  },
+  publisher: {
+    type: String,
+    trim: true
+  },
+  rating: {
+    type: Number,
+    trim: true,
+    default: '-', 
     min: 0,
     max: 10
   },
