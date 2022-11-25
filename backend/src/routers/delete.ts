@@ -3,6 +3,7 @@ import {Film} from '../models/film';
 import {Book} from '../models/book';
 import {Serie} from '../models/serie';
 import {User} from '../models/user';
+import {List} from '../models/list';
 
 
 export const deleteRouter = express.Router();
@@ -96,6 +97,28 @@ export const deleteRouter = express.Router();
     }
 
     return res.send(user);
+  } catch (error) {
+    return res.status(400).send();
+  }
+});
+
+/**
+ * Elimina una lista por nombre
+ */
+deleteRouter.delete ('/list', async (req:any, res) => {
+  if (!req.query.name) {
+    res.status(400).send({
+      error: 'A name must be provided',
+    });
+  }
+  try {
+    const list = await List.findOneAndDelete({name: req.query.name.toString()});
+
+    if (!list) {
+      return res.status(404).send();
+    }
+
+    return res.send(list);
   } catch (error) {
     return res.status(400).send();
   }

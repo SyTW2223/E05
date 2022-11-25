@@ -3,7 +3,7 @@ import {Serie} from '../models/serie';
 import {Book} from '../models/book';
 import {Film} from '../models/film';
 import {User} from '../models/user';
-
+import {List} from '../models/list';
 
 
 export const getRouter = express.Router();
@@ -67,7 +67,7 @@ getRouter.get('/book', async (req, res) => {
 /**
  * Consulta de un usuario 
  */
- getRouter.get('/user', async (req, res) => {
+getRouter.get('/user', async (req, res) => {
   const filter = req.query.username?{username: req.query.username.toString()}:{};
 
   try {
@@ -77,6 +77,39 @@ getRouter.get('/book', async (req, res) => {
     }
 
     return res.status(404).send();
+  } catch (error) {
+    return res.status(500).send();
+  }
+});
+
+/**
+ * Consulta una lista por nombre
+ */
+getRouter.get('/list', async (req, res) => {
+  const filter = req.query.name?{name: req.query.name?.toString()}:{};
+  try {
+    const lists = await List.find(filter);
+    if (lists.length !== 0) {
+      return res.send(lists);
+    }
+
+    return res.status(404).send();
+  } catch (error) {
+    return res.status(500).send();
+  }
+});
+
+/**
+ * Consulta una lista por id
+ */
+getRouter.get('/list/:id', async (req, res) => {
+  try {
+    const film = await List.findById(req.params.id);
+    if (!film) {
+      return res.status(404).send();
+    }
+
+    return res.send(film);
   } catch (error) {
     return res.status(500).send();
   }

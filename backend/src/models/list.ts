@@ -1,5 +1,4 @@
 import {Document, Schema, model} from 'mongoose';
-import { ObjectId } from 'mongodb';
 
 /**
  * Interfaz de una lista
@@ -24,6 +23,7 @@ const ListSchema = new Schema<ListDocumentInterface>({
   },
   listId: {
     type: Number,
+    unique: true,
     required: [true, 'La lista debe tener un id.'],
     trim: true,
   },
