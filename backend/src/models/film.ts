@@ -5,7 +5,7 @@ import {Document, Schema, model} from 'mongoose';
  */
 interface FilmDocumentInterface extends Document {
   name: string,
-  description: string[]
+  description: string,
   details: string[],
   value: number
 }
@@ -21,12 +21,12 @@ const FilmSchema = new Schema<FilmDocumentInterface>({
     trim: true,
     validate: (value: string) => {
       if (!value.match(/^[A-Z]/)) {
-        throw new Error('The name of the artist must start with a capital letter');
+        throw new Error('The name of the film must start with a capital letter');
       }
     },
   },
   description: {
-    type: [String],
+    type: String,
     required: [true, 'La pelicula debe tener una breve descripcion'],
     trim: true,
   },

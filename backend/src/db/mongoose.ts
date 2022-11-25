@@ -1,14 +1,14 @@
-import {MongoClient} from 'mongodb';
+import {connect} from 'mongoose';
 
-const dbURL = 'mongodb://127.0.0.1:27017';
-const dbName = 'story-app';
+const databaseURL = process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/story-app';
 
-MongoClient.connect(dbURL, {
+connect(databaseURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-}).then((client) => {
-  const db = client.db(dbName);
-  console.log(db.databaseName);
-}).catch((error) => {
-  console.log(`Unable to connect to database: ${error.message}`);
+  useCreateIndex: true,
+  useFindAndModify: false,
+}).then(() => {
+  console.log('Connection to MongoDB server established');
+}).catch(() => {
+  console.log('Unnable to connect to MongoDB server');
 });
