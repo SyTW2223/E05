@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { connect } from "react-redux";
 
 class Profile extends Component {
@@ -12,7 +12,7 @@ render() {
     const { user: currentUser } = this.props;
 
     if (!currentUser) {
-    return <Redirect to="/login" />;
+    return <Navigate to="/login" />;
     }
 
     return (

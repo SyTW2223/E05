@@ -4,7 +4,7 @@
 
 
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -82,7 +82,7 @@ render() {
     const { isLoggedIn, message } = this.props;
 
     if (isLoggedIn) {
-    return <Redirect to="/profile" />;
+    return <Navigate to="/profile" />;
     }
 
     return (
