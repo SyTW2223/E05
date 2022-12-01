@@ -4,6 +4,6 @@
 module.exports = {
     HOST: "localhost",
     PORT: 27017,
-    DB: "bezkoder_db"
+    DB: "SyTW.mystoryworld"
 };
 // cambiar por nuestra bbdd
