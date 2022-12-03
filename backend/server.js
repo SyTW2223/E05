@@ -56,7 +56,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to bezkoder application." });
+    res.json({ message: "Welcome to my story application." });
+});
+
+app.get("/ALL", (req, res) => {
+    res.json({ message: "JOla application." });
 });
 
 // set port, listen for requests
