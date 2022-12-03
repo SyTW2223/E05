@@ -29,7 +29,7 @@ export const Login = () => {
           sx={{backgroundColor: 'primary.fill'}}
         >
           <Typography variant="h4" padding={3}>
-            Login
+            Inicio de sesion
           </Typography>
           <TextField
             label="Username"
@@ -67,7 +67,7 @@ export const Login = () => {
                 });
             }}
           >
-            Registro
+            Iniciar Sesion
           </Button>
           <Typography marginTop={1}>
             ¿No tienes cuenta?
