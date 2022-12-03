@@ -10,7 +10,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    SET_MESSAGE,
+    SET_MESSAGE
 } from "./types";
 
 import AuthService from "../services/auth.service";
@@ -22,76 +22,60 @@ export const register = (username, email, password) => (dispatch) => {
             // lanza el siguiente mensaje
         dispatch({
             type: REGISTER_SUCCESS,
+            payload: response.data
         });
 
         dispatch({
-            type: SET_MESSAGE,
-            payload: response.data.message,
+          type: SET_MESSAGE,
+          payload: response.data.message,
         });
 
         return Promise.resolve();
         },
         (error) => {
-        const message =
-            (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-        dispatch({
-            type: REGISTER_FAIL,
+            dispatch({
+                type: REGISTER_FAIL,
+                payload: error.data
         });
-
-        dispatch({
-            type: SET_MESSAGE,
-            payload: message,
-        });
-
         return Promise.reject();
         }
     );
 };
 
 // INICIO DE SESION
-export const login = (username, password) => (dispatch) => {
-return AuthService.login(username, password).then(
-    (data) => {
-    dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { user: data },
-    });
-
-    return Promise.resolve();
-    },
-    (error) => {
-    const message =
-        (error.response &&
-        error.response.data &&
-        error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-    dispatch({
-        type: LOGIN_FAIL,
-    });
-
-    dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-    });
-
-    return Promise.reject();
-    }
-);
-};
+export const login = (username, password)=> (dispatch) => {
+    return AuthService.login(username, password).then(
+      (response) => {
+        const passwd = response.data.password
+        if (password === passwd) {
+          dispatch({
+            type: LOGIN_SUCCESS,
+            payload: response.data
+          })
+        } else {
+          dispatch({
+            type: LOGIN_FAIL,
+            payload: "Contraseña incorrecta"
+          })
+        }    
+        return Promise.resolve();
+      },
+      (error) => {
+        dispatch({
+          type: LOGIN_FAIL,
+          payload: error.data
+        });
+        return Promise.reject();
+      }
+    )
+}
 
 // CERRAR SESION
 export const logout = () => (dispatch) => {
-AuthService.logout();
+    AuthService.logout();
 
-dispatch({
-    type: LOGOUT,
-});
+    dispatch({
+        type: LOGOUT,
+    });
 };
 
