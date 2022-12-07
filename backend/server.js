@@ -10,6 +10,8 @@ require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 const Role = db.role;
 // const dbConfig = './config/db.config.js';
+// const path = __dirname + './views/';
+
 
 var dbConfig = {
     HOST: "127.0.0.1",
@@ -21,7 +23,7 @@ var dbConfig = {
 var corsOptions = {
 origin: "http://localhost:8081"
 };
-
+// app.use(express.static(path));
 // crea roles en la bbdd
 function initial() {
     Role.estimatedDocumentCount((err, count) => {
