@@ -5,10 +5,10 @@
  import axios from "axios";
 
 
- const API_URL = "http://localhost:8000/";
+ const API_URL = "http://localhost:8080/";
  
  export const register = (name, username, email, password) => {
-   return axios.post(API_URL + "account", {
+   return axios.post(API_URL + "register", {
      "name": name,
      "username": username,
      "email": email,
@@ -18,7 +18,7 @@
  
  
  export const login = (username) => {
-   return axios.get(API_URL + "account", {
+   return axios.post(API_URL + "login", {
    params:{
      "username": username
    }

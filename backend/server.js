@@ -14,7 +14,8 @@ const Role = db.role;
 var dbConfig = {
     HOST: "127.0.0.1",
     PORT: 27017,
-    DB: "SyTW"
+    DB: "SyTW",
+    //url: "mongodb+srv://my-story-app:storyapp@cluster0.f1buatx.mongodb.net/SyTW"
 };
 
 var corsOptions = {
@@ -56,11 +57,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to my story application." });
+    res.json({ message: "Welcome to bezkoder application." });
 });
 
-app.get("/ALL", (req, res) => {
-    res.json({ message: "JOla application." });
+app.get("/login", (req, res) => {
+    res.json({ message: "Welcome to login." });
 });
 
 // set port, listen for requests
