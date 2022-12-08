@@ -21,7 +21,7 @@ var dbConfig = {
 };
 
 var corsOptions = {
-origin: "http://localhost:8081"
+    origin: "http://10.6.131.130:8080"
 };
 // app.use(express.static(path));
 // crea roles en la bbdd
@@ -59,7 +59,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to bezkoder application." });
+    res.json({ message: "Welcome to storya-app application." });
 });
 
 app.get("/login", (req, res) => {
@@ -67,7 +67,7 @@ app.get("/login", (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
     console.log(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`);

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /**
  * comprueba usuarios duplicados y si el rol es valido
  */

@@ -5,7 +5,7 @@
  import axios from "axios";
 
 
- const API_URL = "http://localhost:8080/";
+ const API_URL = "http://10.6.130.239:80/";
  
  export const register = (name, username, email, password) => {
    return axios.post(API_URL + "register", {
