@@ -7,7 +7,7 @@ const List = mongoose.model(
     name: {
       type: String,
       unique: true,
-      required: [true, 'Debe contener un nombre.'],
+      required: true,
       trim: true,
     },
     id: {

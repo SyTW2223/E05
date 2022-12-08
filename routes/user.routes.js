@@ -4,27 +4,28 @@
     -> GET /api/test/user for loggedin users (user/admin)
     -> GET /api/test/admin for admin
 */
+module.exports = app => {
+  const user = require("../controllers/user.controler");
 
+  var router = require("express").Router();
 
-const { authJwt } = require("../middlewares");
-const controller = require("../controllers/user.controller");
+  // Create a new user
+  router.post("/", user.create);
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
+  // Retrieve all user
+  router.get("/", user.findAll);
 
-  app.get("/api/test/all", controller.allAccess);
+  // Retrieve a single user with id
+  router.get("/:name", user.findOne);
 
-  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+  // Update a user with name
+  router.patch("/:name", user.update);
 
-  app.get(
-    "/api/test/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
-  );
+  // Delete a user with name
+  router.delete("/:name", user.delete);
+
+  // Delete all users database
+  router.delete("/", user.deleteAll);
+
+  app.use("/api/user.controler", router);
 };

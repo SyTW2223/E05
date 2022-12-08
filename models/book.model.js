@@ -8,12 +8,12 @@ const Book = mongoose.model(
     title: {
       type: String,
       unique: true,
-      required: [true, 'Debe contener un titulo.'],
+      required: true,
       trim: true,
     },
     description: {
       type: String,
-      required: [true, 'Debe contener una descripcion.'],
+      required: true,
       trim: true,
     },
     categorys: {

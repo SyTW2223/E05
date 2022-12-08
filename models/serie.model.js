@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const categorys = require("./categorys");
-
 // ------------------ COLECCIONES DE USUARIOS EN MONGO ------------ //
 // se puede pasar las comprobaciones al front
 const Serie = mongoose.model(
@@ -9,12 +8,12 @@ const Serie = mongoose.model(
     title: {
       type: String,
       unique: true,
-      required: [true, 'Debe contener un titulo.'],
+      required: true,
       trim: true,
     },
     description: {
       type: String,
-      required: [true, 'Debe contener una descripcion.'],
+      required: true,
       trim: true,
     },
     seasons: {
