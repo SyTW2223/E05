@@ -4,5 +4,5 @@
 module.exports = {
     HOST: "172.16.127.55",
     PORT: 27017,
-    DB: "myStoryWorld",
+    DB: "mystoryworld",
 };

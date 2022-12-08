@@ -18,7 +18,7 @@ require('./routes/user.routes')(app);
 
 // para permitir acceso a otras maquinas, indica el origen del frontend
 var corsOptions = {
-    origin: "http://169.254.231.165:8081"
+    origin: "http://10.6.131.130:8080"
 };
 
 

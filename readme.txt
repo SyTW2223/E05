@@ -1,0 +1,1 @@
+https://www.bezkoder.com/node-js-mongodb-auth-jwt/ -> tutorial seguido para autenticacion y autorizacions
