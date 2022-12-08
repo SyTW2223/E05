@@ -5,6 +5,11 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+
+app.use(cors({
+    origin:"http://localhost:8080"
+}));
+
 const db = require("./models");
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
@@ -20,9 +25,9 @@ var dbConfig = {
     //url: "mongodb+srv://my-story-app:storyapp@cluster0.f1buatx.mongodb.net/SyTW"
 };
 
-var corsOptions = {
-    origin: "http://10.6.131.130:8080"
-};
+// var corsOptions = {
+//     origin: "http://10.6.131.130:8080"
+// };
 // app.use(express.static(path));
 // crea roles en la bbdd
 function initial() {
@@ -48,8 +53,6 @@ function initial() {
     }
 });
 }
-
-app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
