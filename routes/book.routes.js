@@ -21,5 +21,5 @@ module.exports = app => {
     // Delete all books database
     router.delete("/", book.deleteAll);
   
-    app.use("/api/book.controler", router);
+    app.use("/api/book", router);
   };

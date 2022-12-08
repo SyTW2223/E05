@@ -27,5 +27,5 @@ module.exports = app => {
   // Delete all users database
   router.delete("/", user.deleteAll);
 
-  app.use("/api/user.controler", router);
+  app.use("/api/user", router);
 };
