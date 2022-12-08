@@ -7,17 +7,17 @@ const User = mongoose.model(
     username: {
       type: String,
       unique: true,
-      required: [true, 'El usuario debe tener un nombre de usuario'],
+      required: true,
       trim: true,
     },
     email: {
       type: String,
-      required: [true, 'El usuario debe tener un correo electronico'],
+      required: true,
       trim: true,
     },
     password: {
       type: String,
-      required: [true, 'El usuario debe tener una contraseña'],
+      required: true,
       trim: true,
     },
     roles: [

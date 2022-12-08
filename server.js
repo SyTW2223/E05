@@ -1,8 +1,16 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
-const dbConfig = require("./config/db.config");
+
 const db = require("./models");
+require("./routes/book.routes")(app);
+require("./routes/user.routes")(app);
+require("./routes/list.routes")(app);
+require("./routes/serie.routes")(app);
+require("./routes/film.routes")(app);
+
+
 
 var corsOptions = {
   origin: "http://10.6.131.130:8080"
@@ -31,12 +39,12 @@ var server = app.listen(PORT, '172.16.126.55', () => {
 
 
 // conexion con mongoose
-db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+db.mongoose.connect(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connect to MongoDB. ");
-    console.log(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`);
+    console.log(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`);
 }).catch(err => {
     console.error("Connection error", err);
     process.exit();

@@ -5,7 +5,7 @@
     -> GET /api/test/admin for admin
 */
 module.exports = app => {
-  const user = require("../controllers/user.controler");
+  const user = require("../controllers/user.controller");
 
   var router = require("express").Router();
 

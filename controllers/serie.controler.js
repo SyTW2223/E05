@@ -2,7 +2,7 @@ const db = require("../models");
 const serie = db.series;
 
 // Create and Save a new serie
-exports.create = (req, res) => {
+exports.create = (req, res) => {/*
   // Validate request
   if (!req.body.title) {
     res.status(400).send({ message: "Debe tener un titulo!" });
@@ -24,13 +24,13 @@ exports.create = (req, res) => {
         message:
           err.message || "Error al crear el elemento."
       });
-    });
+    });*/
 };
 
 
 
 // Update a serie by the title in the request
-exports.update = (req, res) => {
+exports.update = (req, res) => {/*
   if (!req.body) {
     return res.status(400).send({
       message: "Data to update can not be empty!"
@@ -51,12 +51,12 @@ exports.update = (req, res) => {
       res.status(500).send({
         message: "Error updating serie with title=" + title
       });
-    });
+    });*/
 };
 
 
 // Retrieve all elements from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req, res) => {/*
   const title = req.query.title;
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 
@@ -68,11 +68,11 @@ exports.findAll = (req, res) => {
         message:
           err.message || "Error al buscar los elementos."
       });
-    });
+    });*/
 };
 
 // Find a element with an title
-exports.findOne = (req, res) => {
+exports.findOne = (req, res) => {/*
   const title = req.query.name?{name: req.query.name.toString()}:{};
   serie.find(title).then(data => {
       if (!data)
@@ -82,12 +82,12 @@ exports.findOne = (req, res) => {
       res
         .status(500)
         .send({ message: "Error retrieving serie with title=" + title });
-    });
+    });*/
 };
 
 
 // Delete a serie with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req, res) => {/*
   const title = req.params.title;
 
   serie.findByIdAndRemove(title, { useFindAndModify: false })
@@ -106,11 +106,11 @@ exports.delete = (req, res) => {
       res.status(500).send({
         message: "Could not delete serie with title=" + title
       });
-    });
+    });*/
 };
 
 // Delete all series from the database.
-exports.deleteAll = (req, res) => {
+exports.deleteAll = (req, res) => {/*
   serie.deleteMany({})
     .then(data => {
       res.send({
@@ -122,5 +122,5 @@ exports.deleteAll = (req, res) => {
         message:
           err.message || "Some error occurred while removing all series."
       });
-    });
+    });*/
 };

@@ -5,4 +5,5 @@ module.exports = {
     HOST: "172.16.127.55",
     PORT: 27017,
     DB: "mystoryworld",
+    url: "mongodb://172.16.127.55:27017/mystoryworld",
 };
