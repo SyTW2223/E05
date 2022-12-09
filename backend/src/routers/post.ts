@@ -5,6 +5,11 @@ import {Serie} from '../models/serie';
 import {User} from '../models/user';
 import {List} from '../models/list';
 
+import authenticateToken from '../middlewares/authJwt';
+
+const jwt = require('jsonwebtoken');
+const cript = require('bcryptjs');
+
 export const postRouter = express.Router();
 
 /**
@@ -56,8 +61,15 @@ postRouter.post('/serie', async (req, res) => {
  * Creacion de un usuario
  */
 postRouter.post('/user', async (req, res) => {
-  const user = new User(req.body);
-
+  let pass = await cript.hash(req.body.password, 10);
+  const user = new User({
+    username: req.body.username,
+    name: req.body.name,
+    password: pass,
+    email: req.body.email,
+    dob: req.body.dob,
+    list: req.body.lists
+  });
   try {
     await user.save();
     return res.status(201).send(user);

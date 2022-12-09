@@ -37,7 +37,7 @@ export const Login = () => {
             value={username}
             variant="outlined"
             margin="dense"
-            placeholder="@Username"
+            placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField

@@ -19,9 +19,9 @@ export default function ButtonAppBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              fontFamily: 'times new roman',
               fontWeight: 700,
-              letterSpacing: '.3rem',
+              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -42,7 +42,17 @@ export default function ButtonAppBar() {
               backgroundColor: 'primary.main'
             }}
           >
-            Login
+            Iniciar Sesion
+          </Button>
+          <Button
+            component={Link} to="/register"
+            color="inherit"
+            sx={{
+              color: 'inherit',
+              backgroundColor: 'primary.main'
+            }}
+          >
+            Registro
           </Button>
         </Toolbar>
       </AppBar>

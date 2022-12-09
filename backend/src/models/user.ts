@@ -4,7 +4,6 @@ import {Document, Schema, model} from 'mongoose';
  * Interfaz de un usuario
  */
 interface UserDocumentInterface extends Document {
-  id: number,
   username: string,
   name: string,
   password: string
@@ -17,12 +16,6 @@ interface UserDocumentInterface extends Document {
  * Esquema de un usuario de mongoose
  */
 const UserSchema = new Schema<UserDocumentInterface>({
-  id: {
-    type: Number,
-    unique: true,
-    require: [true, 'El usuario debe tener un identificador'],
-    trim: true
-  },
   username: {
     type: String,
     unique: true,
