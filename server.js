@@ -4,19 +4,13 @@ const cors = require("cors");
 const app = express();
 
 const db = require("./models");
+
 require("./routes/book.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/list.routes")(app);
 require("./routes/serie.routes")(app);
 require("./routes/film.routes")(app);
 
-
-
-var corsOptions = {
-  origin: "http://10.6.131.130:8080"
-};
-
-app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -25,8 +19,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Hola, esta es la linea 19 de server.js." });
+app.get("/", (_, res) => {
+  res.send("Hola, esto es el backend." );
 });
 
 // set port, listen for requests, puerto del backend

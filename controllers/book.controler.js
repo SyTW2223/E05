@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../models/book.model");
 const book = db.books;
 
 // Create and Save a new book
@@ -59,8 +59,8 @@ exports.findAll = (req, res) => {
   
   const title = req.query.title;
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-
-  book.find(condition)
+  book.find()
+  console.log('tercer all')
     .then(data => {
       res.send(data);
     }).catch(err => {
@@ -74,9 +74,8 @@ exports.findAll = (req, res) => {
 // Find a element with an title
 exports.findOne = (req, res) => {
   console.log('esto es findOne en book.controler');
-  
-  const title = req.query.name?{name: req.query.name.toString()}:{};
-  book.find(title).then(data => {
+  console.log(req.params.title)
+  book.find(req.body.title).then(data => {
       if (!data)
         res.status(404).send({ message: "Not found book with title " + id });
       else res.send(data);

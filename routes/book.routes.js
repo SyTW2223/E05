@@ -1,4 +1,5 @@
 module.exports = app => {
+  console.log('hola')
     const book = require("../controllers/book.controler");
   
     var router = require("express").Router();
@@ -21,5 +22,5 @@ module.exports = app => {
     // Delete all books database
     router.delete("/", book.deleteAll);
   
-    app.use("/api/book", router);
+    app.use("/book", router);
   };
