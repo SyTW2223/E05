@@ -6,6 +6,7 @@ exports.create = async (req, res) => {
   console.log('esto es create en book.controler');
   // Create a book
   const newBook = new bookModel({
+    id: req.body.id,
     title: req.body.title,
     description: req.body.description,
     categorys: req.body.categorys,

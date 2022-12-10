@@ -6,6 +6,7 @@ exports.create = async (req, res) => {
   console.log('esto es create en film.controler');
   // Create a film
   const newFilm = new filmModel({
+    id: req.body.id,
     title: req.body.title,
     description: req.body.description,
     categorys: req.body.categorys,

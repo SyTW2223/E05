@@ -6,6 +6,7 @@ exports.create = async (req, res) => {
   console.log('esto es create en user.controler');
   // Create a user
   const newUser = new userModel({
+    id: req.body.id,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,

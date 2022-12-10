@@ -18,11 +18,16 @@ app.use(bodyParser.json())
 
 const db = require("./models");
 
+// API REST
 require("./routes/book.routes")(app);
 require("./routes/user.routes")(app);
 require("./routes/list.routes")(app);
 require("./routes/serie.routes")(app);
 require("./routes/film.routes")(app);
+
+
+// PRUEBAS TDD API REST
+// require("./test/book.spec")
 
 // simple route
 app.get("/", (_, res) => {

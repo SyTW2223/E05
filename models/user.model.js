@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const User = mongoose.model(
   "User",
   new mongoose.Schema({
+    id: {
+      type: Number,
+      trim: true,
+    },
     username: {
       type: String,
       unique: true,

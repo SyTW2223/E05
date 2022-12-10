@@ -5,9 +5,12 @@ const categorys = require("./categorys");
 const Film = mongoose.model(
   "Film",
   new mongoose.Schema({
+    id: {
+      type: Number,
+      trim: true,
+    },
     title: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
     },

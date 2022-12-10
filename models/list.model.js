@@ -15,11 +15,11 @@ const List = mongoose.model(
       trim: true,
     },
     items: {
-      type: [JSON],
+      type: [Number],
       trim: true,
     },
     users: {
-        type: [JSON],
+        type: [Number],
         trim: true,
     }
   })

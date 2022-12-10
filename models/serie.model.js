@@ -5,6 +5,10 @@ const categorys = require("./categorys");
 const Serie = mongoose.model(
   "Serie",
   new mongoose.Schema({
+    id: {
+      type: Number,
+      trim: true,
+    },
     title: {
       type: String,
       unique: true,

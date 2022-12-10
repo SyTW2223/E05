@@ -6,6 +6,7 @@ exports.create = async (req, res) => {
   console.log('esto es create en serie.controler');
   // Create a serie
   const newSerie = new SerieModel({
+    id: req.body.id,
     title: req.body.title,
     description: req.body.description,
     season: req.body.season,
