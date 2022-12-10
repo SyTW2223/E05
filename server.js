@@ -3,6 +3,19 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
+app.use(cors({
+    origin:"http://localhost:8081"
+  }));
+
+// parse requests of content-type - application/json
+//app.use(express.json());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+
 const db = require("./models");
 
 require("./routes/book.routes")(app);
@@ -11,16 +24,10 @@ require("./routes/list.routes")(app);
 require("./routes/serie.routes")(app);
 require("./routes/film.routes")(app);
 
-
-// parse requests of content-type - application/json
-app.use(express.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
-
 // simple route
 app.get("/", (_, res) => {
-  res.send("Hola, esto es el backend." );
+    console.log("peticion recibida")
+    res.send("Hola, esto es el backend." );
 });
 
 // set port, listen for requests, puerto del backend

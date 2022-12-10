@@ -21,5 +21,5 @@ module.exports = app => {
     // Delete all lists database
     router.delete("/", list.deleteAll);
   
-    app.use("/api/list", router);
+    app.use("/list", router);
   };

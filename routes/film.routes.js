@@ -21,5 +21,5 @@ module.exports = app => {
     // Delete all films database
     router.delete("/", film.deleteAll);
   
-    app.use("/api/film", router);
+    app.use("/film", router);
   };

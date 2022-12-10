@@ -16,16 +16,16 @@ module.exports = app => {
   router.get("/", user.findAll);
 
   // Retrieve a single user with id
-  router.get("/:name", user.findOne);
+  router.get("/:username", user.findOne);
 
-  // Update a user with name
-  router.patch("/:name", user.update);
+  // Update a user with username
+  router.patch("/:username", user.update);
 
-  // Delete a user with name
-  router.delete("/:name", user.delete);
+  // Delete a user with username
+  router.delete("/:username", user.delete);
 
   // Delete all users database
   router.delete("/", user.deleteAll);
 
-  app.use("/api/user", router);
+  app.use("/user", router);
 };

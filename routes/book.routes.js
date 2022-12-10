@@ -1,5 +1,4 @@
 module.exports = app => {
-  console.log('hola')
     const book = require("../controllers/book.controler");
   
     var router = require("express").Router();

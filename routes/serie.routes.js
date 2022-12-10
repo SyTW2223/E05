@@ -21,5 +21,5 @@ module.exports = app => {
     // Delete all series database
     router.delete("/", serie.deleteAll);
   
-    app.use("/api/serie", router);
+    app.use("/serie", router);
   };

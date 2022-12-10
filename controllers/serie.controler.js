@@ -1,45 +1,43 @@
-const db = require("../models");
-const serie = db.series;
+const serieModel = require("../models/serie.model");
+
 
 // Create and Save a new serie
-exports.create = (req, res) => {/*
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({ message: "Debe tener un titulo!" });
-    return;
-  }
-
+exports.create = async (req, res) => {
+  console.log('esto es create en serie.controler');
   // Create a serie
-  const serie = new serie({
+  const newSerie = new SerieModel({
     title: req.body.title,
     description: req.body.description,
+    season: req.body.season,
     categorys: req.body.categorys,
+    rating: req.body.rating,
   });
 
-  // Save serie in the database
-  serie.save(serie).then(data => {
+  // Save Serie in the database
+  newSerie.save().then(data => {
       res.send(data);
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al crear el elemento."
+          err.message || "Error al crear la serie."
       });
-    });*/
+    });
 };
 
 
-
 // Update a serie by the title in the request
-exports.update = (req, res) => {/*
-  if (!req.body) {
-    return res.status(400).send({
+exports.update = (req, res) => {
+  console.log('esto es update en serie.controler');
+  // si no hay datos nuevos no podra actualizarse
+  if (Object.keys(req.body).length === 0) {
+    res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
-
+  
   const title = req.params.title;
-
-  serie.findOneAndUpdate(title, req.body, { useFindAndModify: false })
+  // busca el libro original para actualizarlo
+  serieModel.findOneAndUpdate({'title': title}, req.body, { new: true })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -51,46 +49,46 @@ exports.update = (req, res) => {/*
       res.status(500).send({
         message: "Error updating serie with title=" + title
       });
-    });*/
+    });
 };
 
 
 // Retrieve all elements from the database.
-exports.findAll = (req, res) => {/*
-  const title = req.query.title;
-  var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-
-  serie.find(condition)
+exports.findAll = (req, res) => {
+  console.log('esto es findAll en serie.controler');
+  
+  serieModel.find()
     .then(data => {
       res.send(data);
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al buscar los elementos."
+          err.message || "Error al buscar las series."
       });
-    });*/
+    });
 };
 
 // Find a element with an title
-exports.findOne = (req, res) => {/*
-  const title = req.query.name?{name: req.query.name.toString()}:{};
-  serie.find(title).then(data => {
+exports.findOne = (req, res) => {
+  console.log('esto es findOne en serie.controler');
+  const title = req.params.title;
+  serieModel.findOne({'title': title}).then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found serie with title " + id });
+        res.status(404).send({ message: "Not found serie with title " + title });
       else res.send(data);
     }).catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving serie with title=" + title });
-    });*/
+      res.status(500).send({ message: "Unknown error when searching for " + title });
+    });
 };
 
 
 // Delete a serie with the specified id in the request
-exports.delete = (req, res) => {/*
+exports.delete = (req, res) => {
+  console.log('esto es delete en serie.controler');
+  
   const title = req.params.title;
 
-  serie.findByIdAndRemove(title, { useFindAndModify: false })
+  serieModel.findOneAndDelete({'title': title})
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -98,7 +96,7 @@ exports.delete = (req, res) => {/*
         });
       } else {
         res.send({
-          message: "serie was deleted successfully!"
+          message: "Serie was deleted successfully!"
         });
       }
     })
@@ -106,12 +104,14 @@ exports.delete = (req, res) => {/*
       res.status(500).send({
         message: "Could not delete serie with title=" + title
       });
-    });*/
+    });
 };
 
 // Delete all series from the database.
-exports.deleteAll = (req, res) => {/*
-  serie.deleteMany({})
+exports.deleteAll = (req, res) => {
+  console.log('esto es deleteAll en serie.controler');
+  
+  serieModel.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} series were deleted successfully!`
@@ -122,5 +122,5 @@ exports.deleteAll = (req, res) => {/*
         message:
           err.message || "Some error occurred while removing all series."
       });
-    });*/
+    });
 };

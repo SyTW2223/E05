@@ -1,45 +1,42 @@
-const db = require("../models");
-const film = db.films;
+const filmModel = require("../models/film.model");
+
 
 // Create and Save a new film
-exports.create = (req, res) => {/*
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({ message: "Debe tener un titulo!" });
-    return;
-  }
-
+exports.create = async (req, res) => {
+  console.log('esto es create en film.controler');
   // Create a film
-  const film = new film({
+  const newFilm = new filmModel({
     title: req.body.title,
     description: req.body.description,
     categorys: req.body.categorys,
+    rating: req.body.categorys,
   });
 
   // Save film in the database
-  film.save(film).then(data => {
+  newFilm.save().then(data => {
       res.send(data);
     }).catch(err => {
       res.status(500).send({
         message:
           err.message || "Error al crear el elemento."
       });
-    });*/
+    });
 };
 
 
-
 // Update a film by the title in the request
-exports.update = (req, res) => {/*
-  if (!req.body) {
-    return res.status(400).send({
+exports.update = (req, res) => {
+  console.log('esto es update en film.controler');
+  // si no hay datos nuevos no podra actualizarse
+  if (Object.keys(req.body).length === 0) {
+    res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
-
+  
   const title = req.params.title;
-
-  film.findOneAndUpdate(title, req.body, { useFindAndModify: false })
+  // busca el libro original para actualizarlo
+  filmModel.findOneAndUpdate({'title': title}, req.body, { new: true })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -51,16 +48,15 @@ exports.update = (req, res) => {/*
       res.status(500).send({
         message: "Error updating film with title=" + title
       });
-    });*/
+    });
 };
 
 
 // Retrieve all elements from the database.
-exports.findAll = (req, res) => {/*
-  const title = req.query.title;
-  var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
-
-  film.find(condition)
+exports.findAll = (req, res) => {
+  console.log('esto es findAll en film.controler');
+  
+  filmModel.find()
     .then(data => {
       res.send(data);
     }).catch(err => {
@@ -68,29 +64,30 @@ exports.findAll = (req, res) => {/*
         message:
           err.message || "Error al buscar los elementos."
       });
-    });*/
+    });
 };
 
 // Find a element with an title
-exports.findOne = (req, res) => {/*
-  const title = req.query.name?{name: req.query.name.toString()}:{};
-  film.find(title).then(data => {
+exports.findOne = (req, res) => {
+  console.log('esto es findOne en film.controler');
+  const title = req.params.title;
+  filmModel.findOne({'title': title}).then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found film with title " + id });
+        res.status(404).send({ message: "Not found film with title " + title });
       else res.send(data);
     }).catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving film with title=" + title });
-    });*/
+      res.status(500).send({ message: "Unknown error when searching for " + title });
+    });
 };
 
 
 // Delete a film with the specified id in the request
-exports.delete = (req, res) => {/*
+exports.delete = (req, res) => {
+  console.log('esto es delete en film.controler');
+  
   const title = req.params.title;
 
-  film.findByIdAndRemove(title, { useFindAndModify: false })
+  filmModel.findOneAndDelete({'title': title})
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -106,12 +103,14 @@ exports.delete = (req, res) => {/*
       res.status(500).send({
         message: "Could not delete film with title=" + title
       });
-    });*/
+    });
 };
 
 // Delete all films from the database.
-exports.deleteAll = (req, res) => {/*
-  film.deleteMany({})
+exports.deleteAll = (req, res) => {
+  console.log('esto es deleteAll en film.controler');
+  
+  filmModel.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} films were deleted successfully!`
@@ -122,5 +121,5 @@ exports.deleteAll = (req, res) => {/*
         message:
           err.message || "Some error occurred while removing all films."
       });
-    });*/
+    });
 };
