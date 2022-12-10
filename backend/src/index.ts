@@ -1,10 +1,4 @@
-import {app} from './app';
-
-const cors = require("cors");
-
-app.use(cors({
-  origin:"http://localhost:8080"
-}));
+import {app} from './app'
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
