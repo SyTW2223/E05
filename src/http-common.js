@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "http://10.6.131.130:80", // envia peticiones al proxy 
   headers: {
     "Content-type": "application/json"
   }
