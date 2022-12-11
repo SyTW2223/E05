@@ -5,11 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
-    "test": "mocha",
-    "coverage": "jest --collect-coverage"
+    "test": "mocha --exit --timeout 10000"
   },
   "keywords": [],
-  "type": "module",
   "author": "",
   "license": "ISC",
   "devDependencies": {
