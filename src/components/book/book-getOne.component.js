@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import http from "../../http-common";
 
-function BookGet() {
+function BookGetOne() {
   const [isLoading, setLoading] = useState(true);
   const [respuestaBack, setData] = useState([]); 
 
   // ruta raiz por defecto
   useEffect(() => {
-    http.get("/book").then(response => { //response contiene datos de respuesta del back
+    http.get(`/book/${title}`).then(response => { //response contiene datos de respuesta del back
       setData(response.data); //obtiene respuesta del back del .send
       setLoading(false);
     });
@@ -54,4 +54,4 @@ function BookGet() {
 }
 
 
-export default BookGet;
+export default BookGetOne;

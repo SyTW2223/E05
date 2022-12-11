@@ -3,16 +3,20 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // -------- COMPONENTS ----------- //
-import BookGet from "./components/book/book-get.component";
-//import { Login } from './components/login';
-//import { Register } from './components/register';
+import { Login } from './components/login/login.component';
+import { Register } from './components/register/register.component';
+
+import BookGetOne from "./components/book/book-getOne.component";
 // ------------------------------- //
 
 function App() {
   return(
       <Router>
           <Routes>
-            <Route path="/book/:title" element = {<BookGet />}/>
+              <Route path="/" element = {<Login />}/>
+              <Route path="/login" element = {<Login />}/>
+              <Route path="/register" element = {<Register />}/>
+            <Route path="/book/:title" element = {<BookGetOne />}/>
           </Routes>
       </Router>
   )
