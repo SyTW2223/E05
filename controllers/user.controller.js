@@ -1,7 +1,10 @@
+const { createImportTypeNode } = require("typescript");
 const userModel = require("../models/user.model");
 
+const jwt = require('jsonwebtoken');
+const crypt = require('bcryptjs');
 
-// Create and Save a new user
+// Create and Save a new user (register)
 exports.create = async (req, res) => {
   console.log('esto es create en user.controler');
   // Create a user
@@ -9,7 +12,7 @@ exports.create = async (req, res) => {
     id: req.body.id,
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password,
+    password: crypt.hashSync(req.body.password, 10),
     roles: req.body.roles,
   });
 
@@ -19,10 +22,14 @@ exports.create = async (req, res) => {
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al crear el elemento."
+          "Error al crear el elemento."
       });
     });
 };
+
+
+// login
+
 
 
 // Update a user by the username in the request
