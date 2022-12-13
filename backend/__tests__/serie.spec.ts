@@ -1,12 +1,15 @@
 import supertest from 'supertest';
 import {app} from '../src/app';
 import 'mocha';
+import { Serie } from '../src/models/serie';
 
 /**
  * Testing método post
  */
-
 describe('API SERIE succes', () => {
+  before(async () => {
+    await Serie.deleteMany();
+  });
   let serie = {
     id: 2,
     name: "serie1",
@@ -22,37 +25,27 @@ describe('API SERIE succes', () => {
       await supertest(app).post('/serie').send(serie2).expect(201);
     });
     it('Should successfully get a serie2', async () => {
-      await supertest(app).get('/serie/').send(serie2).expect(201);
-      /*expect(response.body).to.include({
-        id: '5',
-        title: 'test2',
-        description: 'test serieTest2'
-      });*/
+      await supertest(app).get('/serie/').send(serie2).expect(200);
     });
-    it('Should successfully get update serie', async () => {
-      await supertest(app).patch('/serie').send({"title": "patchtest"}).expect(201);
-      //expect(response.body.title).to.equal("patchtest");
-    });
-    it('Should successfully remove serie', async () => {
-      await supertest(app).delete('/serie').send(serie2).expect(201);
-    });
+    // it('Should successfully get update serie', async () => {
+    //   await supertest(app).patch('/serie').send({"title": "patchtest"}).expect(201);
+    //   //expect(response.body.title).to.equal("patchtest");
+    // });
+    // it('Should successfully remove serie', async () => {
+    //   await supertest(app).delete('/serie').send(serie2).expect(201);
+    // });
     it('Should successfully get all series', async () => {
       await supertest(app).get('/serie').send().expect(200);
-      /*expect(response.body).to.include({
-        id: "2",
-        title: "patchtest",
-        description: "test serieTest"
-      });*/
     });
 });
 
-const serieTestError = {
-  id: 2,
-  title: "test",
-  description: "test serieTest"
-}
 
 describe('API serie errors', () => {
+  const serieTestError = {
+    id: 2,
+    title: "test",
+    description: "test serieTest"
+  };
   it('Should error at insert a new serie', async () => {
     await supertest(app).post('/serie').send(serieTestError).expect(400);
   });
