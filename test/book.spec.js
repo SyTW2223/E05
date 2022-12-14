@@ -1,7 +1,6 @@
 let supertest = require('supertest');
 let app = require('../src/server');
 let mocha = require('mocha');
-let Book = require('../src/models/book.model');
 
 
 describe('API BOOK succes', () => {

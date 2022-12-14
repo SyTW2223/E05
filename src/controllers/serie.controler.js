@@ -5,7 +5,7 @@ const serieModel = require("../models/serie.model");
 exports.create = async (req, res) => {
   //console.log('esto es create en serie.controler');
   // Create a serie
-  const newSerie = new SerieModel({
+  const newSerie = new serieModel({
     id: req.body.id,
     title: req.body.title,
     description: req.body.description,
