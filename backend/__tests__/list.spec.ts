@@ -11,7 +11,7 @@ describe('API LIST succes', () => {
     await List.deleteMany();
   });
   let list = {
-    itemsId: [1,3,4,5],
+    itemsId: [2,3,4],
     usersId: [1,3,2],
     name: "Lista2",
     listId: 2
