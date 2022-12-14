@@ -6,6 +6,7 @@ const User = mongoose.model(
   new mongoose.Schema({
     id: {
       type: Number,
+      unique: true,
       trim: true,
     },
     username: {
@@ -16,6 +17,7 @@ const User = mongoose.model(
     },
     email: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
     },

@@ -55,3 +55,5 @@ db.mongoose.connect(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`, {
     console.error("Connection error", err);
     process.exit();
 });
+
+module.exports = app;

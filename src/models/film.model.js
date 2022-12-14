@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const categorys = require("./categorys");
+const categories = require("./categories");
 // ------------------ COLECCIONES DE USUARIOS EN MONGO ------------ //
 // se puede pasar las comprobaciones al front
 const Film = mongoose.model(
@@ -7,6 +7,7 @@ const Film = mongoose.model(
   new mongoose.Schema({
     id: {
       type: Number,
+      unique: true,
       trim: true,
     },
     title: {
@@ -19,8 +20,12 @@ const Film = mongoose.model(
       required: true,
       trim: true,
     },
-    categorys: {
-      type: [categorys],
+    categories: {
+      type: [categories],
+      trim: true,
+    },
+    yearPublication: {
+      type: Number,
       trim: true,
     },
     rating: {

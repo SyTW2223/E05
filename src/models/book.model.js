@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
-const categorys = require("./categorys");
+const categories = require("./categories");
 // ------------------ COLECCIONES DE USUARIOS EN MONGO ------------ //
 // se puede pasar las comprobaciones al front
-const Serie = mongoose.model(
-  "Serie",
+const Book = mongoose.model(
+  "Book",
   new mongoose.Schema({
     id: {
       type: Number,
+      unique: true,
       trim: true,
     },
     title: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
     },
@@ -20,12 +20,8 @@ const Serie = mongoose.model(
       required: true,
       trim: true,
     },
-    seasons: {
-      type: Number,
-      trim: true,  
-    },
-    categorys: {
-      type: [categorys],
+    categories: {
+      type: [categories],
       trim: true,
     },
     rating: {
@@ -38,4 +34,4 @@ const Serie = mongoose.model(
   })
 );
 
-module.exports = Serie;
+module.exports = Book;

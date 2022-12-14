@@ -12,6 +12,7 @@ const List = mongoose.model(
     },
     id: {
       type: Number,
+      unique: true,
       trim: true,
     },
     items: {

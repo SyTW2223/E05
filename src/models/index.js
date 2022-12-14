@@ -13,7 +13,7 @@ db.DB = dbConfig.DB;
 db.user = require("./user.model");
 db.ROLES = ["user", "admin"];
 
-db.book = require("./book.model.js")(mongoose);
+db.book = require("./book.model")(mongoose);
 db.film = require("./film.model")(mongoose);
 db.serie = require("./serie.model")(mongoose);
 db.list = require("./list.model")(mongoose);

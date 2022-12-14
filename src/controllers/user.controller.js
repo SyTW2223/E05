@@ -18,7 +18,7 @@ exports.create = async (req, res) => {
 
   // Save user in the database
   newUser.save().then(data => {
-      res.send(data);
+      res.status(201).send(data);
     }).catch(err => {
       res.status(500).send({
         message:
@@ -34,7 +34,7 @@ exports.create = async (req, res) => {
 
 // Update a user by the username in the request
 exports.update = (req, res) => {
-  console.log('esto es update en user.controler');
+  //console.log('esto es update en user.controler');
   // si no hay datos nuevos no podra actualizarse
   if (Object.keys(req.body).length === 0) {
     res.status(400).send({
@@ -62,7 +62,7 @@ exports.update = (req, res) => {
 
 // Retrieve all elements from the database.
 exports.findAll = (req, res) => {
-  console.log('esto es findAll en user.controler');
+  //console.log('esto es findAll en user.controler');
   
   userModel.find()
     .then(data => {
@@ -77,7 +77,7 @@ exports.findAll = (req, res) => {
 
 // Find a element with an username
 exports.findOne = (req, res) => {
-  console.log('esto es findOne en user.controler');
+  //console.log('esto es findOne en user.controler');
   const username = req.params.username;
   userModel.findOne({'username': username}).then(data => {
       if (!data)
@@ -91,7 +91,7 @@ exports.findOne = (req, res) => {
 
 // Delete a user with the specified id in the request
 exports.delete = (req, res) => {
-  console.log('esto es delete en user.controler');
+  //console.log('esto es delete en user.controler');
   
   const username = req.params.username;
 
@@ -116,7 +116,7 @@ exports.delete = (req, res) => {
 
 // Delete all users from the database.
 exports.deleteAll = (req, res) => {
-  console.log('esto es deleteAll en user.controler');
+  //console.log('esto es deleteAll en user.controler');
   
   userModel.deleteMany({})
     .then(data => {

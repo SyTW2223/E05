@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha",
+    "test2": "node ./node_modules/mocha/bin/mocha",
+    "test": "mocha --exit --timeout 20000",
     "start": "tsc-watch --onSuccess \"node dist/server.js\""
   },
   "keywords": [],
