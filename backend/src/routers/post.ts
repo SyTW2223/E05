@@ -5,6 +5,11 @@ import {Serie} from '../models/serie';
 import {User} from '../models/user';
 import {List} from '../models/list';
 
+import authenticateToken from '../middlewares/authJwt';
+
+const jwt = require('jsonwebtoken');
+const cript = require('bcryptjs');
+
 export const postRouter = express.Router();
 
 /**
@@ -56,8 +61,15 @@ postRouter.post('/serie', async (req, res) => {
  * Creacion de un usuario
  */
 postRouter.post('/user', async (req, res) => {
-  const user = new User(req.body);
-
+  let passwd = await cript.hash(req.body.password, 10);
+  const user = new User({
+    username: req.body.username,
+    name: req.body.name,
+    password: passwd,
+    email: req.body.email,
+    dob: req.body.dob,
+    list: req.body.lists
+  });
   try {
     await user.save();
     return res.status(201).send(user);
@@ -66,6 +78,46 @@ postRouter.post('/user', async (req, res) => {
   }
 });
 
+
+/**
+ * Comprobar si un usuario está registrado
+ */
+ postRouter.post('/login', (req, res) => {
+  if (!req.body.username) {
+    // Esta parte funciona
+    res.status(400).send({
+      error: 'Se debe añadir el nombre de usuario',
+    })
+  } else {
+    const filter = { username: req.body.username.toString() };
+    User.findOne(filter).then(async (user) => {
+      const pass = req.body.password.toString();
+      if (user === null) {
+        // Esto funciona
+        res.status(404).send("No se encuentra al usuario");
+      } else {
+        let compare = await cript.compare(pass, user.password);
+        
+        if (compare) {
+          const name = user.username;
+          const usuario = { username: name };
+          const accessToken = jwt.sign(usuario, process.env.TOKEN_SECRET);
+
+          // El programa llega bien hasta aquí pero una vez llega no crea el token o no lo envia
+          // y no se porque 
+          res.send({
+            "Token de acceso": accessToken
+          });
+        } else {
+          // Esta parte funciona
+          res.status(404).send("Constraseña incorrecta");
+        }
+      }
+    }).catch(() => {
+      res.status(500).send();
+    });
+  }
+});
 
 /**
  * Creacion de una lista en la base de datos

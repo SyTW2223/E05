@@ -5,6 +5,8 @@ import {Serie} from '../models/serie';
 import {User} from '../models/user';
 import {List} from '../models/list';
 
+import authenticateToken from '../middlewares/authJwt';
+
 
 export const deleteRouter = express.Router();
 
