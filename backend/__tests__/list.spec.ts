@@ -29,13 +29,14 @@ describe('API LIST succes', () => {
   it('Should successfully get a list2', async () => {
     await supertest(app).get('/list').send(list2).expect(200);  
   });
-  // it('Should successfully get update list', async () => {
-  //   await supertest(app).patch('/list').send({"name": "patchtest"}).expect(201);
-  // //expect(response.body.name).to.equal("patchtest");
-  // });
-  // it('Should successfully remove list', async () => {
-  //   await supertest(app).delete('/list/').send(list).expect(201);
-  // });
+  it('Should successfully get update a list', async () => {
+    await supertest(app).patch('/list?name=' + list.name).send({"usersId": [1,2,6,7]}).expect(200);
+    await supertest(app).patch('/list?name=' + list.name).send({"itemsId": [3,6,7,8]}).expect(200);
+    await supertest(app).patch('/list?name=' + list.name).send({"name": "Lista Tests"}).expect(200);
+  });
+  it('Should successfully remove a list2', async () => {
+    await supertest(app).delete('/list?name=' + list2.name).send().expect(200);
+  });
   it('Should successfully get all lists', async () => {
     await supertest(app).get('/list').send().expect(200);
   });

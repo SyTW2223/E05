@@ -25,13 +25,14 @@ describe('API FILM succes', () => {
   it('Should successfully get a film2', async () => {
     await supertest(app).get('/film').send(film2).expect(200);
   });
-  // it('Should successfully get update film', async () => {
-  //   await supertest(app).patch('/film').send({"title": "patchtest"}).expect(201);
-  //   //expect(response.body.title).to.equal("patchtest");
-  // });
-  // it('Should successfully remove film', async () => {
-  //   await supertest(app).delete('/film').send(film2).expect(201);
-  // });
+  it('Should successfully get update a film', async () => {
+    await supertest(app).patch('/film?name=' + film.name).send({"rating": 3}).expect(200);
+    await supertest(app).patch('/film?name=' + film.name).send({"description": "Modify description tests"}).expect(200);
+    await supertest(app).patch('/film?name=' + film.name).send({"yearPublication": 2022}).expect(200);
+  });
+  it('Should successfully remove a film2', async () => {
+    await supertest(app).delete('/film?name=' + film2.name).send().expect(200);
+  });
   it('Should successfully get all films', async () => {
     await supertest(app).get('/film').send().expect(200);
   });
