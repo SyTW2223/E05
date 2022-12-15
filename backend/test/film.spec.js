@@ -1,7 +1,6 @@
 let supertest = require('supertest');
 let app = require('../src/server');
 let mocha = require('mocha');
-let Film = require('../src/models/film.model');
 
 
 describe('API FILM succes', () => {

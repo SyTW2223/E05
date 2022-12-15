@@ -40,8 +40,7 @@ describe('API LIST succes', () => {
 
 describe('API list errors', () => {
   const listTestError = {
-    name: "test",
-    description: "test listTest"
+    items: [1,6,4],
   };
   it('Should error at insert a new list', async () => {
     await supertest(app).post('/list').send(listTestError).expect(500);
