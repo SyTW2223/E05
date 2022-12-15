@@ -1,0 +1,36 @@
+{
+  "name": "backend-mystoryworld",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test2": "node ./node_modules/mocha/bin/mocha",
+    "test": "mocha --exit --timeout 20000",
+    "start": "tsc-watch --onSuccess \"node dist/server.js\""
+  },
+  "keywords": [],
+  "author": "G05",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "@types/mongodb": "^3.6.20",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
+    "chai": "^4.3.7",
+    "eslint": "^8.28.0",
+    "mocha": "^10.1.0",
+    "mongoose": "^6.7.5",
+    "supertest": "^6.3.3",
+    "tsc-watch": "^5.0.3",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.7.3"
+  }
+}
