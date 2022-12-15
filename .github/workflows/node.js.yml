@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  DB_URL: 'mongodb+srv://my-story-app:storyapp@cluster0.f1buatx.mongodb.net/SyTW'
+
 jobs:
   tests:
 
