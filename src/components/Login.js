@@ -50,6 +50,7 @@ export const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button 
+            type="submit"
             sx={{
               marginTop: 2,
               borderRadius: 3,

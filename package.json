@@ -1,5 +1,6 @@
 {
   "name": "frontend",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,8 +9,6 @@
     "@mui/material": "^5.10.16",
     "@reduxjs/toolkit": "^1.9.0",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^29.2.3",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
@@ -57,7 +56,11 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.19.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/jsonwebtoken": "^8.5.9",
+    "enzyme": "^3.11.0",
     "jest": "^27.5.1",
     "redux-devtools-extension": "^2.13.9"
   }
