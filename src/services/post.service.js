@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API_URL = "http://localhost:8080/";
+const API_URL = "http://localhost:3000/";
 
 
 export const getPost = (name, username, email, password) => {
