@@ -21,13 +21,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with: 
-        ref: 'main'
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - uses: actions/setup-node@v2
       with:
-        working-directory: backend
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: ./backend/package-lock.json
     - run: npm install
     - run: npm test
