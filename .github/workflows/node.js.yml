@@ -11,6 +11,7 @@ on:
 
 env:
   DB_URL: 'mongodb+srv://my-story-app:storyapp@cluster0.f1buatx.mongodb.net/SyTW'
+  URL: 'localhost'
 
 jobs:
   tests:
