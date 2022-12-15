@@ -8,7 +8,7 @@ app.use(cors({
   }));
 
 // parse requests of content-type - application/json
-//app.use(express.json());
+// app.use(express.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -37,7 +37,8 @@ app.get("/", (_, res) => {
 
 // set port, listen for requests, puerto del backend
 const PORT = process.env.PORT || 3000;
-var server = app.listen(PORT, '172.16.126.55', () => {
+const URL = process.env.URL || '172.16.126.55';
+var server = app.listen(PORT, URL, () => {
     var host = server.address().address;
     var port = server.address().port;
     console.log(`Server is listening at http://${host}:${port}.`);
@@ -45,12 +46,13 @@ var server = app.listen(PORT, '172.16.126.55', () => {
 
 
 // conexion con mongoose
-db.mongoose.connect(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`, {
+const DB_URL = process.env.DB_URL || `mongodb://${db.HOST}:${db.PORT}/${db.DB}`;
+db.mongoose.connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connect to MongoDB. ");
-    console.log(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`);
+    // console.log(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`);
 }).catch(err => {
     console.error("Connection error", err);
     process.exit();
