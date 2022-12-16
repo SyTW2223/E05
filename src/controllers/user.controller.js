@@ -1,40 +1,87 @@
 const { createImportTypeNode } = require("typescript");
 const userModel = require("../models/user.model");
-
 const jwt = require('jsonwebtoken');
 const crypt = require('bcryptjs');
+const secret = require('../config/authJwt');
 
-// Create and Save a new user (register)
+// Create and Save a new user (for REGISTER)
 exports.create = async (req, res) => {
   console.log('esto es create en user.controler');
   // Create a user
+  
+  const { error } = userModel.validate(req.body);
+  if (error) {
+    return res.status(400).json(
+      {error: error.details[0].message}
+    );
+  }
+  // check email exist and send error
+  const isEmailExist = await userModel.findOne({"email": req.body.email});
+  if (isEmailExist) {
+    return res.status(400).json({error: "Email already exist."});
+  };
+
+  // password hash
+  const salt = await crypt.genSalt(10);
+  const password = await crypt.hash(req.body.password, salt);
+
+  // create new user
   const newUser = new userModel({
     id: req.body.id,
     username: req.body.username,
     email: req.body.email,
-    password: crypt.hashSync(req.body.password, 10),
+    password: password,
     roles: req.body.roles,
   });
 
   // Save user in the database
   newUser.save().then(data => {
-      res.status(201).send(data);
+      res.status(201).send({ message: "Succesfull created user." });
     }).catch(err => {
       res.status(500).send({
-        message:
-          "Error al crear el elemento."
+        message: "Error created user."
       });
     });
 };
 
+// Login user
+exports.login = async (req, res) => {
+  console.log('esto es login en user.controler');
+  // validations
+  const { error } = userModel.validate(req.body);
+  if (error) return res.status(400).json({ error: error.details[0].message });
 
-// login
+  // find a username
+  const user = await userModel.findOne({ username: req.body.username });
+  if (!user) return res.status(400).json({ error: 'User not found.' });
 
+  // if user found, check password and send tokenJWT
+  crypt.compare(req.body.password, user.password, function(err, response) {
+    if (err){
+      console.log(err.message);
+    }
+    if (response) {
+      // Send JWT
+      // create token
+      const token = jwt.sign({
+        name: user.username,
+        id: user._id
+      }, secret.secret);
+      res.header('auth-token', token).json({
+        error: null,
+        data: {token}
+      });
 
+      // res.status(200).send(user);
+    } else {
+      res.status(400).send({ error: "Invalid password." });
+    }
+  });
+};
 
 // Update a user by the username in the request
 exports.update = (req, res) => {
-  //console.log('esto es update en user.controler');
+  console.log('esto es update en user.controler');
   // si no hay datos nuevos no podra actualizarse
   if (Object.keys(req.body).length === 0) {
     res.status(400).send({
@@ -43,14 +90,14 @@ exports.update = (req, res) => {
   }
   
   const username = req.params.username;
-  // busca el libro original para actualizarlo
+  // busca el usuario original para actualizarlo
   userModel.findOneAndUpdate({'username': username}, req.body, { new: true })
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update user with username=${username}. Maybe user was not found!`
         });
-      } else res.send({ message: "user was updated successfully." });
+      } else res.send({ message: "User was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
@@ -62,22 +109,21 @@ exports.update = (req, res) => {
 
 // Retrieve all elements from the database.
 exports.findAll = (req, res) => {
-  //console.log('esto es findAll en user.controler');
-  
+  console.log('esto es findAll en user.controler');
   userModel.find()
     .then(data => {
       res.send(data);
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al buscar los elementos."
+          err.message || "Error found user."
       });
     });
 };
 
 // Find a element with an username
-exports.findOne = (req, res) => {
-  //console.log('esto es findOne en user.controler');
+exports.findOne = async (req, res) => {
+  console.log('esto es findOne en user.controler');
   const username = req.params.username;
   userModel.findOne({'username': username}).then(data => {
       if (!data)
@@ -91,7 +137,7 @@ exports.findOne = (req, res) => {
 
 // Delete a user with the specified id in the request
 exports.delete = (req, res) => {
-  //console.log('esto es delete en user.controler');
+  console.log('esto es delete en user.controler');
   
   const username = req.params.username;
 
@@ -103,7 +149,7 @@ exports.delete = (req, res) => {
         });
       } else {
         res.send({
-          message: "user was deleted successfully!"
+          message: "User was deleted successfully!"
         });
       }
     })
@@ -116,7 +162,7 @@ exports.delete = (req, res) => {
 
 // Delete all users from the database.
 exports.deleteAll = (req, res) => {
-  //console.log('esto es deleteAll en user.controler');
+  console.log('esto es deleteAll en user.controler');
   
   userModel.deleteMany({})
     .then(data => {

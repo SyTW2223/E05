@@ -18,20 +18,14 @@ const User = mongoose.model(
     email: {
       type: String,
       unique: true,
-      required: true,
       trim: true,
     },
     password: {
       type: String,
       required: true,
       trim: true,
+      min: 6,
     },
-    roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role"
-      }
-    ]
   })
 );
 
