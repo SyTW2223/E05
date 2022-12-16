@@ -35,7 +35,7 @@ exports.create = async (req, res) => {
   });
 
   // Save user in the database
-  newUser.save().then(data => {
+  newUser.save().then(() => {
       res.status(201).send({ message: "Succesfull created user." });
     }).catch(err => {
       res.status(500).send({
@@ -69,10 +69,9 @@ exports.login = async (req, res) => {
       }, secret.secret);
       res.header('auth-token', token).json({
         error: null,
-        data: {token}
+        data: {token, user}
       });
-
-      // res.status(200).send(user);
+      // return console.log(token, user);
     } else {
       res.status(400).send({ error: "Invalid password." });
     }
