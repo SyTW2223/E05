@@ -3,6 +3,11 @@
 - Ainoa Iglesias Dasilva (alu0101164403@ull.edu.es)
 - Karina Kalwani Israni (alu0101109046@ull.edu.es)  
 
+
+[![Tests](https://github.com/SyTW2223/E05/actions/workflows/node.js.yml/badge.svg)](https://github.com/SyTW2223/E05/actions/workflows/node.js.yml)
+
+[![Sonar-Cloud](https://github.com/SyTW2223/E05/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/SyTW2223/E05/actions/workflows/sonarcloud.yml)
+
 ## Introducción
 Nuestra aplicación consiste en un sitio web que permite a los usuarios buscar
 unos elementos en una base de datos ya existente y que se mantiene
