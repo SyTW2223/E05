@@ -5,6 +5,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import { register } from '../../actions/auth.action';
 
 export const Register = () => {
+    const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,6 +31,15 @@ export const Register = () => {
             <Typography variant="h4" padding={3}>
                 Registro
             </Typography>
+            <TextField 
+                label="Fullname"
+                type={'text'}
+                value={name}
+                variant="outlined"
+                margin="dense"
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+            />
             <TextField 
                 label="Username"
                 type={'text'}
@@ -66,7 +76,7 @@ export const Register = () => {
                 backgroundColor: 'primary.buttonReg'
                 }}
                 onClick={() => {
-                    dispatch(register(username, email, password)).then(data => {
+                    dispatch(register(name, username, email, password)).then(data => {
                         console.log(data);
                         }).catch(() => {
                             console.log('Error, no se ha podido registrar el usuario.');
