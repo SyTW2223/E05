@@ -6,32 +6,24 @@ const User = mongoose.model(
   new mongoose.Schema({
     id: {
       type: Number,
-      unique: true,
       trim: true,
     },
     username: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
     },
     email: {
       type: String,
       unique: true,
-      required: true,
       trim: true,
     },
     password: {
       type: String,
       required: true,
       trim: true,
+      min: 6,
     },
-    roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role"
-      }
-    ]
   })
 );
 

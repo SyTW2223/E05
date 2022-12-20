@@ -1,36 +1,93 @@
 const { createImportTypeNode } = require("typescript");
 const userModel = require("../models/user.model");
-
 const jwt = require('jsonwebtoken');
 const crypt = require('bcryptjs');
+const secret = require('../config/authJwt');
 
-// Create and Save a new user (register)
+// Create and Save a new user (for REGISTER)
 exports.create = async (req, res) => {
-  console.log('esto es create en user.controler');
+  //console.log('esto es create en user.controler');
   // Create a user
+  
+  const allowedCreated = ['id', 'username', 'email', 'password'];
+  const actualCreated = Object.keys(req.body);
+  const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
+
+  if (!isValidCreate) {
+    return res.status(400).send({
+      error: 'Create is not permitted. Check the parameters. [id, username, email, password]',
+    });
+  }
+  // check email exist and send error
+  const isEmailExist = await userModel.findOne({"email": req.body.email});
+  if (isEmailExist) {
+    return res.status(400).json({error: "Email already exist."});
+  };
+
+  // password hash
+  const salt = await crypt.genSalt(10);
+  const password = await crypt.hash(req.body.password, salt);
+
+  // create new user
   const newUser = new userModel({
     id: req.body.id,
     username: req.body.username,
     email: req.body.email,
-    password: crypt.hashSync(req.body.password, 10),
+    password: password,
     roles: req.body.roles,
   });
 
   // Save user in the database
-  newUser.save().then(data => {
-      res.status(201).send(data);
+  newUser.save().then(() => {
+      res.status(201).send({ message: "Succesfull created user." });
     }).catch(err => {
       res.status(500).send({
-        message:
-          "Error al crear el elemento."
+        message: 
+          err.message || "Error created user."
       });
     });
 };
 
+// Login user
+exports.login = async (req, res) => {
+  //console.log('esto es login en user.controler');
+  // validations
+  const allowedLogin = ['username', 'password'];
+  const actualLogin = Object.keys(req.body);
+  const isValidLogin = actualLogin.every((login) => allowedLogin.includes(login));
 
-// login
+  if (!isValidLogin) {
+    return res.status(400).send({
+      error: 'Login is not permited. Check the parameters. [username, password]',
+    });
+  }
 
+  // find a username
+  const user = await userModel.findOne({ username: req.body.username });
+  if (!user) return res.status(400).json({ error: 'User not found.' });
 
+  // if user found, check password and send tokenJWT
+  crypt.compare(req.body.password, user.password, function(err, response) {
+    if (err){
+      console.log(err.message);
+    }
+    if (response) {
+      // Send JWT
+      // create token
+      const token = jwt.sign({
+        name: user.username,
+        id: user._id
+      }, secret.secret);
+      res.status(200).header('auth-token', token).json({
+        error: null,
+        data: {token, user}
+      });
+      // return console.log(token, user);
+    } else {
+      res.status(400).send({ error: "Invalid password." });
+    }
+  });
+};
 
 // Update a user by the username in the request
 exports.update = (req, res) => {
@@ -41,20 +98,30 @@ exports.update = (req, res) => {
       message: "Data to update can not be empty!"
     });
   }
+  const allowedUpdates = ['username', 'email', 'password'];
+  const actualUpdates = Object.keys(req.body);
+  const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
+
+  if (!isValidUpdate) {
+    return res.status(400).send({
+      error: 'Update is not permitted. Check the parameters.',
+    });
+  }
   
   const username = req.params.username;
-  // busca el libro original para actualizarlo
+  // busca el usuario original para actualizarlo
   userModel.findOneAndUpdate({'username': username}, req.body, { new: true })
     .then(data => {
       if (!data) {
         res.status(404).send({
           message: `Cannot update user with username=${username}. Maybe user was not found!`
         });
-      } else res.send({ message: "user was updated successfully." });
+      } else res.send({ message: "User was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating user with username=" + username
+        message: 
+          err.message || "Error updating user with username=" + username
       });
     });
 };
@@ -63,28 +130,29 @@ exports.update = (req, res) => {
 // Retrieve all elements from the database.
 exports.findAll = (req, res) => {
   //console.log('esto es findAll en user.controler');
-  
   userModel.find()
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al buscar los elementos."
+          err.message || "Error found user."
       });
     });
 };
 
 // Find a element with an username
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   //console.log('esto es findOne en user.controler');
   const username = req.params.username;
   userModel.findOne({'username': username}).then(data => {
       if (!data)
         res.status(404).send({ message: "Not found user with username " + username });
-      else res.send(data);
+      else res.status(200).send(data);
     }).catch(err => {
-      res.status(500).send({ message: "Unknown error when searching for " + username });
+      res.status(500).send({ message: 
+        err.message || "Unknown error when searching for " + username
+      });
     });
 };
 
@@ -102,14 +170,15 @@ exports.delete = (req, res) => {
           message: `Cannot delete user with username=${username}. Maybe user was not found!`
         });
       } else {
-        res.send({
-          message: "user was deleted successfully!"
+        res.status(200).send({
+          message: "User was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete user with username=" + username
+        message: 
+          err.message || "Could not delete user with username=" + username
       });
     });
 };
@@ -120,7 +189,7 @@ exports.deleteAll = (req, res) => {
   
   userModel.deleteMany({})
     .then(data => {
-      res.send({
+      res.status(200).send({
         message: `${data.deletedCount} users were deleted successfully!`
       });
     })

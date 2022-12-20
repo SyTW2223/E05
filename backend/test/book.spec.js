@@ -5,12 +5,12 @@ let mocha = require('mocha');
 
 describe('API BOOK succes', () => {
   let book = {
-    id: 2,
+    id: 0,
     title: "book1",
     description: "test book1"
   };
   let book2 = {
-    id: 5,
+    id: 1,
     title: "book2",
     description: "test book2"
   };
@@ -20,7 +20,7 @@ describe('API BOOK succes', () => {
   });
 
   it('Should successfully get a book2', async () => {
-    await supertest(app).get('/book?title=' + book.title).send().expect(200);
+    await supertest(app).get(`/book/${book2.title}`).send().expect(200);
   });
   it('Should successfully get all books', async () => {
     await supertest(app).get('/book').send().expect(200);
@@ -47,16 +47,16 @@ describe('API BOOK errors', () => {
     id: 2,
     title: "test2",
   };
-  it('Should error at insert a new book with wrong parameters.', async () => {
+  it('Should error at insert a new book because missing parameters.', async () => {
     await supertest(app).post('/book').send(bookParamError).expect(500);
   });
   it('Should error with get when path is wrong.', async () => {
     await supertest(app).get('/hola').send().expect(404);
   });
-  it('Should error get update book.', async () => {
+  it('Should error get update book because worng parameter.', async () => {
     await supertest(app).patch(`/book/${bookTestError.title}`).send({tittle: "patchtest"}).expect(400);
   });
   it('Should error remove one book beacuse not exist.', async () => {
-    await supertest(app).delete(`/book/${bookParamError.title}`).send().expect(404);
+    await supertest(app).delete(`/book/notexist99565`).send().expect(404);
   });
 });

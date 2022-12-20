@@ -1,16 +1,17 @@
 let supertest = require('supertest');
 let app = require('../src/server');
 let mocha = require('mocha');
+let Film = require('../src/models/film.model');
 
 
 describe('API FILM succes', () => {
   let film = {
-    id: 2,
+    id: 0,
     title: "film1",
     description: "test film1"
   };
   let film2 = {
-    id: 5,
+    id: 1,
     title: "film2",
     description: "test film2"
   };
@@ -41,8 +42,8 @@ describe('API film errors', () => {
     tittle: "test",
     description: "test filmTest"
   };
-  it('Should error at insert a new film', async () => {
-    await supertest(app).post('/film').send(filmTestError).expect(500);
+  it('Should error at insert a new film for wrong parameters', async () => {
+    await supertest(app).post('/film').send(filmTestError).expect(400);
   });
   it('Should error get update film', async () => {
     await supertest(app).patch(`/film/${filmTestError.title}`).send({"tittle": "iiiih"}).expect(400);
