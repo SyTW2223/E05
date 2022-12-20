@@ -10,7 +10,7 @@ exports.create = async (req, res) => {
 
   if (!isValidCreate) {
     return res.status(400).send({
-      error: 'Update is not permitted. Check the parameters.',
+      error: 'Post is not permitted. Check the parameters.',
     });
   }
   // Create a serie

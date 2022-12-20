@@ -6,14 +6,17 @@ const secret = require('../config/authJwt');
 
 // Create and Save a new user (for REGISTER)
 exports.create = async (req, res) => {
-  console.log('esto es create en user.controler');
+  //console.log('esto es create en user.controler');
   // Create a user
   
-  const { error } = userModel.validate(req.body);
-  if (error) {
-    return res.status(400).json(
-      {error: error.details[0].message}
-    );
+  const allowedCreated = ['id', 'username', 'email', 'password'];
+  const actualCreated = Object.keys(req.body);
+  const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
+
+  if (!isValidCreate) {
+    return res.status(400).send({
+      error: 'Create is not permitted. Check the parameters. [id, username, email, password]',
+    });
   }
   // check email exist and send error
   const isEmailExist = await userModel.findOne({"email": req.body.email});
@@ -39,17 +42,25 @@ exports.create = async (req, res) => {
       res.status(201).send({ message: "Succesfull created user." });
     }).catch(err => {
       res.status(500).send({
-        message: "Error created user."
+        message: 
+          err.message || "Error created user."
       });
     });
 };
 
 // Login user
 exports.login = async (req, res) => {
-  console.log('esto es login en user.controler');
+  //console.log('esto es login en user.controler');
   // validations
-  const { error } = userModel.validate(req.body);
-  if (error) return res.status(400).json({ error: error.details[0].message });
+  const allowedLogin = ['username', 'password'];
+  const actualLogin = Object.keys(req.body);
+  const isValidLogin = actualLogin.every((login) => allowedLogin.includes(login));
+
+  if (!isValidLogin) {
+    return res.status(400).send({
+      error: 'Login is not permited. Check the parameters. [username, password]',
+    });
+  }
 
   // find a username
   const user = await userModel.findOne({ username: req.body.username });
@@ -67,7 +78,7 @@ exports.login = async (req, res) => {
         name: user.username,
         id: user._id
       }, secret.secret);
-      res.header('auth-token', token).json({
+      res.status(200).header('auth-token', token).json({
         error: null,
         data: {token, user}
       });
@@ -80,11 +91,20 @@ exports.login = async (req, res) => {
 
 // Update a user by the username in the request
 exports.update = (req, res) => {
-  console.log('esto es update en user.controler');
+  //console.log('esto es update en user.controler');
   // si no hay datos nuevos no podra actualizarse
   if (Object.keys(req.body).length === 0) {
     res.status(400).send({
       message: "Data to update can not be empty!"
+    });
+  }
+  const allowedUpdates = ['username', 'email', 'password'];
+  const actualUpdates = Object.keys(req.body);
+  const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
+
+  if (!isValidUpdate) {
+    return res.status(400).send({
+      error: 'Update is not permitted. Check the parameters.',
     });
   }
   
@@ -100,7 +120,8 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating user with username=" + username
+        message: 
+          err.message || "Error updating user with username=" + username
       });
     });
 };
@@ -108,10 +129,10 @@ exports.update = (req, res) => {
 
 // Retrieve all elements from the database.
 exports.findAll = (req, res) => {
-  console.log('esto es findAll en user.controler');
+  //console.log('esto es findAll en user.controler');
   userModel.find()
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     }).catch(err => {
       res.status(500).send({
         message:
@@ -122,21 +143,23 @@ exports.findAll = (req, res) => {
 
 // Find a element with an username
 exports.findOne = async (req, res) => {
-  console.log('esto es findOne en user.controler');
+  //console.log('esto es findOne en user.controler');
   const username = req.params.username;
   userModel.findOne({'username': username}).then(data => {
       if (!data)
         res.status(404).send({ message: "Not found user with username " + username });
-      else res.send(data);
+      else res.status(200).send(data);
     }).catch(err => {
-      res.status(500).send({ message: "Unknown error when searching for " + username });
+      res.status(500).send({ message: 
+        err.message || "Unknown error when searching for " + username
+      });
     });
 };
 
 
 // Delete a user with the specified id in the request
 exports.delete = (req, res) => {
-  console.log('esto es delete en user.controler');
+  //console.log('esto es delete en user.controler');
   
   const username = req.params.username;
 
@@ -147,25 +170,26 @@ exports.delete = (req, res) => {
           message: `Cannot delete user with username=${username}. Maybe user was not found!`
         });
       } else {
-        res.send({
+        res.status(200).send({
           message: "User was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete user with username=" + username
+        message: 
+          err.message || "Could not delete user with username=" + username
       });
     });
 };
 
 // Delete all users from the database.
 exports.deleteAll = (req, res) => {
-  console.log('esto es deleteAll en user.controler');
+  //console.log('esto es deleteAll en user.controler');
   
   userModel.deleteMany({})
     .then(data => {
-      res.send({
+      res.status(200).send({
         message: `${data.deletedCount} users were deleted successfully!`
       });
     })

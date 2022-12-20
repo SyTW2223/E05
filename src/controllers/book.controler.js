@@ -10,7 +10,7 @@ exports.create = async (req, res) => {
 
   if (!isValidCreate) {
     return res.status(400).send({
-      error: 'Update is not permitted. Check the parameters.',
+      error: 'Update is not permitted. Check the parameters. [id, title, description, categories, rating]',
     });
   }
   // Create a book

@@ -6,13 +6,10 @@ const User = mongoose.model(
   new mongoose.Schema({
     id: {
       type: Number,
-      require: true,
-      unique: true,
       trim: true,
     },
     username: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
     },
