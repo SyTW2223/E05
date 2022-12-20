@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import http from "../../http-common";
 
 
-function BookGetOne() {
+function BookGet() {
   const [isLoading, setLoading] = useState(true);
   const [respuestaBack, setData] = useState([]); 
 
@@ -55,4 +55,4 @@ function BookGetOne() {
 }
 
 
-export default BookGetOne;
+export default BookGet;

@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
 // -------- COMPONENTS ----------- //
 import { Login } from './components/login/login.component';
 import { Register } from './components/register/register.component';
-import BookGetOne from "./components/book/book-getOne.component";
+import BookGet from "./components/book/book-get.component";
 // ------------------------------- //
 
 
@@ -37,12 +37,11 @@ function App() {
             <Route path="/" element = {<Login />}/>
             <Route path="/login" element = {<Login />}/>
             <Route path="/register" element = {<Register />}/>
-            <Route path="/book/:title" element = {<BookGetOne />}/>
+            <Route path="/book/" element = {<BookGet />}/>
           </Routes>
         </Router>
     </ThemeProvider>
   )
 }
-
 
 export default App;
