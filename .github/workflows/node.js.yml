@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 env:
-  DB_URL: 'mongodb+srv://my-story-app:storyapp@cluster0.f1buatx.mongodb.net/SyTW'
+  DB_URL: 'mongodb+srv://admin:admin@cluster0.gunxbd0.mongodb.net/test'
   URL: 'localhost'
 
 jobs:
