@@ -4,12 +4,21 @@ const bookModel = require("../models/book.model");
 // Create and Save a new book
 exports.create = async (req, res) => {
   //console.log('esto es create en book.controler');
+  const allowedCreated = ['description', 'rating', 'id', 'categories', 'title'];
+  const actualCreated = Object.keys(req.body);
+  const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
+
+  if (!isValidCreate) {
+    return res.status(400).send({
+      error: 'Update is not permitted. Check the parameters.',
+    });
+  }
   // Create a book
   const newBook = new bookModel({
     id: req.body.id,
     title: req.body.title,
     description: req.body.description,
-    categorys: req.body.categorys,
+    categories: req.body.categories,
     rating: req.body.rating,
   });
   
@@ -19,7 +28,7 @@ exports.create = async (req, res) => {
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al crear el elemento."
+          err.message || "Error created book."
       });
     });
 };
@@ -55,7 +64,8 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating book with title=" + title
+        message:
+          err.message || "Error updating book with title=" + title
       });
     });
 };
@@ -67,11 +77,11 @@ exports.findAll = (req, res) => {
   
   bookModel.find()
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al buscar los elementos."
+          err.message || "Error found book."
       });
     });
 };
@@ -83,9 +93,12 @@ exports.findOne = (req, res) => {
   bookModel.findOne({'title': title}).then(data => {
       if (!data)
         res.status(404).send({ message: "Not found book with title " + title });
-      else res.send(data);
+      else res.status(200).send(data);
     }).catch(err => {
-      res.status(500).send({ message: "Unknown error when searching for " + title });
+      res.status(500).send({
+        message:
+          err.message || "Unknown error when searching for " + title
+      });
     });
 };
 
@@ -103,8 +116,8 @@ exports.delete = (req, res) => {
           message: `Cannot delete book with title=${title}. Maybe book was not found!`
         });
       } else {
-        res.send({
-          message: "book was deleted successfully!"
+        res.status(200).send({
+          message: "Book was deleted successfully!"
         });
       }
     })
@@ -121,7 +134,7 @@ exports.deleteAll = (req, res) => {
   
   bookModel.deleteMany({})
     .then(data => {
-      res.send({
+      res.status(200).send({
         message: `${data.deletedCount} books were deleted successfully!`
       });
     })

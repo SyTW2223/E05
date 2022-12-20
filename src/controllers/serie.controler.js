@@ -4,6 +4,15 @@ const serieModel = require("../models/serie.model");
 // Create and Save a new serie
 exports.create = async (req, res) => {
   //console.log('esto es create en serie.controler');
+  const allowedCreated = ['description', 'rating', 'id', 'categories', 'title', 'seasons'];
+  const actualCreated = Object.keys(req.body);
+  const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
+
+  if (!isValidCreate) {
+    return res.status(400).send({
+      error: 'Update is not permitted. Check the parameters.',
+    });
+  }
   // Create a serie
   const newSerie = new serieModel({
     id: req.body.id,
@@ -20,7 +29,7 @@ exports.create = async (req, res) => {
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al crear la serie."
+          err.message || "Error create serie."
       });
     });
 };
@@ -52,11 +61,12 @@ exports.update = (req, res) => {
         res.status(404).send({
           message: `Cannot update serie with title=${title}. Maybe serie was not found!`
         });
-      } else res.send({ message: "serie was updated successfully." });
+      } else res.status(200).send({ message: "Serie was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating serie with title=" + title
+        message: 
+          err.message || "Error updating serie with title=" + title
       });
     });
 };
@@ -68,11 +78,11 @@ exports.findAll = (req, res) => {
   
   serieModel.find()
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al buscar las series."
+          err.message || "Error found series."
       });
     });
 };
@@ -84,9 +94,11 @@ exports.findOne = (req, res) => {
   serieModel.findOne({'title': title}).then(data => {
       if (!data)
         res.status(404).send({ message: "Not found serie with title " + title });
-      else res.send(data);
+      else res.status(200).send(data);
     }).catch(err => {
-      res.status(500).send({ message: "Unknown error when searching for " + title });
+      res.status(500).send({ message: 
+        err.message || "Unknown error when searching for " + title 
+      });
     });
 };
 
@@ -104,14 +116,13 @@ exports.delete = (req, res) => {
           message: `Cannot delete serie with title=${title}. Maybe serie was not found!`
         });
       } else {
-        res.send({
-          message: "Serie was deleted successfully!"
-        });
+        res.status(200).send({message: "Serie was deleted successfully!"});
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete serie with title=" + title
+        message: 
+          err.message || "Could not delete serie with title=" + title
       });
     });
 };
@@ -122,7 +133,7 @@ exports.deleteAll = (req, res) => {
   
   serieModel.deleteMany({})
     .then(data => {
-      res.send({
+      res.status(200).send({
         message: `${data.deletedCount} series were deleted successfully!`
       });
     })

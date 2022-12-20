@@ -7,11 +7,13 @@ const Film = mongoose.model(
   new mongoose.Schema({
     id: {
       type: Number,
+      required: true,
       unique: true,
       trim: true,
     },
     title: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
     },

@@ -4,6 +4,15 @@ const listModel = require("../models/list.model");
 // Create and Save a new list
 exports.create = async (req, res) => {
   //console.log('esto es create en list.controler');
+  const allowedUpdates = ['users', 'id', 'name', 'items'];
+  const actualUpdates = Object.keys(req.body);
+  const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
+
+  if (!isValidUpdate) {
+    return res.status(400).send({
+      error: 'Update is not permitted. Check the parameters.',
+    });
+  }
   // Create a list
   const newList = new listModel({
     name: req.body.name,
@@ -18,7 +27,7 @@ exports.create = async (req, res) => {
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al crear el elemento."
+          err.message || "Error create list."
       });
     });
 };
@@ -50,11 +59,12 @@ exports.update = (req, res) => {
         res.status(404).send({
           message: `Cannot update list with name=${name}. Maybe list was not found!`
         });
-      } else res.send({ message: "list was updated successfully." });
+      } else res.status(200).send({ message: "List was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating list with name=" + name
+        message: 
+          err.message || "Error updating list with name=" + name
       });
     });
 };
@@ -66,11 +76,11 @@ exports.findAll = (req, res) => {
   
   listModel.find()
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     }).catch(err => {
       res.status(500).send({
         message:
-          err.message || "Error al buscar los elementos."
+          err.message || "Error found lists."
       });
     });
 };
@@ -82,9 +92,10 @@ exports.findOne = (req, res) => {
   listModel.findOne({'name': name}).then(data => {
       if (!data)
         res.status(404).send({ message: "Not found list with name " + name });
-      else res.send(data);
+      else res.status(200).send(data);
     }).catch(err => {
-      res.status(500).send({ message: "Unknown error when searching for " + name });
+      res.status(500).send({ message: 
+        err.message || "Unknown error when searching for " + name });
     });
 };
 
@@ -102,14 +113,15 @@ exports.delete = (req, res) => {
           message: `Cannot delete list with name=${name}. Maybe list was not found!`
         });
       } else {
-        res.send({
-          message: "list was deleted successfully!"
+        res.status(200).send({
+          message: "List was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete list with name=" + name
+        message: 
+          err.message || "Could not delete list with name=" + name
       });
     });
 };
@@ -120,7 +132,7 @@ exports.deleteAll = (req, res) => {
   
   listModel.deleteMany({})
     .then(data => {
-      res.send({
+      res.status(200).send({
         message: `${data.deletedCount} lists were deleted successfully!`
       });
     })

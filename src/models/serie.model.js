@@ -8,6 +8,7 @@ const Serie = mongoose.model(
     id: {
       type: Number,
       unique: true,
+      required: true,
       trim: true,
     },
     title: {

@@ -47,12 +47,14 @@ var server = app.listen(PORT, URL, () => {
 
 // conexion con mongoose
 const DB_URL = process.env.DB_URL || `mongodb://${db.HOST}:${db.PORT}/${db.DB}`;
+const DB_USER = process.env.DB_USER || db.USER;
+const DB_PASSWORD = process.env.DB_PASSWORD|| db.PASSWORD;
 db.mongoose.connect(DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
     console.log("Successfully connect to MongoDB. ");
-    // console.log(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`);
+    console.log(`mongodb://${db.HOST}:${db.PORT}/${db.DB}`);
 }).catch(err => {
     console.error("Connection error", err);
     process.exit();

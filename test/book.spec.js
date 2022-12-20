@@ -5,12 +5,12 @@ let mocha = require('mocha');
 
 describe('API BOOK succes', () => {
   let book = {
-    id: 2,
+    id: 0,
     title: "book1",
     description: "test book1"
   };
   let book2 = {
-    id: 5,
+    id: 1,
     title: "book2",
     description: "test book2"
   };
@@ -47,7 +47,7 @@ describe('API BOOK errors', () => {
     id: 2,
     title: "test2",
   };
-  it('Should error at insert a new book with wrong parameters.', async () => {
+  it('Should error at insert a new book because missing parameters.', async () => {
     await supertest(app).post('/book').send(bookParamError).expect(500);
   });
   it('Should error with get when path is wrong.', async () => {
