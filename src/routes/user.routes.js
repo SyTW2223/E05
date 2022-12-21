@@ -1,6 +1,6 @@
 const user = require("../controllers/user.controller");
 const router = require("express").Router();
-const verify = require("../middlewares/authJwt");
+const auth = require("../middlewares/authJwt");
 
 module.exports = app => {
   // Create a new user
@@ -15,7 +15,13 @@ module.exports = app => {
   router.post("/logout", user.logout);
 
   // Refresh token
-  router.post("/refreshToken", user.refreshToken);
+  //router.post("/refreshToken", user.refreshToken);
+  
+  // Dashboard route
+  router.get('/adminBoard', [auth.verifyToken], user.adminBoard);
+
+  // Dashboard route
+  router.get('/userBoard', [auth.verifyToken], user.userBoard);
 
   // Retrieve all user
   router.get("/", user.findAll);

@@ -4,10 +4,6 @@ const mongoose = require("mongoose");
 const User = mongoose.model(
   "User",
   new mongoose.Schema({
-    id: {
-      type: Number,
-      trim: true,
-    },
     username: {
       type: String,
       unique: true,
@@ -30,6 +26,10 @@ const User = mongoose.model(
       type: ["ADMIN" | "USER"],
       trim: true,
       default: "USER",
+    },
+    date: {
+      type: Date,
+      default: Date.now,
     }
   })
 );

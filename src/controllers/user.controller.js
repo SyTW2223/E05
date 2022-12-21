@@ -3,20 +3,16 @@ const { user: userModel, refreshToken: RefreshToken } = db;
 const jwt = require('jsonwebtoken');
 const crypt = require('bcryptjs');
 const config = require("../config/auth.config");
+const { schemaLogin:loginVal } = require('../validations/login.validation');
+const { schemaRegister:registerVal } = require('../validations/register.validation');
 
 // Create and Save a new user 
 exports.create = async (req, res) => {
   //console.log('esto es create en user.controler');
-  const allowedCreated = ['id', 'username', 'email', 'password', 'role'];
-  const actualCreated = Object.keys(req.body);
-  const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
-
-  if (!isValidCreate) {
-    return res.status(400).send({
-      error: 'Create is not permitted. Check the parameters. [id, username, email, password]',
-    });
+  const { error } = registerVal.validate(req.body);
+  if (error) {
+    return res.status(400).json({error: error.details[0].message})
   }
-
   // check email exist and send error
   const isEmailExist = await userModel.findOne({"email": req.body.email});
   if (isEmailExist) {
@@ -58,15 +54,8 @@ exports.create = async (req, res) => {
 // Login user
 exports.login = async (req, res) => {
   // validations
-  const allowedLogin = ['username', 'password'];
-  const actualLogin = Object.keys(req.body);
-  const isValidLogin = actualLogin.every((login) => allowedLogin.includes(login));
-
-  if (!isValidLogin) {
-    return res.status(400).send({
-      error: 'Login is not permited. Check the parameters. [username, password]',
-    });
-  }
+  const { error } = loginVal.validate(req.body);
+  if (error) return res.status(400).json({ error: error.details[0].message })
 
   // find a username
   const user = await userModel.findOne({ username: req.body.username });
@@ -103,6 +92,18 @@ exports.login = async (req, res) => {
 
 
 
+exports.userBoard = (req, res) => {
+  res.status(200).send("User Content.");
+};
+
+
+
+exports.adminBoard = (req, res) => {
+  res.status(200).send("Admin Content.");
+};
+
+/*
+
 // crea nuevo token al haber expirado
 exports.refreshToken = async (req, res) => {
   const requestToken = req.body.refreshToken;
@@ -134,7 +135,7 @@ exports.refreshToken = async (req, res) => {
   }
 };
 
-
+*/
 
 // exist account
 exports.logout = async (req, res) => {
