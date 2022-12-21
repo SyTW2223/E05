@@ -58,13 +58,6 @@ describe('API USER errors', () => {
     email: "test@gmail.com",
     password: "passwordError"
   };
-  const userParamError = {
-    id: 999,
-    username: "test2",
-  };
-  it('Should error at insert a new user because missing parameters.', async () => {
-    await supertest(app).post('/user').send(userParamError).expect(400);
-  });
   it('Should error register user beacuse email is already exist.', async () => {
     await supertest(app).post(`/user/register`).send(userTestError);
     await supertest(app).delete(`/user/register`).send(userTestError).expect(404);
