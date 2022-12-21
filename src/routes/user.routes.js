@@ -1,22 +1,21 @@
-/*
-  Rutas de autorizacion para los usuarios, que recursos son accesibles para cada uno
-    -> GET /api/test/all
-    -> GET /api/test/user for loggedin users (user/admin)
-    -> GET /api/test/admin for admin
-*/
+const user = require("../controllers/user.controller");
+const router = require("express").Router();
+const verify = require("../middlewares/authJwt");
+
 module.exports = app => {
-  const user = require("../controllers/user.controller");
-
-  var router = require("express").Router();
-
   // Create a new user
   router.post("/", user.create);
-
-  // Register user
-  router.post("/register", user.create);
-
   // Login user
   router.post("/login", user.login);
+
+  // Register a new user
+  router.post("/register", user.create);
+
+  // Logout user
+  router.post("/logout", user.logout);
+
+  // Refresh token
+  router.post("/refreshToken", user.refreshToken);
 
   // Retrieve all user
   router.get("/", user.findAll);

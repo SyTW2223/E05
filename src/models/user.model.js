@@ -10,11 +10,13 @@ const User = mongoose.model(
     },
     username: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
     },
     email: {
       type: String,
+      require: true,
       unique: true,
       trim: true,
     },
@@ -24,6 +26,11 @@ const User = mongoose.model(
       trim: true,
       min: 6,
     },
+    role: {
+      type: ["ADMIN" | "USER"],
+      trim: true,
+      default: "USER",
+    }
   })
 );
 

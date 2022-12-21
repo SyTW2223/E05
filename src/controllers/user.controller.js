@@ -1,15 +1,13 @@
-const { createImportTypeNode } = require("typescript");
-const userModel = require("../models/user.model");
+const db = require("../models/");
+const { user: userModel, refreshToken: RefreshToken } = db;
 const jwt = require('jsonwebtoken');
 const crypt = require('bcryptjs');
-const secret = require('../config/authJwt');
+const config = require("../config/auth.config");
 
-// Create and Save a new user (for REGISTER)
+// Create and Save a new user 
 exports.create = async (req, res) => {
   //console.log('esto es create en user.controler');
-  // Create a user
-  
-  const allowedCreated = ['id', 'username', 'email', 'password'];
+  const allowedCreated = ['id', 'username', 'email', 'password', 'role'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
@@ -18,10 +16,16 @@ exports.create = async (req, res) => {
       error: 'Create is not permitted. Check the parameters. [id, username, email, password]',
     });
   }
+
   // check email exist and send error
   const isEmailExist = await userModel.findOne({"email": req.body.email});
   if (isEmailExist) {
     return res.status(400).json({error: "Email already exist."});
+  };
+  // check email exist and send error
+  const isUsernameExist = await userModel.findOne({"username": req.body.username});
+  if (isUsernameExist) {
+    return res.status(400).json({error: "Username already exist."});
   };
 
   // password hash
@@ -34,7 +38,7 @@ exports.create = async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: password,
-    roles: req.body.roles,
+    role: req.body.role,
   });
 
   // Save user in the database
@@ -48,9 +52,11 @@ exports.create = async (req, res) => {
     });
 };
 
+
+
+
 // Login user
 exports.login = async (req, res) => {
-  //console.log('esto es login en user.controler');
   // validations
   const allowedLogin = ['username', 'password'];
   const actualLogin = Object.keys(req.body);
@@ -67,27 +73,80 @@ exports.login = async (req, res) => {
   if (!user) return res.status(400).json({ error: 'User not found.' });
 
   // if user found, check password and send tokenJWT
-  crypt.compare(req.body.password, user.password, function(err, response) {
+  crypt.compare(req.body.password, user.password, async function(err, response) {
     if (err){
       console.log(err.message);
     }
     if (response) {
-      // Send JWT
-      // create token
       const token = jwt.sign({
         name: user.username,
         id: user._id
-      }, secret.secret);
-      res.status(200).header('auth-token', token).json({
-        error: null,
-        data: {token, user}
+      }, config.secret, {
+        expiresIn: config.jwtExpiration,
       });
-      // return console.log(token, user);
+      const refreshToken = await RefreshToken.createToken(user);
+      res.status(200).header('x-access-token', token).json({
+        error: null,
+        data: {
+          accessToken: token,
+          refreshToken: refreshToken,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        }
+      });
     } else {
       res.status(400).send({ error: "Invalid password." });
     }
   });
 };
+
+
+
+// crea nuevo token al haber expirado
+exports.refreshToken = async (req, res) => {
+  const requestToken = req.body.refreshToken;
+  if (requestToken == null) {
+    return res.status(403).json({ message: "Refresh Token is required!" });
+  }
+  try {
+    let refreshToken = await RefreshToken.findOne({ token: requestToken });
+    if (!refreshToken) {
+      res.status(403).json({ message: "Refresh token is not in database!" });
+      return;
+    }
+    if (RefreshToken.verifyExpiration(refreshToken)) {
+      RefreshToken.findByIdAndRemove(refreshToken._id, { useFindAndModify: false }).exec();
+      res.status(403).json({
+        message: "Refresh token was expired. Please make a new signin request.",
+      });
+      return;
+    }
+    let newAccessToken = jwt.sign({ id: refreshToken.user._id }, config.secret, {
+      expiresIn: config.jwtExpiration,
+    });
+    return res.status(200).json({
+      accessToken: newAccessToken,
+      refreshToken: refreshToken.token,
+    });
+  } catch (err) {
+    return res.status(500).send({ message: err });
+  }
+};
+
+
+
+// exist account
+exports.logout = async (req, res) => {
+  try {
+    req.session = null;
+    return res.status(200).send({ message: "You've been signed out!" });
+  } catch (err) {
+    this.next(err);
+  }
+};
+
+
 
 // Update a user by the username in the request
 exports.update = (req, res) => {
@@ -98,7 +157,7 @@ exports.update = (req, res) => {
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['username', 'email', 'password'];
+  const allowedUpdates = ['username', 'email', 'password', 'role'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 
@@ -108,6 +167,8 @@ exports.update = (req, res) => {
     });
   }
   
+
+
   const username = req.params.username;
   // busca el usuario original para actualizarlo
   userModel.findOneAndUpdate({'username': username}, req.body, { new: true })
@@ -127,6 +188,7 @@ exports.update = (req, res) => {
 };
 
 
+
 // Retrieve all elements from the database.
 exports.findAll = (req, res) => {
   //console.log('esto es findAll en user.controler');
@@ -140,6 +202,8 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+
 
 // Find a element with an username
 exports.findOne = async (req, res) => {
@@ -155,6 +219,7 @@ exports.findOne = async (req, res) => {
       });
     });
 };
+
 
 
 // Delete a user with the specified id in the request
@@ -182,6 +247,8 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+
 
 // Delete all users from the database.
 exports.deleteAll = (req, res) => {

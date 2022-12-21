@@ -13,11 +13,11 @@ db.USER = dbConfig.USER;
 db.PASSWORD = dbConfig.PASSWORD;
 
 db.user = require("./user.model");
-db.ROLES = ["user", "admin"];
-
+db.ROLES = ["USER", "ADMIN"];
 db.book = require("./book.model")(mongoose);
 db.film = require("./film.model")(mongoose);
 db.serie = require("./serie.model")(mongoose);
 db.list = require("./list.model")(mongoose);
+db.refreshToken = require("./refreshToken.model");
 
 module.exports = db;

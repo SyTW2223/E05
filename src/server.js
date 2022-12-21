@@ -26,9 +26,6 @@ require("./routes/serie.routes")(app);
 require("./routes/film.routes")(app);
 
 
-// PRUEBAS TDD API REST
-//require("./test/book.spec")
-
 // simple route
 app.get("/", (_, res) => {
     console.log("peticion recibida")
