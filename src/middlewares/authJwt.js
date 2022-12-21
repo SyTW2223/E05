@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
 const { TokenExpiredError } = jwt;
+const User = require('../models/user.model');
 
 // errors
 const catchError = (err, res) => {
@@ -23,5 +24,22 @@ exports.verifyToken = (req, res, next) => {
     }
     req.user = decoded;
     next();
+  });
+};
+
+// comrpueba que sea admin
+exports.isAdmin = (req, res, next) => {
+  User.findById(req.user.id).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    if (user.role == "ADMIN") {
+      next();
+      return;
+    } else {
+      res.status(403).send({ message: "Require Admin Role!" });
+      return;
+    }
   });
 };

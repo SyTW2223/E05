@@ -18,7 +18,7 @@ module.exports = app => {
   //router.post("/refreshToken", user.refreshToken);
   
   // Dashboard route
-  router.get('/adminBoard', [auth.verifyToken], user.adminBoard);
+  router.get('/adminBoard', [auth.verifyToken, auth.isAdmin], user.adminBoard);
 
   // Dashboard route
   router.get('/userBoard', [auth.verifyToken], user.userBoard);
