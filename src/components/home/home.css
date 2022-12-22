@@ -4,9 +4,17 @@
   margin: auto;
 }
 
-@media (max-width: 900px) {
+@media (max-height: 100%) {
   .carousel {
-    max-width:auto;
-    max-height:auto;
+    max-width: fit-content;
+    max-height: fit-content;
+    margin: auto;
   }
+}
+
+img {
+  max-width: fit-content;
+  max-height: fit-content;
+  display: flex;
+  margin: auto;
 }
