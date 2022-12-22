@@ -3,11 +3,12 @@
 - Ainoa Iglesias Dasilva (alu0101164403@ull.edu.es)
 - Karina Kalwani Israni (alu0101109046@ull.edu.es)  
 
-[![Tests Backend](https://github.com/SyTW2223/E05/actions/workflows/test-backend.js.yml/badge.svg)](https://github.com/SyTW2223/E05/actions/workflows/test-backend.js.yml)
-
 <p align="center">
-    <a href="https://github.com/SyTW2223/E05/actions/workflows/node.js.yml">
-        <img alt="Test" src="https://github.com/SyTW2223/E05/actions/workflows/node.js.yml/badge.svg">
+    <a href="https://github.com/SyTW2223/E05/actions/workflows/test-backend.js.yml">
+        <img alt="Tests Backend" src="https://github.com/SyTW2223/E05/actions/workflows/test-backend.js.yml/badge.svg">
+    </a>
+    <a href="https://github.com/SyTW2223/E05/actions/workflows/test-frontend.js.yml">
+        <img alt="Tests Frontend" src="https://github.com/SyTW2223/E05/actions/workflows/test-frontend.js.yml/badge.svg">
     </a>
     <a href='https://github.com/SyTW2223/E05/actions/workflows/sonarcloud.yml'>
         <img src='https://github.com/SyTW2223/E05/actions/workflows/sonarcloud.yml/badge.svg' alt='Sonar Cloud' />
