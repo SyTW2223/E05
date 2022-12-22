@@ -13,6 +13,9 @@
     <a href='https://github.com/SyTW2223/E05/actions/workflows/sonarcloud.yml'>
         <img src='https://github.com/SyTW2223/E05/actions/workflows/sonarcloud.yml/badge.svg' alt='Sonar Cloud' />
     </a>
+    <a href='https://coveralls.io/github/SyTW2223/E05'>
+        <img src='https://coveralls.io/repos/github/SyTW2223/E05/badge.svg' alt='Coverage Status' />
+    </a>
 </p>
 
 
