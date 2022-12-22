@@ -1,14 +1,16 @@
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import './home.css'
+import './home.css'
 
 
 function Home() {
   return (
-    <Carousel fade >
+    <div display="flex">
+    <Carousel fade>
       <Carousel.Item>
         <img
           className="d-block w-100"
+          width={400}
           src={require('../../assets/avatar.jpg')}
           alt="First slide"
         />
@@ -44,6 +46,7 @@ function Home() {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
+    </div>
   );
 }
 
