@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test2": "node ./node_modules/mocha/bin/mocha",
-    "test": "mocha --exit --timeout 100000",
+    "test": "mocha --exit --timeout 1000000",
     "start": "tsc-watch --onSuccess \"node dist/server.js\""
   },
   "keywords": [],
