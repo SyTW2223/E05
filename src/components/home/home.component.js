@@ -10,13 +10,8 @@ function Home() {
     <html>
       <Stack gap={5}>
         <div className='welcome'>
-          <h1>Bienvenido a MyStoryApp</h1>
-          <p className="col-md-5 mx-auto">
-            Texto explicativo <br />
-            Linea 1 <br />
-            Linea 2 <br />
-            Linea 3
-          </p>
+          <h1 class="text-center">¡Bienvenido a MyStoryApp!</h1>
+          <p class="text-center">Con esta página web podrás estar al día con tus series, películas y libros favoritos <br></br> personalizando tus propias listas de visionado.</p>
         </div>
         <div className='summary-movies'>
           <Container fluid="sm">

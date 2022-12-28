@@ -2,12 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
 
+
 // -------- COMPONENTS ----------- //
 import { Login } from './components/login/login.component';
 import { Register } from './components/register/register.component';
 import Home from './components/home/home.component';
 import Navbar from './components/navbar/navbar.component';
 import BookGet from "./components/book/book-get.component";
+import Footer from './components/footer/footer.component'
 // ------------------------------- //
 
 
@@ -42,6 +44,7 @@ function App() {
             <Route path="/register" element = {<Register />}/>
             <Route path="/book/" element = {<BookGet />}/>
           </Routes>
+          <Footer/>
         </Router>
     </ThemeProvider>
   )
