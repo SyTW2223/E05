@@ -8,7 +8,7 @@ import {
 
 export default function App() {
   return (
-    <MDBFooter style={{ backgroundColor: '#92C9D5' }} className='text-white text-center text-lg-left'>
+    <MDBFooter style={{ backgroundColor: '#92C9D5' }} className='text-white text-center text-lg-left fixed-bottom'>
       <MDBContainer className='p-4'>
         <MDBRow>
           <MDBCol lg='6' md='12' className='mb-4 mb-md-0'>

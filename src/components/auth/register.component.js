@@ -22,7 +22,7 @@ export const Register = () => {
             alignItems="center"
             justifyContent={"center"}
             margin="auto"
-            marginTop={5}
+            marginTop={15}
             padding={3}
             borderRadius={5}
             sx={{backgroundColor: 'primary.fill'}}
