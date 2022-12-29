@@ -4,12 +4,7 @@ import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
 
 
 // -------- COMPONENTS ----------- //
-import { Login } from './components/login/login.component';
-import { Register } from './components/register/register.component';
-import Home from './components/home/home.component';
-import Navbar from './components/navbar/navbar.component';
-import BookGet from "./components/book/book-get.component";
-import Footer from './components/footer/footer.component'
+import component from './components';
 // ------------------------------- //
 
 
@@ -36,15 +31,15 @@ function App() {
     <ThemeProvider theme={formato}>
       <CssBaseline />
         <Router>
-          <Navbar/>
+        <component.NavbarUser/>
           <Routes>
-            <Route path="/" element = {<Home />}/>
-            <Route path="/home" element = {<Home />}/>
-            <Route path="/login" element = {<Login />}/>
-            <Route path="/register" element = {<Register />}/>
-            <Route path="/book/" element = {<BookGet />}/>
+            <Route path="/" element = {<component.Home />}/>
+            <Route path="/home" element = {<component.Home />}/>
+            <Route path="/login" element = {<component.Login />}/>
+            <Route path="/register" element = {<component.Register />}/>
+            <Route path="/profile" element = {<component.Profile />}/>
           </Routes>
-          <Footer/>
+          <component.Footer/>
         </Router>
     </ThemeProvider>
   )

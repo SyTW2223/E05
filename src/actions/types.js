@@ -1,11 +1,11 @@
 /**
  * mensajes lanzados 
  */
-export const REGISTER_SUCCESS = "@APP/REGISTER_SUCCESS";
-export const REGISTER_FAIL = "@APP/REGISTER_FAIL";
-export const LOGIN_SUCCESS = "@APP/LOGIN_SUCCESS";
-export const LOGIN_FAIL = "@APP/LOGIN_FAIL";
-export const LOGOUT = "@APP/LOGOUT";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
 
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
