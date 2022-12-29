@@ -8,7 +8,7 @@ import {
 
 export default function Footer() {
   return (
-    <MDBFooter style={{ backgroundColor: '#92C9D5' }} className='text-white text-center text-lg-left fixed-bottom'>
+    <MDBFooter style={{ backgroundColor: '#92C9D5' }} className='text-white text-center text-lg-left absolute-bottom mt-5'>
       <MDBContainer className='p-4'>
         <MDBRow>
           <MDBCol lg='6' md='12' className='mb-4 mb-md-0'>
@@ -36,7 +36,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href='#!' className='text-white'>
-                  Karina
+                  Karina Kalwani Israni
                 </a>
               </li>
             </ul>
