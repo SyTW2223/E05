@@ -4,10 +4,16 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { logout }  from "../../actions/auth.action";
 import {Link} from 'react-router-dom';
 
-export default function ButtonAppBar() {
+const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
+
+export default function Navbar() {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectorIsLoggedIn); 
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -34,7 +40,35 @@ export default function ButtonAppBar() {
             sx={{ flexGrow: 1 }}
           >
           </Typography>
-          <Button
+
+          { isLoggedIn && (
+            <Button
+            color="inherit"
+            sx={{
+              color: 'inherit',
+              backgroundColor: 'primary.main'
+            }}
+            onClick={() => {dispatch(logout())}}
+          >
+            Cerrar Sesion
+          </Button>)
+          }
+
+          { isLoggedIn && 
+          (<Button
+            component={Link} to="/profile"
+            color="inherit"
+            sx={{
+              color: 'inherit',
+              backgroundColor: 'primary.main'
+            }}
+          >
+            Mi Perfil
+          </Button>
+            )
+          }
+          { isLoggedIn == false && (
+            <Button
             component={Link} to="/login"
             color="inherit"
             sx={{
@@ -44,7 +78,12 @@ export default function ButtonAppBar() {
           >
             Iniciar Sesion
           </Button>
-          <Button
+            )
+          }
+          
+          {
+            isLoggedIn == false && (
+            <Button
             component={Link} to="/register"
             color="inherit"
             sx={{
@@ -54,6 +93,8 @@ export default function ButtonAppBar() {
           >
             Registro
           </Button>
+            )
+          }
         </Toolbar>
       </AppBar>
     </Box>

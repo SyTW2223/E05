@@ -8,9 +8,7 @@ import {
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const initialState = user
-  ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
+const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
@@ -19,7 +17,8 @@ export default function (state = initialState, action) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: true,
+        user: payload.user,
       };
     case REGISTER_FAIL:
       return {

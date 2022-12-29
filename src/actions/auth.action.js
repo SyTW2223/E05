@@ -14,6 +14,7 @@ import {
       (response) => {
         dispatch({
           type: REGISTER_SUCCESS,
+          payload: { user: response },
         });
   
         dispatch({
@@ -25,11 +26,8 @@ import {
       },
       (error) => {
         const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+          (error.response && error.response.data && error.response.data.message) ||
+          error.message || error.toString();
   
         dispatch({
           type: REGISTER_FAIL,
@@ -57,11 +55,8 @@ import {
       },
       (error) => {
         const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+          (error.response && error.response.data && error.response.data.message) ||
+          error.message || error.toString();
   
         dispatch({
           type: LOGIN_FAIL,

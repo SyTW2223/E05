@@ -31,7 +31,7 @@ function App() {
     <ThemeProvider theme={formato}>
       <CssBaseline />
         <Router>
-        <component.NavbarUser/>
+        <component.Navbar/>
           <Routes>
             <Route path="/" element = {<component.Home />}/>
             <Route path="/home" element = {<component.Home />}/>
