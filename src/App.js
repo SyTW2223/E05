@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
 
 // -------- COMPONENTS ----------- //
 import component from './components';
+import { AuthVerify } from "./services/auth-verify";
 // ------------------------------- //
 
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/register" element = {<component.Register />}/>
             <Route path="/profile" element = {<component.Profile />}/>
           </Routes>
+          <AuthVerify/>
           <component.Footer/>
         </Router>
     </ThemeProvider>

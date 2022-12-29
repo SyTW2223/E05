@@ -71,7 +71,6 @@ export const Login = () => {
                 onClick={() => {
                     dispatch(login(username, password)).then((data) => {
                         console.log('Sesion iniciada');
-                        console.log(data);
                         navigate('/profile');
                     }).catch(() => {
                         console.log('Error. La cuenta no existe, debe crearse una cuenta.');
