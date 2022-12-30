@@ -45,7 +45,7 @@ var server = app.listen(PORT, URL, () => {
 
 // conexion con mongoose
 // const DB_URL = process.env.DB_URL || `mongodb://${db.HOST}:${db.PORT}/${db.DB}`;
-const DB_URL = process.env.DB_URL || "mongodb+srv://admin:admin@cluster0.gunxbd0.mongodb.net/test";
+const DB_URL = process.env.DB_URL || "mongodb+srv://admin:admin@cluster0.gunxbd0.mongodb.net/SyTW";
 const DB_USER = process.env.DB_USER || db.USER;
 const DB_PASSWORD = process.env.DB_PASSWORD|| db.PASSWORD;
 db.mongoose.connect(DB_URL, {
