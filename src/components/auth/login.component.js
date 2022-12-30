@@ -6,6 +6,7 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import { Link } from 'react-router-dom';
 import { login } from '../../actions/auth.action';
 
+
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 const selectorMessage = (state) => state.message;
 
@@ -71,7 +72,8 @@ export const Login = () => {
                 onClick={() => {
                     dispatch(login(username, password)).then((data) => {
                         console.log('Sesion iniciada');
-                        navigate('/profile');
+                        if (data.role[0] === "ADMIN") navigate('/AdminProfile');
+                        if (data.role[0] === "USER") navigate('/UserProfile');
                     }).catch(() => {
                         console.log('Error. La cuenta no existe, debe crearse una cuenta.');
                     });

@@ -38,7 +38,8 @@ function App() {
             <Route path="/home" element = {<component.Home />}/>
             <Route path="/login" element = {<component.Login />}/>
             <Route path="/register" element = {<component.Register />}/>
-            <Route path="/profile" element = {<component.Profile />}/>
+            <Route path="/userProfile" element = {<component.UserProfile />}/>
+            <Route path="/adminProfile" element = {<component.AdminProfile />}/>
           </Routes>
           <AuthVerify/>
           <component.Footer/>

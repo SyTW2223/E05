@@ -51,7 +51,7 @@ import {
           payload: { user: data },
         });
   
-        return Promise.resolve();
+        return Promise.resolve(data.data);
       },
       (error) => {
         const message =

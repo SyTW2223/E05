@@ -7,7 +7,7 @@ import {
 } from 'mdb-react-ui-kit';
 import './home.css';
 
-export default function Home() {
+export const Home = () => {
   return (
     <MDBContainer>
       <div className='welcome'>

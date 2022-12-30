@@ -6,14 +6,18 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout }  from "../../actions/auth.action";
-import {Link} from 'react-router-dom';
+import {Link,useNavigate} from 'react-router-dom';
+
 
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
+const selectorUserData = (state) => state.auth?.user?.data;
 
-export default function Navbar() {
+export const Navbar = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectorIsLoggedIn); 
-
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
+  const userData = useSelector(selectorUserData);
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -54,20 +58,26 @@ export default function Navbar() {
           </Button>)
           }
 
-          { isLoggedIn && 
-          (<Button
-            component={Link} to="/profile"
-            color="inherit"
-            sx={{
-              color: 'inherit',
-              backgroundColor: 'primary.main'
-            }}
-          >
-            Mi Perfil
-          </Button>
+          { isLoggedIn && (
+            <Button
+              // component={Link} to="/userProfile"
+              color="inherit"
+              sx={{
+                color: 'inherit',
+                backgroundColor: 'primary.main'
+              }}
+              onClick={() => {
+                console.log('data', userData.role)
+                if (userData.role[0] === "ADMIN") navigate('/AdminProfile');
+                if (userData.role[0] === "USER") navigate('/UserProfile');
+              }}
+            >
+              Mi Perfil
+            </Button>
             )
           }
-          { isLoggedIn == false && (
+
+          { isLoggedIn === false && (
             <Button
             component={Link} to="/login"
             color="inherit"
@@ -82,7 +92,7 @@ export default function Navbar() {
           }
           
           {
-            isLoggedIn == false && (
+            isLoggedIn === false && (
             <Button
             component={Link} to="/register"
             color="inherit"

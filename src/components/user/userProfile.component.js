@@ -24,7 +24,8 @@ import {
 const selectorIsLoggedIn = (state) => state.auth?.isLoggedIn;
 const selectorUserData = (state) => state.auth?.user?.data;
 
-export default function ProfilePage() {
+export const UserProfile = () => {
+
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const userData = useSelector(selectorUserData);
 
@@ -46,7 +47,7 @@ export default function ProfilePage() {
                   fluid />
                 <p className="text-muted mb-4"></p>
                 <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn outline className="ms-1">Editar Perfil</MDBBtn>
+                  <MDBBtn outline className="ms-1">Esto es user</MDBBtn>
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -106,15 +107,6 @@ export default function ProfilePage() {
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">{userData.email}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Token</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userData.accessToken.substring(0, 20)} ...{" "}{userData.accessToken.substr(userData.accessToken.length - 20)}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
