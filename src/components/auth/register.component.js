@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { Box, Typography, TextField, Button } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
 import { register } from '../../actions/auth.action';
+
 
 export const Register = () => {
     const [username, setUsername] = useState("");
@@ -10,6 +12,7 @@ export const Register = () => {
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return (
         <div className="register">
@@ -66,13 +69,15 @@ export const Register = () => {
                 backgroundColor: 'primary.buttonReg'
                 }}
                 onClick={() => {
-                    dispatch(register(username, email, password)).then(data => {
-                        console.log(data);
-                        // ir a pagina de login
-                        }).catch(() => {
-                            console.log('Error, no se ha podido registrar el usuario.');
-                        });
-                    }}
+                    dispatch(register(username, email, password))
+                    .then(() => {
+                        console.log('register')
+                        navigate('/login');
+                    })
+                    .catch(() => {
+                        console.log('Error, no se ha podido registrar el usuario.');
+                    });
+                }}
             >
                 Registrarse
             </Button>
