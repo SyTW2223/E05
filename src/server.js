@@ -34,7 +34,8 @@ app.get("/", (_, res) => {
 
 // set port, listen for requests, puerto del backend
 const PORT = process.env.PORT || 3000;
-const URL = process.env.URL || '172.16.126.55';
+// const URL = process.env.URL || '172.16.126.55';
+const URL = process.env.URL || 'localhost';
 var server = app.listen(PORT, URL, () => {
     var host = server.address().address;
     var port = server.address().port;
@@ -43,7 +44,8 @@ var server = app.listen(PORT, URL, () => {
 
 
 // conexion con mongoose
-const DB_URL = process.env.DB_URL || `mongodb://${db.HOST}:${db.PORT}/${db.DB}`;
+// const DB_URL = process.env.DB_URL || `mongodb://${db.HOST}:${db.PORT}/${db.DB}`;
+const DB_URL = process.env.DB_URL || "mongodb+srv://admin:admin@cluster0.gunxbd0.mongodb.net/test";
 const DB_USER = process.env.DB_USER || db.USER;
 const DB_PASSWORD = process.env.DB_PASSWORD|| db.PASSWORD;
 db.mongoose.connect(DB_URL, {

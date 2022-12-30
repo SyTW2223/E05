@@ -30,7 +30,6 @@ exports.create = async (req, res) => {
 
   // create new user
   const newUser = new userModel({
-    id: req.body.id,
     username: req.body.username,
     email: req.body.email,
     password: password,
