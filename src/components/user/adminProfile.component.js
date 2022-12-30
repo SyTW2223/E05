@@ -40,12 +40,12 @@ export const AdminProfile = () => {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava4.webp"
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: '150px' }}
                   fluid />
-                <p className="text-muted mb-4"></p>
+                <p className="text-muted mb-4">{userData.username}</p>
                 <div className="d-flex justify-content-center mb-2">
                   <MDBBtn outline className="ms-1">Esto es admin</MDBBtn>
                 </div>
@@ -55,7 +55,7 @@ export const AdminProfile = () => {
             <MDBCard>
             <MDBListGroup style={{ minWidth: '22rem' }} light>
               <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-              Listas preferidas
+              <b>Listas preferidas</b>
               </MDBListGroupItem>
               <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
                 Películas pendientes
