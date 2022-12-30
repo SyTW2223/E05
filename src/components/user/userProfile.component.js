@@ -113,15 +113,6 @@ export const UserProfile = () => {
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Fecha de nacimiento</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Falta ponerla</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
                     <MDBCardText>Authorities</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
@@ -130,7 +121,8 @@ export const UserProfile = () => {
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-
+            
+            <hr />
             <p className="text-center"><strong>Mis listas</strong></p>
             <MDBRow>
               <MDBCol md="6">
