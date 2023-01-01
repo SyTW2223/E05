@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "../testUtils";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { Login } from "../src/components/login/login.component";
+import { Login } from "../src/components/auth/login.component";
 
 beforeEach(() => {
   // eslint-disable-next-line testing-library/no-render-in-setup
