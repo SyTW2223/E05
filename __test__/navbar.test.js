@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "../testUtils";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import Navbar from "../src/components/navbar/navbar.component";
+import { Navbar } from "../src/components/navbar/navbar.component";
 
 beforeEach(() => {
   // eslint-disable-next-line testing-library/no-render-in-setup
