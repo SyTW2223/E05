@@ -19,4 +19,12 @@ describe("Home tests", () => {
     const welcomeText = screen.getByRole('heading', {level: 1});
     expect(welcomeText).toBeInTheDocument();
   });
+  it("Debe haber un mensaje explicativo de lo que contiene la pagina", () => {
+    const explainText = screen.getByText('Con esta página web podrás estar al día con tus series, películas y libros favoritos personalizando tus propias listas de visionado.');
+    expect(explainText).toBeInTheDocument();
+  });
+  it("Debe haber un titulo para los ultimos añadidos", () => {
+    const recentlyAddedText = screen.getByRole('heading', {level: 2});
+    expect(recentlyAddedText).toBeInTheDocument();
+  });
 });
