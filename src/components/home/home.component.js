@@ -11,12 +11,12 @@ export const Home = () => {
   return (
     <MDBContainer>
       <div className='welcome'>
-        <h1 class="text-center my-5">¡Bienvenido a MyStoryApp!</h1>
-        <p class="text-center my-5">Con esta página web podrás estar al día con tus series, películas y libros favoritos <br/>personalizando tus propias listas de visionado.</p>
+        <h1 className="text-center my-5">¡Bienvenido a MyStoryApp!</h1>
+        <p className="text-center my-5">Con esta página web podrás estar al día con tus series, películas y libros favoritos <br/>personalizando tus propias listas de visionado.</p>
       </div>
 
-      <div class="mt-5 mb-3">
-        <h2 class="text-center">Últimos Añadidos</h2>
+      <div className="mt-5 mb-3">
+        <h2 className="text-center">Últimos Añadidos</h2>
       </div>
       <MDBRow>
         <MDBCarousel showControls showIndicators fade>
