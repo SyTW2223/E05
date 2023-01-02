@@ -9,13 +9,9 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  // MDBCardFooter, 
   MDBBtn,
-  // MDBBreadcrumb,
-  // MDBBreadcrumbItem,
   MDBProgress,
   MDBProgressBar,
-  // MDBIcon,
   MDBListGroup,
   MDBListGroupItem,
   MDBBadge
