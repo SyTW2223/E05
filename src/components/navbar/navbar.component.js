@@ -95,6 +95,16 @@ export const Navbar = () => {
                 }}
               >Registro</Button>)
             }
+            { isLoggedIn === false && (
+              <Button
+                component={Link} to="/listFilm"
+                color="inherit"
+                sx={{
+                  color: 'inherit',
+                  backgroundColor: 'primary.main'
+                }}
+              >Peliculas</Button>)
+            }
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBContainer>

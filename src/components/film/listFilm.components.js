@@ -18,20 +18,24 @@ export default function ListFilm() {
       <MDBTableBody>
         <tr>
           <td>
-            <div className='d-flex align-items-center'>
-              <img
-                src={require('../../assets/avatar.jpg')}
-                alt='Cartelera Avatar 2'
-                style={{ width: '45px', height: '45px' }}
-                className='rounded-circle'
-              />
-              <div className='ms-3'>
+            <div className='d-flex justify-content-around'>
+              <div className='p-2'>
+                <img
+                  src={require('../../assets/avatar.jpg')}
+                  alt='Cartelera Avatar 2'
+                  style={{ width: '45px', height: '45px' }}
+                  className='rounded-circle'
+                />
+              </div>
+              <div className='p-2'>
                 <p className='fw-bold mb-1'>Avatar. El sentido del agua</p>
                 <p className='text-muted mb-0'>Jake Sully y Ney'tiri han formado una familia...</p>
               </div>
-              <MDBBtn className='rounded-circle' color='light' size='sm'>
-                Valorar
-              </MDBBtn>
+              <div className='p-2'>
+                <MDBBtn className='rounded-circle' color='light' size='sm'>
+                  Valorar
+                </MDBBtn>
+              </div>
             </div>
           </td>
           <td>
@@ -45,20 +49,24 @@ export default function ListFilm() {
         </tr>
         <tr>
           <td>
-            <div className='d-flex align-items-center'>
-              <img
-                src={require('../../assets/black-adam.jpg')}
-                alt='Cartelera Black Adam'
-                style={{ width: '45px', height: '45px' }}
-                className='rounded-circle'
-              />
-              <div className='ms-3'>
+            <div className='d-flex justify-content-around'>
+              <div className='p-2'>
+                <img
+                  src={require('../../assets/black-adam.jpg')}
+                  alt='Cartelera Black Adam'
+                  style={{ width: '45px', height: '45px' }}
+                  className='rounded-circle'
+                />
+              </div>
+              <div className='p-2'>
                 <p className='fw-bold mb-1'>Black Adam</p>
                 <p className='text-muted mb-0'>Unos arqueólogos liberan de su tumba a Black...</p>
               </div>
-              <MDBBtn className='rounded-circle' color='light' size='sm'>
-                  Valorar
-              </MDBBtn>
+              <div className='p-2'>
+                <MDBBtn className='rounded-circle' color='light' size='sm'>
+                    Valorar
+                </MDBBtn>
+              </div>
             </div>
           </td>
           <td>
@@ -72,20 +80,24 @@ export default function ListFilm() {
         </tr>
         <tr>
           <td>
-            <div className='d-flex align-items-center'>
-              <img
-                src={require('../../assets/morbius.jpg')}
-                alt='Cartelera Morbius'
-                style={{ width: '45px', height: '45px' }}
-                className='rounded-circle'
-              />
-              <div className='ms-3'>
+            <div className='d-flex justify-content-around'>
+              <div className='p-2'>
+                <img
+                  src={require('../../assets/morbius.jpg')}
+                  alt='Cartelera Morbius'
+                  style={{ width: '45px', height: '45px' }}
+                  className='rounded-circle'
+                />
+              </div>
+              <div className='p-2'>
                 <p className='fw-bold mb-1'>Morbius</p>
                 <p className='text-muted mb-0'>Morbius, un doctor que tras sufrir una enfermedad...</p>
               </div>
-              <MDBBtn className='rounded-circle' color='light' size='sm'>
-                  Valorar
-              </MDBBtn>
+              <div className='p-2'>
+                <MDBBtn className='rounded-circle' color='light' size='sm'>
+                    Valorar
+                </MDBBtn>
+              </div>
             </div>
           </td>
           <td>
