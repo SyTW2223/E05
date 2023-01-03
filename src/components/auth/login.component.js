@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { Box, Typography, TextField, Button } from "@mui/material";
-
 import { login } from '../../actions/auth.action';
 
 
@@ -71,7 +70,7 @@ export const Login = () => {
                 color="inherit"
                 onClick={() => {
                     dispatch(login(username, password)).then((data) => {
-                        console.log('Sesion iniciada');
+                        console.log('Sesion iniciada');   
                         if (data.role[0] === "ADMIN") navigate('/AdminProfile');
                         if (data.role[0] === "USER") navigate('/UserProfile');
                     }).catch(() => {

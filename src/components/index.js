@@ -5,6 +5,10 @@ import { Login } from "./auth/login.component";
 import { Register } from "./auth/register.component";
 import { UserProfile } from "./user/userProfile.component";
 import { AdminProfile } from "./user/adminProfile.component";
+import Film from "./film/film.component";
+import ListFilm from "./film/listFilm.components";
+
+
 
 export default {
     Home,
@@ -14,4 +18,6 @@ export default {
     Register,
     UserProfile,
     AdminProfile,
+    Film,
+    ListFilm
 }
