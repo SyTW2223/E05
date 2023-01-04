@@ -18,8 +18,8 @@ export default function ListFilm() {
       <MDBTableBody>
         <tr>
           <td>
-            <div className='d-flex justify-content-around'>
-              <div className='p-2'>
+            <div className='d-flex justify-content-between'>
+              <div className='p-2 ms-0 me-2'>
                 <img
                   src={require('../../assets/avatar.jpg')}
                   alt='Cartelera Avatar 2'
@@ -27,11 +27,11 @@ export default function ListFilm() {
                   className='rounded-circle'
                 />
               </div>
-              <div className='p-2'>
-                <p className='fw-bold mb-1'>Avatar. El sentido del agua</p>
-                <p className='text-muted mb-0'>Jake Sully y Ney'tiri han formado una familia...</p>
+              <div className='p-2 mx-2'>
+                <p className='fw-bold mb-1 text-left'>Avatar. El sentido del agua</p>
+                <p className='text-muted mb-0 text-left'>Jake Sully y Ney'tiri han formado una familia...</p>
               </div>
-              <div className='p-2'>
+              <div className='p-2 ms-2 me-0'>
                 <MDBBtn className='rounded-circle' color='light' size='sm'>
                   Valorar
                 </MDBBtn>
@@ -49,7 +49,7 @@ export default function ListFilm() {
         </tr>
         <tr>
           <td>
-            <div className='d-flex justify-content-around'>
+            <div className='d-flex justify-content-between'>
               <div className='p-2'>
                 <img
                   src={require('../../assets/black-adam.jpg')}
@@ -59,8 +59,8 @@ export default function ListFilm() {
                 />
               </div>
               <div className='p-2'>
-                <p className='fw-bold mb-1'>Black Adam</p>
-                <p className='text-muted mb-0'>Unos arqueólogos liberan de su tumba a Black...</p>
+                <p className='fw-bold mb-1 text-left'>Black Adam</p>
+                <p className='text-muted mb-0 text-left'>Unos arqueólogos liberan de su tumba a Black..</p>
               </div>
               <div className='p-2'>
                 <MDBBtn className='rounded-circle' color='light' size='sm'>
@@ -80,7 +80,7 @@ export default function ListFilm() {
         </tr>
         <tr>
           <td>
-            <div className='d-flex justify-content-around'>
+            <div className='d-flex justify-content-between'>
               <div className='p-2'>
                 <img
                   src={require('../../assets/morbius.jpg')}
@@ -89,9 +89,9 @@ export default function ListFilm() {
                   className='rounded-circle'
                 />
               </div>
-              <div className='p-2'>
-                <p className='fw-bold mb-1'>Morbius</p>
-                <p className='text-muted mb-0'>Morbius, un doctor que tras sufrir una enfermedad...</p>
+              <div className='d-flex flex-column'>
+                <p className='fw-bold mb-1 text-left'>Morbius</p>
+                <p className='text-muted mb-0 text-left'>Morbius, un doctor que tras sufrir una.....</p>
               </div>
               <div className='p-2'>
                 <MDBBtn className='rounded-circle' color='light' size='sm'>
