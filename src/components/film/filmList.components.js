@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-undef */
 import React, { useState, useEffect } from "react";
-import filmServices from "../../services/film.services";
+import itemServices from "../../services/item.services";
 import {useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody, MDBContainer, MDBIcon } from 'mdb-react-ui-kit';
@@ -19,7 +19,7 @@ export const FilmList = () => {
 
   
   useEffect(() => {
-    filmServices.listFilms().then(response => {
+    itemServices.listItems("/film").then(response => {
       setData(response.data);
       setLoading(false);
     });
