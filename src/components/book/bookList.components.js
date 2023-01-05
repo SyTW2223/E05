@@ -10,7 +10,7 @@ import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody, MDBContainer, M
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 // const selectorUserData = (state) => state.auth?.user?.data;
 
-export const FilmList = () => {
+export const BookList = () => {
   const [isLoading, setLoading] = useState(true);
   const [respuestaBack, setData] = useState([]);
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export const FilmList = () => {
 
   
   useEffect(() => {
-    itemServices.listItems("film").then(response => {
+    itemServices.listItems("book").then(response => {
       setData(response.data);
       setLoading(false);
     });
@@ -31,13 +31,15 @@ export const FilmList = () => {
     return (!respuestaBack) ? null : (
       <MDBContainer>
         <div className='welcome'>
-          <h1 className="text-center my-5">Todas las películas</h1>
+          <h1 className="text-center my-5">Todos los libros</h1>
         </div>
         <MDBTable align='middle' bordered responsive className='caption-top'>
           <MDBTableHead>
             <tr className='table-secondary'>
               <th scope='col'>Título</th>
+              <th scope='col'>Autor</th>
               <th scope='col'>Año</th>
+              <th scope='col'>Saga</th>
               <th scope='col'>Categoria</th>
               <th scope='col'>Valoración</th>
               {isLoggedIn && (
@@ -48,12 +50,13 @@ export const FilmList = () => {
               )}
             </tr>
           </MDBTableHead>
-          
           {respuestaBack.map((item) => {
             return (
                 <tr>
-                  <td onClick={() => {navigate("/film/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
+                  <td onClick={() => {navigate("/book/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
+                  <td>{item.author}</td>
                   <td>{item.yearPublication}</td>
+                  <td>{item.saga}</td>
                   <td>{item.categories.map((cat) => cat + ', ')}</td>
                   <td>{item.rating}</td>
                 </tr>
@@ -74,41 +77,3 @@ export const FilmList = () => {
     </div>
   );
 }
-
-
-
-/*
-{respuestaBack.map((item) => {
-  return (
-    <MDBTableBody>
-      <tr>
-        <td>
-          <div className='d-flex justify-content-between'>
-            <div className='p-2 ms-0 me-2'>
-            </div>
-            <div className='p-2 mx-2'>
-              <p className='fw-bold mb-1 text-left'>{item.title}</p>
-              <p className='text-muted mb-0 text-left'>{item.description}</p>
-            </div>
-            {isLoggedIn && (
-              <div className='p-2 ms-2 me-0'>
-                <MDBBtn className='rounded-circle' color='light' size='sm'>
-                  Valorar
-                </MDBBtn>
-            </div>
-            )}
-          </div>
-        </td>
-        <td>
-          <p className='fw-normal mb-1'>9.0 <MDBIcon fas icon="star" style={{ color: '#FFD700' }} /></p>
-        </td>
-        <td>
-          <MDBBadge color='success' pill>
-            Visto
-          </MDBBadge>
-        </td>
-      </tr>
-    </MDBTableBody>
-  );
-})}
-*/

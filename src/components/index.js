@@ -7,7 +7,8 @@ import { UserProfile } from "./user/userProfile.component";
 import { AdminProfile } from "./user/adminProfile.component";
 import { Film } from "./film/film.component";
 import { FilmList } from "./film/filmList.components";
-
+import { Book } from "./book/book.component";
+import { BookList } from "./book/bookList.components";
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -20,5 +21,7 @@ export default {
     UserProfile,
     AdminProfile,
     Film,
+    Book,
     FilmList,
+    BookList,
 }
