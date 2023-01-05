@@ -1,3 +1,3 @@
-var categories = 'action' | 'comedy' | 'drama' | 'horror' | 'romance' | 'fantasy' | 'science fiction' | 'adventure';
+var categories = 'Accion' | 'Comedia' | 'Drama' | 'Terror' | 'Romance' | 'Fantasia' | 'Ciencia ficcion' | 'Aventuras' | 'Historica';
 
 module.exports = categories;

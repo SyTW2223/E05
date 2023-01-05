@@ -5,26 +5,38 @@ const categories = require("./categories");
 const Book = mongoose.model(
   "Book",
   new mongoose.Schema({
-    id: {
-      type: Number,
-      require: true,
-      unique: true,
-      trim: true,
-    },
     title: {
       type: String,
       unique: true,
       required: true,
       trim: true,
     },
+    image: {
+      type: String,
+    },
     description: {
       type: String,
       required: true,
       trim: true,
     },
+    author: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    saga:{
+      type: String,
+      trim: true,
+    },
     categories: {
       type: [categories],
       trim: true,
+      required: true,
+    },
+    yearPublication: {
+      type: Number,
+      trim: true,
+      required: true,
     },
     rating: {
       type: Number,

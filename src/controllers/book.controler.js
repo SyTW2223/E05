@@ -2,21 +2,24 @@ const bookModel = require("../models/book.model");
 
 
 // Create and Save a new book
-exports.create = async (req, res) => {
-  //console.log('esto es create en book.controler');
-  const allowedCreated = ['description', 'rating', 'id', 'categories', 'title'];
+exports.create = async (req, res) => 
+{
+  const allowedCreated = ['description', 'rating', 'categories', 'title', 'author', 'saga', 'yearPublication'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
   if (!isValidCreate) {
     return res.status(400).send({
-      error: 'Update is not permitted. Check the parameters. [id, title, description, categories, rating]',
+      error: 'Update is not permitted. Check the parameters. [title, description, categories, rating, author, yearPublication, saga]',
     });
   }
   // Create a book
   const newBook = new bookModel({
     id: req.body.id,
     title: req.body.title,
+    author: req.body.author,
+    saga: req.body.saga,
+    yearPublication: req.body.yearPublication,
     description: req.body.description,
     categories: req.body.categories,
     rating: req.body.rating,
@@ -35,15 +38,14 @@ exports.create = async (req, res) => {
 
 
 // Update a book by the title in the request
-exports.update = (req, res) => {
-  //console.log('esto es update en book.controler');
-  // si no hay datos nuevos no podra actualizarse
+exports.update = (req, res) => 
+{
   if (Object.keys(req.body).length === 0) {
     res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['description', 'rating', 'id', 'categories', 'title'];
+  const allowedUpdates = ['description', 'rating', 'categories', 'title', 'author', 'saga', 'yearPublication'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 
@@ -72,13 +74,13 @@ exports.update = (req, res) => {
 
 
 // Retrieve all elements from the database.
-exports.findAll = (req, res) => {
-  //console.log('esto es findAll en book.controler');
-  
+exports.findAll = (req, res) => 
+{
   bookModel.find()
     .then(data => {
       res.status(200).send(data);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).send({
         message:
           err.message || "Error found book."
@@ -87,14 +89,16 @@ exports.findAll = (req, res) => {
 };
 
 // Find a element with an title
-exports.findOne = (req, res) => {
-  //console.log('esto es findOne en book.controler');
+exports.findOne = (req, res) => 
+{
   const title = req.params.title;
-  bookModel.findOne({'title': title}).then(data => {
+  bookModel.findOne({'title': title})
+  .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found book with title " + title });
       else res.status(200).send(data);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).send({
         message:
           err.message || "Unknown error when searching for " + title
@@ -104,9 +108,8 @@ exports.findOne = (req, res) => {
 
 
 // Delete a book with the specified id in the request
-exports.delete = (req, res) => {
-  //console.log('esto es delete en book.controler');
-  
+exports.delete = (req, res) => 
+{
   const title = req.params.title;
 
   bookModel.findOneAndDelete({'title': title})
@@ -129,9 +132,8 @@ exports.delete = (req, res) => {
 };
 
 // Delete all books from the database.
-exports.deleteAll = (req, res) => {
-  //console.log('esto es deleteAll en book.controler');
-  
+exports.deleteAll = (req, res) => 
+{
   bookModel.deleteMany({})
     .then(data => {
       res.status(200).send({
