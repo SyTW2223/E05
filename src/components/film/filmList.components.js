@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-no-undef */
 import React, { useState, useEffect } from "react";
 import filmServices from "../../services/film.services";
+import {useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody, MDBContainer, MDBIcon } from 'mdb-react-ui-kit';
 
@@ -11,6 +13,7 @@ const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const FilmList = () => {
   const [isLoading, setLoading] = useState(true);
   const [respuestaBack, setData] = useState([]);
+  const navigate = useNavigate();
 
   const isLoggedIn = useSelector(selectorIsLoggedIn); 
 
@@ -49,7 +52,7 @@ export const FilmList = () => {
           {respuestaBack.map((item) => {
             return (
                 <tr>
-                  <td>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
+                  <td onClick={() => {navigate("/film/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
                   <td>{item.yearPublication}</td>
                   <td>{item.categories.map((cat) => cat + ', ')}</td>
                   <td>{item.rating}</td>
