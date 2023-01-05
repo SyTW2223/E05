@@ -5,12 +5,6 @@ const categories = require("./categories");
 const Serie = mongoose.model(
   "Serie",
   new mongoose.Schema({
-    id: {
-      type: Number,
-      unique: true,
-      required: true,
-      trim: true,
-    },
     title: {
       type: String,
       unique: true,
@@ -25,6 +19,10 @@ const Serie = mongoose.model(
     seasons: {
       type: Number,
       trim: true,  
+    },
+    yearPublication: {
+      type: Number,
+      required: true,
     },
     categories: {
       type: [categories],

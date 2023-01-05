@@ -15,7 +15,6 @@ exports.create = async (req, res) =>
   }
   // Create a book
   const newBook = new bookModel({
-    id: req.body.id,
     title: req.body.title,
     author: req.body.author,
     saga: req.body.saga,
