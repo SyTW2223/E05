@@ -40,8 +40,10 @@ function App() {
             <Route path="/register" element = {<component.Register />}/>
             <Route path="/userProfile" element = {<component.UserProfile />}/>
             <Route path="/adminProfile" element = {<component.AdminProfile />}/>
+            <Route path="/filmList" element = {<component.FilmList/>}/>
+            <Route path="/bookList" element = {<component.BookList/>}/>
+            <Route path="/serieList" element = {<component.SerieList/>}/>
             <Route path="/film" element = {<component.Film/>}/>
-            <Route path="/listFilm" element = {<component.ListFilm/>}/>
           </Routes>
           <AuthVerify/>
           <component.Footer/>

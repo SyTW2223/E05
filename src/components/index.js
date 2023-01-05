@@ -6,7 +6,7 @@ import { Register } from "./auth/register.component";
 import { UserProfile } from "./user/userProfile.component";
 import { AdminProfile } from "./user/adminProfile.component";
 import Film from "./film/film.component";
-import ListFilm from "./film/listFilm.components";
+import { FilmList } from "./film/filmList.components";
 
 
 
@@ -19,5 +19,5 @@ export default {
     UserProfile,
     AdminProfile,
     Film,
-    ListFilm
+    FilmList,
 }

@@ -31,6 +31,33 @@ export const Navbar = () => {
     <MDBNavbar expand='lg' style={{ backgroundColor: '#92C9D5' }}>
       <MDBContainer fluid>
         <Button
+          component={Link} to="/filmList"
+          color="inherit"
+          sx={{
+            color: 'inherit',
+            backgroundColor: 'primary.main'
+          }}
+          >Peliculas
+        </Button>
+        <Button
+          component={Link} to="/bookList"
+          color="inherit"
+          sx={{
+            color: 'inherit',
+            backgroundColor: 'primary.main'
+          }}
+          >Libros
+        </Button>
+        <Button
+          component={Link} to="/serieList"
+          color="inherit"
+          sx={{
+            color: 'inherit',
+            backgroundColor: 'primary.main'
+          }}
+          >Series
+        </Button>
+        <Button
           component={Link} to="/"
           color="inherit"
           sx={{
