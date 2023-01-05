@@ -9,6 +9,8 @@ import { Film } from "./film/film.component";
 import { FilmList } from "./film/filmList.components";
 import { Book } from "./book/book.component";
 import { BookList } from "./book/bookList.components";
+import { Serie } from "./serie/serie.component";
+import { SerieList } from "./serie/serieList.component";
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -22,6 +24,8 @@ export default {
     AdminProfile,
     Film,
     Book,
+    Serie,
     FilmList,
     BookList,
+    SerieList,
 }
