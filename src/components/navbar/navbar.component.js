@@ -122,16 +122,18 @@ export const Navbar = () => {
                 }}
               >Registro</Button>)
             }
-            { isLoggedIn === false && (
-              <Button
-                component={Link} to="/listFilm"
-                color="inherit"
-                sx={{
-                  color: 'inherit',
-                  backgroundColor: 'primary.main'
-                }}
-              >Peliculas</Button>)
-            }
+            <input type="search" id="site-search" name="search" placeholder="Search"/>
+            <Button
+              color="inherit"
+              sx={{
+                color: 'inherit',
+                backgroundColor: 'primary.main'
+              }}
+              onClick={() => { navigate("/searchList", {state: {item: document.getElementById("site-search").value}});
+              }}
+              >
+              Search
+            </Button>
           </MDBNavbarNav>
         </MDBCollapse>
       </MDBContainer>

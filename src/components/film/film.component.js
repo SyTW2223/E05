@@ -8,7 +8,7 @@ export const Film = () => {
 
     return (
         <p>
-            {location.state.item.title}
+            Esto es una peli: {location.state.item.title}
         </p>
     );
 }

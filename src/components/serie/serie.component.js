@@ -8,7 +8,7 @@ export const Serie = () => {
 
     return (
         <p>
-            {location.state.item.title}
+            Esto es una serie: {location.state.item.title}
         </p>
     );
 }

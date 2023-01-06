@@ -6,16 +6,16 @@ class Item {
         return http.get("/" + route);
     }
     getItem(route, title) {
-        return http.get("/" + title);
+        return http.get("/" + route + title);
     }
     createItem(route, data) {
-        return http.post("/", data,  { headers: authHeader() });
+        return http.post("/" + route, data,  { headers: authHeader() });
     }
     updateItem(route, data) {
-        return http.patch("/", data, { headers: authHeader() });
+        return http.patch("/" + route, data, { headers: authHeader() });
     }
     deleteItem(route, title) {
-        return http.delete("/" + title, { headers: authHeader() });
+        return http.delete("/" + route + title, { headers: authHeader() });
     }
 }
 

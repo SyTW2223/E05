@@ -8,7 +8,7 @@ export const Book = () => {
 
     return (
         <p>
-            {location.state.item.title}
+            Esto es un libro: {location.state.item.title}
         </p>
     );
 }

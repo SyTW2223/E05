@@ -26,8 +26,6 @@ export const FilmList = () => {
   }, []);
 
   function getTableBodyAsReactElement() {
-    console.log('respuestaBack: ', respuestaBack);
-
     return (!respuestaBack) ? null : (
       <MDBContainer>
         <div className='welcome'>
@@ -51,14 +49,14 @@ export const FilmList = () => {
           
           {respuestaBack.map((item) => {
             return (
-                <tr>
-                  <td onClick={() => {navigate("/film/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
-                  <td>{item.yearPublication}</td>
-                  <td>{item.categories.map((cat) => cat + ', ')}</td>
-                  <td>{item.rating}</td>
-                </tr>
-              );
-            })}
+              <tr>
+                <td onClick={() => {navigate("/film/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
+                <td>{item.yearPublication}</td>
+                <td>{item.categories.map((cat) => cat + ', ')}</td>
+                <td>{item.rating}</td>
+              </tr>
+            );
+          })}
         </MDBTable>
       </MDBContainer>
     );

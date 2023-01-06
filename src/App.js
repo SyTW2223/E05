@@ -46,6 +46,7 @@ function App() {
             <Route path="/film" element = {<component.Film/>}/>
             <Route path="/book" element = {<component.Book/>}/>
             <Route path="/serie" element = {<component.Serie/>}/>
+            <Route path="/searchList" element = {<component.SearchList/>}/>
           </Routes>
           <AuthVerify/>
           <component.Footer/>
