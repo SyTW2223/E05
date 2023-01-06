@@ -11,7 +11,7 @@ import { Book } from "./book/book.component";
 import { BookList } from "./book/bookList.components";
 import { Serie } from "./serie/serie.component";
 import { SerieList } from "./serie/serieList.component";
-import { SearchList } from "../components/navbar/searchList";
+import { SearchList } from "../components/navbar/searchList.component";
 
 
 // eslint-disable-next-line import/no-anonymous-default-export

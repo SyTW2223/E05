@@ -18,7 +18,7 @@ export const SearchList = () => {
             setFilms(result.films);
             setSeries(result.series);
         });
-    }, []);
+    }, [location.state.item]);
     
 
     return (
