@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
+
 // ------------------ COLECCIONES DE USUARIOS EN MONGO ------------ //
-// se puede pasar las comprobaciones al front
 const User = mongoose.model(
   "User",
   new mongoose.Schema({
@@ -30,6 +30,10 @@ const User = mongoose.model(
     date: {
       type: Date,
       default: Date.now,
+    },
+    lists: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "List"
     }
   })
 );

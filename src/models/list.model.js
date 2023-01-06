@@ -6,23 +6,28 @@ const List = mongoose.model(
   new mongoose.Schema({
     name: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
     },
-    id: {
-      type: Number,
-      unique: true,
-      trim: true,
-    },
-    items: {
-      type: [Number],
-      trim: true,
-    },
     users: {
-        type: [Number],
-        trim: true,
-    }
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+    },
+    books: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Book",
+      trim: true,
+    },
+    films: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Film",
+      trim: true,
+    },
+    series: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Serie",
+      trim: true,
+    },
   })
 );
 

@@ -1,5 +1,5 @@
 module.exports = app => {
-  const serie = require("../controllers/serie.controler");
+  const serie = require("../controllers/serie.controller");
   var router = require("express").Router();
 
   router
@@ -10,7 +10,8 @@ module.exports = app => {
 
   router
   .route("/:title")
-  .get(serie.findOne)
+  .get(serie.findSerie)
+  .get(serie.findSerie)
   .delete(serie.delete)
   .patch(serie.update);
 

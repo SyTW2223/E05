@@ -1,5 +1,5 @@
 module.exports = app => {
-  const film = require("../controllers/film.controler");
+  const film = require("../controllers/film.controller");
   var router = require("express").Router();
 
   router
@@ -10,7 +10,7 @@ module.exports = app => {
 
   router
   .route("/:title")
-  .get(film.findOne)
+  .get(film.findFilm)
   .delete(film.delete)
   .patch(film.update);
 

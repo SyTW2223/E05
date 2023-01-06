@@ -1,5 +1,5 @@
 module.exports = app => {
-  const book = require("../controllers/book.controler");
+  const book = require("../controllers/book.controller");
   var router = require("express").Router();
 
   router
@@ -10,7 +10,7 @@ module.exports = app => {
 
   router
   .route("/:title")
-  .get(book.findOne)
+  .get(book.findBook)
   .delete(book.delete)
   .patch(book.update);
 

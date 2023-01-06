@@ -6,9 +6,11 @@ const config = require("../config/auth.config");
 const { schemaLogin:loginVal } = require('../validations/login.validation');
 const { schemaRegister:registerVal } = require('../validations/register.validation');
 
+
+
 // Create and Save a new user 
-exports.create = async (req, res) => {
-  //console.log('esto es create en user.controler');
+exports.create = async (req, res) => 
+{
   const { error } = registerVal.validate(req.body);
   if (error) {
     return res.status(400).json({error: error.details[0].message})
@@ -34,24 +36,35 @@ exports.create = async (req, res) => {
     email: req.body.email,
     password: password,
     role: req.body.role,
+
   });
 
   // Save user in the database
-  newUser.save().then(() => {
-      res.status(201).send({ message: "Succesfull created user." });
-    }).catch(err => {
-      res.status(500).send({
-        message: 
-          err.message || "Error created user."
-      });
+  newUser.save()
+  .then(() => {
+    res.status(201).send({ message: "Succesfull created user." });
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: 
+        err.message || "Error created user."
     });
+  });
+
+  const lists = createPredefinedList(newUser._id);
+  const data = {
+    username: newUser.username,
+    lists: lists,
+  }
+  this.update(data);
 };
 
 
 
 
 // Login user
-exports.login = async (req, res) => {
+exports.login = async (req, res) => 
+{
   // validations
   const { error } = loginVal.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message })
@@ -90,54 +103,9 @@ exports.login = async (req, res) => {
 };
 
 
-
-exports.userBoard = (req, res) => {
-  res.status(200).send("User Content.");
-};
-
-
-
-exports.adminBoard = (req, res) => {
-  res.status(200).send("Admin Content.");
-};
-
-/*
-
-// crea nuevo token al haber expirado
-exports.refreshToken = async (req, res) => {
-  const requestToken = req.body.refreshToken;
-  if (requestToken == null) {
-    return res.status(403).json({ message: "Refresh Token is required!" });
-  }
-  try {
-    let refreshToken = await RefreshToken.findOne({ token: requestToken });
-    if (!refreshToken) {
-      res.status(403).json({ message: "Refresh token is not in database!" });
-      return;
-    }
-    if (RefreshToken.verifyExpiration(refreshToken)) {
-      RefreshToken.findByIdAndRemove(refreshToken._id, { useFindAndModify: false }).exec();
-      res.status(403).json({
-        message: "Refresh token was expired. Please make a new signin request.",
-      });
-      return;
-    }
-    let newAccessToken = jwt.sign({ id: refreshToken.user._id }, config.secret, {
-      expiresIn: config.jwtExpiration,
-    });
-    return res.status(200).json({
-      accessToken: newAccessToken,
-      refreshToken: refreshToken.token,
-    });
-  } catch (err) {
-    return res.status(500).send({ message: err });
-  }
-};
-
-*/
-
 // exist account
-exports.logout = async (req, res) => {
+exports.logout = async (req, res) => 
+{
   try {
     req.session = null;
     return res.status(200).send({ message: "You've been signed out!" });
@@ -149,8 +117,8 @@ exports.logout = async (req, res) => {
 
 
 // Update a user by the username in the request
-exports.update = (req, res) => {
-  //console.log('esto es update en user.controler');
+exports.update = (req, res) => 
+{
   // si no hay datos nuevos no podra actualizarse
   if (Object.keys(req.body).length === 0) {
     res.status(400).send({
@@ -167,8 +135,6 @@ exports.update = (req, res) => {
     });
   }
   
-
-
   const username = req.params.username;
   // busca el usuario original para actualizarlo
   userModel.findOneAndUpdate({'username': username}, req.body, { new: true })
@@ -190,12 +156,13 @@ exports.update = (req, res) => {
 
 
 // Retrieve all elements from the database.
-exports.findAll = (req, res) => {
-  //console.log('esto es findAll en user.controler');
+exports.findAll = (req, res) => 
+{
   userModel.find()
     .then(data => {
       res.status(200).send(data);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).send({
         message:
           err.message || "Error found user."
@@ -206,14 +173,16 @@ exports.findAll = (req, res) => {
 
 
 // Find a element with an username
-exports.findOne = async (req, res) => {
-  //console.log('esto es findOne en user.controler');
+exports.findOne = async (req, res) => 
+{
   const username = req.params.username;
-  userModel.findOne({'username': username}).then(data => {
+  userModel.findOne({'username': username})
+  .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found user with username " + username });
       else res.status(200).send(data);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).send({ message: 
         err.message || "Unknown error when searching for " + username
       });
@@ -223,9 +192,8 @@ exports.findOne = async (req, res) => {
 
 
 // Delete a user with the specified id in the request
-exports.delete = (req, res) => {
-  //console.log('esto es delete en user.controler');
-  
+exports.delete = (req, res) => 
+{
   const username = req.params.username;
 
   userModel.findOneAndDelete({'username': username})
@@ -251,9 +219,8 @@ exports.delete = (req, res) => {
 
 
 // Delete all users from the database.
-exports.deleteAll = (req, res) => {
-  //console.log('esto es deleteAll en user.controler');
-  
+exports.deleteAll = (req, res) => 
+{
   userModel.deleteMany({})
     .then(data => {
       res.status(200).send({

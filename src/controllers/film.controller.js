@@ -85,10 +85,10 @@ exports.findAll = (req, res) =>
 };
 
 // Find a element with an title 
-exports.findOne = (req, res) => 
+exports.findFilm = async (req, res) => 
 {
   const title = req.params.title;
-  filmModel.findOne({'title': title})
+  await filmModel.find({'title': {$regex: title, $options: "i"}})
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found film with title " + title });
