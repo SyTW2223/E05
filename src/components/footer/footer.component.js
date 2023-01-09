@@ -24,17 +24,17 @@ export const Footer = () => {
             <h5 className='text-uppercase'>Acerca de nosotros</h5>
 
             <ul className='list-unstyled mb-0'>
-              <li>
+              <li key="{profile-andrea}">
                 <a href='#!' className='text-white'>
                   Andrea Hernández Martín
                 </a>
               </li>
-              <li>
+              <li key="{profile-ainoa}">
                 <a href='#!' className='text-white'>
                   Ainoa
                 </a>
               </li>
-              <li>
+              <li key="{profile-karina}">
                 <a href='#!' className='text-white'>
                   Karina Kalwani Israni
                 </a>
