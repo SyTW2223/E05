@@ -55,7 +55,7 @@ export const BookList = () => {
                 <tr key={item.id}>
                   <td onClick={() => {navigate("/book/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
                   <td>{item.author}</td>
-                  <td>{item.year}</td>
+                  <td>{item.yearPublication}</td>
                   <td>{item.saga}</td>
                   <td>{item.categories.map((cat) => cat + ', ')}</td>
                   <td>{item.rating} <MDBIcon icon="fas fa-star" style={{color: '#ffed2d'}}/></td>

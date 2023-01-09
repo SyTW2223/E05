@@ -55,7 +55,7 @@ export const Serie = () => {
                     </MDBCol>
                     <MDBCol size="6" className="mb-3">
                       <MDBTypography tag="h6">Estreno</MDBTypography>
-                      <MDBCardText className="text-muted">{location.state.item.year}</MDBCardText>
+                      <MDBCardText className="text-muted">{location.state.item.yearPublication}</MDBCardText>
                     </MDBCol>
                   </MDBRow>
                   <MDBRow className="pt-1">

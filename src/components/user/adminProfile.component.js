@@ -13,7 +13,17 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  // MDBBtn,
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalTitle,
+  MDBModalBody,
+  MDBModalFooter,
+  MDBInput,
+  MDBCheckbox,
+  MDBFile
   // MDBListGroup,
   // MDBListGroupItem,
 } from 'mdb-react-ui-kit'; 
@@ -44,6 +54,10 @@ export const AdminProfile = () => {
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
 
+  const [centredModal, setCentredModal] = useState(false);
+
+  const toggleShow = () => setCentredModal(!centredModal);
+
   const handleCheck = (event) => {
     var updatedList = [...checked];
     if (event.target.checked) {
@@ -72,15 +86,14 @@ export const AdminProfile = () => {
                   className="rounded-circle"
                   style={{ width: '150px' }}
                   fluid />
-                <div className="d-flex justify-content-center mb-2">
-                  ADMINISTRADOR
-                </div>
-                  {/* <MDBBtn outline className="ms-1">Editar Perfil</MDBBtn> */}
+                  <div className="d-flex justify-content-center mb-2">
+                    ADMINISTRADOR
+                  </div>
+                  <MDBBtn outline noRipple>Editar Perfil</MDBBtn>
               </MDBCardBody>
             </MDBCard>
-
-            
           </MDBCol>
+
           <MDBCol lg="8">
             <MDBCard className="mb-4">
               <MDBCardBody>
@@ -89,7 +102,7 @@ export const AdminProfile = () => {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userData.username}</MDBCardText>
+                    <MDBCardText className="text-muted">{userData.name}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -112,7 +125,7 @@ export const AdminProfile = () => {
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-            <>
+            <hr></hr>
             <Button variant="primary" onClick={handleShow}>
               Añadir Libro
             </Button>
@@ -122,8 +135,6 @@ export const AdminProfile = () => {
               </Modal.Header>
               <Modal.Body>
                 <Form>
-
-
                   <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Control
                       type="text"
@@ -167,8 +178,6 @@ export const AdminProfile = () => {
                     onChange={(e) => setImage(e.target.value)}
                     /><br></br>
                   </Form.Group>
-
-
                 </Form>
               </Modal.Body>
               <Modal.Footer>
@@ -199,8 +208,75 @@ export const AdminProfile = () => {
                 </Button>
               </Modal.Footer>
             </Modal>
-          </>
-          
+
+            {/* Pelicula */}
+            <MDBBtn noRipple onClick={toggleShow}>Añadir Película</MDBBtn>
+            <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
+              <MDBModalDialog centered>
+                <MDBModalContent>
+                  <MDBModalHeader>
+                    <MDBModalTitle>Película</MDBModalTitle>
+                    <MDBBtn noRipple className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+                  </MDBModalHeader>
+                  <MDBModalBody>
+                  <form>
+                    <MDBInput id='form4Example1' wrapperClass='mb-4' placeholder='Título' onChange={(e) => setTitle(e.target.value)}/>
+                    <MDBInput wrapperClass='mb-4' textarea id='form4Example3' rows={4} placeholder='Descripción' onChange={(e) => setDescription(e.target.value)} />
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Año de estreno' onChange={(e) => setYear(e.target.value)}/>
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Fantasía'
+                    />
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Acción'
+                    />
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Aventuras'
+                    />
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Drama'
+                    />
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Historica'
+                    />
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Comedia'
+                    />
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Romance'
+                    />
+                    <MDBCheckbox
+                      wrapperClass='d-flex mb-4'
+                      id='form4Example4'
+                      label='Ciencia ficción'
+                    />
+                    <MDBFile id='customFile' />
+                  </form>
+        
+                  </MDBModalBody>
+                  <MDBModalFooter>
+                    <MDBBtn noRipple color='secondary' onClick={toggleShow}>
+                      Cerrar
+                    </MDBBtn>
+                    <MDBBtn noRipple>Guardar</MDBBtn>
+                  </MDBModalFooter>
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
+            
           </MDBCol>
         </MDBRow>
       </MDBContainer>
