@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import itemServices from "../../services/item.services";
 import {useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { MDBBadge, MDBBtn, MDBTable, MDBTableHead, MDBTableBody, MDBContainer, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBTable, MDBTableHead, MDBContainer, MDBIcon } from 'mdb-react-ui-kit';
 
 
 
@@ -53,7 +53,7 @@ export const FilmList = () => {
                 <td onClick={() => {navigate("/film/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
                 <td>{item.yearPublication}</td>
                 <td>{item.categories.map((cat) => cat + ', ')}</td>
-                <td>{item.rating}</td>
+                <td>{item.rating} <MDBIcon icon="fas fa-star" style={{color: '#ffed2d'}}/></td>
               </tr>
             );
           })}
