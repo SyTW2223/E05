@@ -4,7 +4,7 @@ const serieModel = require("../models/serie.model");
 // Create and Save a new serie
 exports.create = async (req, res) => 
 {
-  const allowedCreated = ['description', 'rating', 'yearPublication', 'categories', 'title', 'seasons'];
+  const allowedCreated = ['description', 'rating', 'yearPublication', 'categories', 'title', 'seasons', 'image'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
@@ -20,7 +20,7 @@ exports.create = async (req, res) =>
     seasons: req.body.seasons,
     categories: req.body.categories,
     rating: req.body.rating,
-    yearPublication: req.body.yearPublication,
+    yearPublication: req.body.yearPublication
   });
 
   // Save Serie in the database
@@ -43,7 +43,7 @@ exports.update = (req, res) =>
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['description', 'rating', 'id', 'categories', 'title', 'seasons'];
+  const allowedUpdates = ['description', 'rating', 'id', 'categories', 'title', 'seasons', 'image'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 

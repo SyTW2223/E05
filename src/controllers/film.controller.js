@@ -41,7 +41,7 @@ exports.update = (req, res) => {
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['description', 'rating', 'image', 'categories', 'title', 'yearPublication'];
+  const allowedUpdates = ['description', 'rating', 'image', 'categories', 'title', 'yearPublication', 'image'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 

@@ -4,13 +4,13 @@ const bookModel = require("../models/book.model");
 // Create and Save a new book
 exports.create = async (req, res) => 
 {
-  const allowedCreated = ['description', 'rating', 'categories', 'title', 'author', 'saga', 'yearPublication'];
+  const allowedCreated = ['description', 'rating', 'categories', 'title', 'author', 'saga', 'yearPublication', 'image'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
   if (!isValidCreate) {
     return res.status(400).send({
-      error: 'Update is not permitted. Check the parameters. [title, description, categories, rating, author, yearPublication, saga]',
+      error: 'Update is not permitted. Check the parameters. [title, description, categories, rating, author, yearPublication, saga, image]',
     });
   }
   // Create a book
@@ -22,6 +22,7 @@ exports.create = async (req, res) =>
     description: req.body.description,
     categories: req.body.categories,
     rating: req.body.rating,
+    image: req.body.image
   });
   
   // Save book in the database
