@@ -1,5 +1,5 @@
 import http from "../http-common";
-import authHeader from './auth-header';
+import { AuthHeader } from './auth-header';
 
 class Item {
     listItems(route) {
@@ -9,13 +9,13 @@ class Item {
         return http.get("/" + route + title);
     }
     createItem(route, data) {
-        return http.post("/" + route, data,  { headers: authHeader() });
+        return http.post("/" + route, data,  { headers: AuthHeader() });
     }
     updateItem(route, data) {
-        return http.patch("/" + route, data, { headers: authHeader() });
+        return http.patch("/" + route, data, { headers: AuthHeader() });
     }
     deleteItem(route, title) {
-        return http.delete("/" + route + title, { headers: authHeader() });
+        return http.delete("/" + route + title, { headers: AuthHeader() });
     }
 }
 

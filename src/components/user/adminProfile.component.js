@@ -1,6 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+/* eslint-disable no-unused-expressions */
+import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 import {
   MDBCol,
   MDBContainer,
@@ -9,21 +13,47 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
-  MDBProgress,
-  MDBProgressBar,
-  MDBListGroup,
-  MDBListGroupItem,
-  MDBBadge
-} from 'mdb-react-ui-kit';
+} from 'mdb-react-ui-kit'; 
+
+import item from "../../services/item.services";
+
+
 
 const selectorIsLoggedIn = (state) => state.auth?.isLoggedIn;
 const selectorUserData = (state) => state.auth?.user?.data;
 
 export const AdminProfile = () => {
 
+  const dispatch = useDispatch();
+
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const userData = useSelector(selectorUserData);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [author, setAuthor] = useState();
+  const [saga, setSaga] = useState("");
+  const [year, setYear] = useState();
+  const [image, setImage] = useState("");
+  const [checked, setChecked] = useState([]);
+
+  const handleCheck = (event) => {
+    var updatedList = [...checked];
+    if (event.target.checked) {
+      updatedList = [...checked, event.target.value];
+    } else {
+      updatedList.splice(checked.indexOf(event.target.value), 1);
+    }
+    setChecked(updatedList);
+  };
+
+  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
 
   if (!isLoggedIn) {
       return <Navigate to="/login" />;
@@ -41,40 +71,12 @@ export const AdminProfile = () => {
                   className="rounded-circle"
                   style={{ width: '150px' }}
                   fluid />
-                <p className="text-muted mb-4">{userData.username}</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn outline className="ms-1">Esto es admin</MDBBtn>
+                  ADMINISTRADOR
                 </div>
               </MDBCardBody>
             </MDBCard>
 
-            <MDBCard>
-            <MDBListGroup style={{ minWidth: '22rem' }} light>
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-              <b>Listas preferidas</b>
-              </MDBListGroupItem>
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                Películas pendientes
-                <MDBBadge pill light>
-                  14
-                </MDBBadge>
-              </MDBListGroupItem>
-
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                Series pendientes
-                <MDBBadge pill light>
-                  2
-                </MDBBadge>
-              </MDBListGroupItem>
-
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                Libros pendientes
-                <MDBBadge pill light>
-                  1
-                </MDBBadge>
-              </MDBListGroupItem>
-            </MDBListGroup>
-            </MDBCard>
           </MDBCol>
           <MDBCol lg="8">
             <MDBCard className="mb-4">
@@ -105,83 +107,98 @@ export const AdminProfile = () => {
                     <MDBCardText className="text-muted">{userData.email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Authorities</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userData.role}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
               </MDBCardBody>
             </MDBCard>
 
-            <MDBRow>
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+            <>
+            <Button variant="primary" onClick={handleShow}>
+              Añadir Libro
+            </Button>
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Libro</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <Form>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
+                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                    <Form.Control
+                      type="text"
+                      placeholder="Titulo"
+                      autoFocus
+                      onChange={(e) => setTitle(e.target.value)}
+                    /><br></br>
+                    <Form.Control 
+                      as="textarea" 
+                      rows={3}
+                      placeholder="Descripción"
+                      onChange={(e) => setDescription(e.target.value)}
+                      /><br></br>
+                    <Form.Control
+                      type="text"
+                      placeholder="Autor"
+                      autoFocus
+                      onChange={(e) => setAuthor(e.target.value)}
+                    /><br></br>
+                    <Form.Control
+                      type="text"
+                      placeholder="Saga"
+                      autoFocus
+                      onChange={(e) => setSaga(e.target.value)}
+                    /><br></br>
+                    <Form.Control
+                      type="text"
+                      placeholder="Año Publicación"
+                      autoFocus
+                      onChange={(e) => setYear(e.target.value)}
+                    /><br></br>
+                    {checkList.map((item, index) => (
+                      <div key={index}>
+                        <input value={item} type="checkbox" onChange={handleCheck}/>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                    <br></br>
+                   <Form.Control 
+                    type="file"
+                    onChange={(e) => setImage(e.target.value)}
+                    /><br></br>
+                  </Form.Group>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
 
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard className="mb-4 mb-md-0">
-                  <MDBCardBody>
-                    <MDBCardText className="mb-4"><span className="text-primary font-italic me-1">assigment</span> Project Status</MDBCardText>
-                    <MDBCardText className="mb-1" style={{ fontSize: '.77rem' }}>Web Design</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={80} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Website Markup</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={72} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>One Page</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={89} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Mobile Template</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={55} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-
-                    <MDBCardText className="mt-4 mb-1" style={{ fontSize: '.77rem' }}>Backend API</MDBCardText>
-                    <MDBProgress className="rounded">
-                      <MDBProgressBar width={66} valuemin={0} valuemax={100} />
-                    </MDBProgress>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow>
+                </Form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  Volver
+                </Button>
+                <Button variant="primary" 
+                  onClick={() => {
+                    const bookData = {
+                      "title": title,
+                      "description": description,
+                      "yearPublication": Number(year),
+                      "categories": checked,
+                      "author": author,
+                      "saga": saga,
+                      "image": image,
+                    }
+                    dispatch(item.createItem("book", bookData))
+                    .then((data) => {
+                        console.log('Creado libro correctamente.')
+                        console.log(data)
+                    })
+                    .catch(() => {
+                        console.log('Error, no se ha podido crear el libro.');
+                    });
+                }}
+                  >Listo
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </>
+          
           </MDBCol>
         </MDBRow>
       </MDBContainer>
