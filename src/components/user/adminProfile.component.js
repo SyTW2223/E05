@@ -13,11 +13,12 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
+  // MDBBtn,
+  // MDBListGroup,
+  // MDBListGroupItem,
 } from 'mdb-react-ui-kit'; 
 
 import item from "../../services/item.services";
-
-
 
 const selectorIsLoggedIn = (state) => state.auth?.isLoggedIn;
 const selectorUserData = (state) => state.auth?.user?.data;
@@ -59,7 +60,7 @@ export const AdminProfile = () => {
       return <Navigate to="/login" />;
   }
   return (
-    <section style={{ backgroundColor: '#eee' }}>
+    <section>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol lg="4">
@@ -74,9 +75,11 @@ export const AdminProfile = () => {
                 <div className="d-flex justify-content-center mb-2">
                   ADMINISTRADOR
                 </div>
+                  {/* <MDBBtn outline className="ms-1">Editar Perfil</MDBBtn> */}
               </MDBCardBody>
             </MDBCard>
 
+            
           </MDBCol>
           <MDBCol lg="8">
             <MDBCard className="mb-4">
@@ -109,7 +112,6 @@ export const AdminProfile = () => {
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-
             <>
             <Button variant="primary" onClick={handleShow}>
               Añadir Libro
