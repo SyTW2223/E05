@@ -22,7 +22,6 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBInput,
-  MDBCheckbox,
   MDBFile
   // MDBListGroup,
   // MDBListGroupItem,
@@ -53,6 +52,8 @@ export const AdminProfile = () => {
   const [year, setYear] = useState();
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
+  const [rating, setRating] = useState("");
+
 
   const [centredModal, setCentredModal] = useState(false);
 
@@ -215,7 +216,7 @@ export const AdminProfile = () => {
               <MDBModalDialog centered>
                 <MDBModalContent>
                   <MDBModalHeader>
-                    <MDBModalTitle>Película</MDBModalTitle>
+                    <MDBModalTitle >Película</MDBModalTitle>
                     <MDBBtn noRipple className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
                   </MDBModalHeader>
                   <MDBModalBody>
@@ -223,46 +224,13 @@ export const AdminProfile = () => {
                     <MDBInput id='form4Example1' wrapperClass='mb-4' placeholder='Título' onChange={(e) => setTitle(e.target.value)}/>
                     <MDBInput wrapperClass='mb-4' textarea id='form4Example3' rows={4} placeholder='Descripción' onChange={(e) => setDescription(e.target.value)} />
                     <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Año de estreno' onChange={(e) => setYear(e.target.value)}/>
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Fantasía'
-                    />
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Acción'
-                    />
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Aventuras'
-                    />
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Drama'
-                    />
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Historica'
-                    />
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Comedia'
-                    />
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Romance'
-                    />
-                    <MDBCheckbox
-                      wrapperClass='d-flex mb-4'
-                      id='form4Example4'
-                      label='Ciencia ficción'
-                    />
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Valoración media' onChange={(e) => setRating(e.target.value)}/>
+                    {checkList.map((item, index) => (
+                      <div key={index}>
+                        <input value={item} type="checkbox" onChange={handleCheck}/>
+                        <span>{item}</span>
+                      </div>
+                    ))}
                     <MDBFile id='customFile' />
                   </form>
         
@@ -271,7 +239,24 @@ export const AdminProfile = () => {
                     <MDBBtn noRipple color='secondary' onClick={toggleShow}>
                       Cerrar
                     </MDBBtn>
-                    <MDBBtn noRipple>Guardar</MDBBtn>
+                    <MDBBtn noRipple onClick={ () => {
+                      const filmData = {
+                        "title": title,
+                        "description": description,
+                        "yearPublication": Number(year),
+                        "categories": checked,
+                        "image": image,
+                        "rating": rating
+                      }
+                      dispatch(item.createItem("film", filmData))
+                      .then((data) => {
+                          console.log('Película creada correctamente.')
+                          console.log(data)
+                      })
+                      .catch(() => {
+                          console.log('Error, no se ha podido crear la película.');
+                      });
+                    }} onMouseUp={toggleShow}>Guardar</MDBBtn>
                   </MDBModalFooter>
                 </MDBModalContent>
               </MDBModalDialog>

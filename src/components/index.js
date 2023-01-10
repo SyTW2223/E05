@@ -29,5 +29,5 @@ export default {
     FilmList,
     BookList,
     SerieList,
-    SearchList,
+    SearchList
 }
