@@ -49,6 +49,7 @@ export const AdminProfile = () => {
   const [description, setDescription] = useState();
   const [author, setAuthor] = useState();
   const [saga, setSaga] = useState("");
+  const [seasons, setSeasons] = useState("");
   const [year, setYear] = useState();
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
@@ -127,96 +128,73 @@ export const AdminProfile = () => {
               </MDBCardBody>
             </MDBCard>
             <hr></hr>
-            <Button variant="primary" onClick={handleShow}>
-              Añadir Libro
-            </Button>
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Libro</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <Form>
-                  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                    <Form.Control
-                      type="text"
-                      placeholder="Titulo"
-                      autoFocus
-                      onChange={(e) => setTitle(e.target.value)}
-                    /><br></br>
-                    <Form.Control 
-                      as="textarea" 
-                      rows={3}
-                      placeholder="Descripción"
-                      onChange={(e) => setDescription(e.target.value)}
-                      /><br></br>
-                    <Form.Control
-                      type="text"
-                      placeholder="Autor"
-                      autoFocus
-                      onChange={(e) => setAuthor(e.target.value)}
-                    /><br></br>
-                    <Form.Control
-                      type="text"
-                      placeholder="Saga"
-                      autoFocus
-                      onChange={(e) => setSaga(e.target.value)}
-                    /><br></br>
-                    <Form.Control
-                      type="text"
-                      placeholder="Año Publicación"
-                      autoFocus
-                      onChange={(e) => setYear(e.target.value)}
-                    /><br></br>
+            {/* Libro */}
+            {/* <div>
+            <MDBBtn noRipple onClick={toggleShow}>Añadir Libro</MDBBtn>
+            <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
+              <MDBModalDialog centered>
+                <MDBModalContent>
+                  <MDBModalHeader>
+                    <MDBModalTitle tag={'h2'}>Libro</MDBModalTitle>
+                    <MDBBtn noRipple className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+                  </MDBModalHeader>
+                  <MDBModalBody>
+                  <form>
+                    <MDBInput id='form4Example1' wrapperClass='mb-4' placeholder='Título' onChange={(e) => setTitle(e.target.value)}/>
+                    <MDBInput wrapperClass='mb-4' textarea id='form4Example3' rows={4} placeholder='Descripción' onChange={(e) => setDescription(e.target.value)} />
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Autor' onChange={(e) => setAuthor(e.target.value)}/>
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Saga' onChange={(e) => setSaga(e.target.value)}/>
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Año de estreno' onChange={(e) => setYear(e.target.value)}/>
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Valoración media' onChange={(e) => setRating(e.target.value)}/>
+
                     {checkList.map((item, index) => (
                       <div key={index}>
                         <input value={item} type="checkbox" onChange={handleCheck}/>
                         <span>{item}</span>
                       </div>
                     ))}
-                    <br></br>
-                   <Form.Control 
-                    type="file"
-                    onChange={(e) => setImage(e.target.value)}
-                    /><br></br>
-                  </Form.Group>
-                </Form>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                  Volver
-                </Button>
-                <Button variant="primary" 
-                  onClick={() => {
-                    const bookData = {
-                      "title": title,
-                      "description": description,
-                      "yearPublication": Number(year),
-                      "categories": checked,
-                      "author": author,
-                      "saga": saga,
-                      "image": image,
-                    }
-                    dispatch(item.createItem("book", bookData))
-                    .then((data) => {
-                        console.log('Creado libro correctamente.')
-                        console.log(data)
-                    })
-                    .catch(() => {
-                        console.log('Error, no se ha podido crear el libro.');
-                    });
-                }}
-                  >Listo
-                </Button>
-              </Modal.Footer>
-            </Modal>
+                    <MDBFile id='customFile' />
+                  </form>
+        
+                  </MDBModalBody>
+                  <MDBModalFooter>
+                    <MDBBtn noRipple color='secondary' onClick={toggleShow}>
+                      Cerrar
+                    </MDBBtn>
+                    <MDBBtn noRipple onClick={ () => {
+                      const filmData = {
+                        "title": title,
+                        "description": description,
+                        "yearPublication": Number(year),
+                        "categories": checked,
+                        "image": image,
+                        "rating": rating,
+                        "saga": saga,
+                        "author": author
+                      }
+                      dispatch(item.createItem("book", filmData))
+                      .then((data) => {
+                          console.log('Libro creado correctamente.')
+                          console.log(data)
+                      })
+                      .catch(() => {
+                          console.log('Error, no se ha podido crear el libro.');
+                      });
+                    }} onMouseUp={toggleShow}>Guardar</MDBBtn>
+                  </MDBModalFooter>
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
+            </div> */}
 
             {/* Pelicula */}
-            <MDBBtn noRipple onClick={toggleShow}>Añadir Película</MDBBtn>
+            {/* <div> */}
+            {/* <MDBBtn noRipple onClick={toggleShow}>Añadir Película</MDBBtn>
             <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
               <MDBModalDialog centered>
                 <MDBModalContent>
                   <MDBModalHeader>
-                    <MDBModalTitle >Película</MDBModalTitle>
+                    <MDBModalTitle tag={'h2'}>Película</MDBModalTitle>
                     <MDBBtn noRipple className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
                   </MDBModalHeader>
                   <MDBModalBody>
@@ -261,7 +239,64 @@ export const AdminProfile = () => {
                 </MDBModalContent>
               </MDBModalDialog>
             </MDBModal>
-            
+            </div> */}
+
+            {/* Serie */}
+            <div>
+            <MDBBtn noRipple onClick={toggleShow}>Añadir Serie</MDBBtn>
+            <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
+              <MDBModalDialog centered>
+                <MDBModalContent>
+                  <MDBModalHeader>
+                    <MDBModalTitle tag={'h2'}>Serie</MDBModalTitle>
+                    <MDBBtn noRipple className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+                  </MDBModalHeader>
+                  <MDBModalBody>
+                  <form>
+                    <MDBInput id='form4Example1' wrapperClass='mb-4' placeholder='Título' onChange={(e) => setTitle(e.target.value)}/>
+                    <MDBInput wrapperClass='mb-4' textarea id='form4Example3' rows={4} placeholder='Descripción' onChange={(e) => setDescription(e.target.value)} />
+                    <MDBInput wrapperClass='mb-4' textarea id='form4Example3' rows={4} placeholder='Temporadas' onChange={(e) => setSeasons(e.target.value)} />
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Año de estreno' onChange={(e) => setYear(e.target.value)}/>
+                    <MDBInput id='form4Example2' wrapperClass='mb-4' placeholder='Valoración media' onChange={(e) => setRating(e.target.value)}/>
+                    {checkList.map((item, index) => (
+                      <div key={index}>
+                        <input value={item} type="checkbox" onChange={handleCheck}/>
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                    <MDBFile id='customFile' />
+                  </form>
+        
+                  </MDBModalBody>
+                  <MDBModalFooter>
+                    <MDBBtn noRipple color='secondary' onClick={toggleShow}>
+                      Cerrar
+                    </MDBBtn>
+                    <MDBBtn noRipple onClick={ () => {
+                      const filmData = {
+                        "title": title,
+                        "description": description,
+                        "yearPublication": Number(year),
+                        "categories": checked,
+                        "image": image,
+                        "rating": rating,
+                        "seasons": seasons
+                      }
+                      dispatch(item.createItem("serie", filmData))
+                      .then((data) => {
+                          console.log('Serie creada correctamente.')
+                          console.log(data)
+                      })
+                      .catch(() => {
+                          console.log('Error, no se ha podido crear la serie.');
+                      });
+                    }} onMouseUp={toggleShow}>Guardar</MDBBtn>
+                  </MDBModalFooter>
+                </MDBModalContent>
+              </MDBModalDialog>
+            </MDBModal>
+            </div>
+
           </MDBCol>
         </MDBRow>
       </MDBContainer>
