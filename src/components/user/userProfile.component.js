@@ -41,7 +41,7 @@ export const UserProfile = () => {
                   fluid />
                 <p className="text-muted mb-4"></p>
                 <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn outline className="ms-1">Editar perfil</MDBBtn>
+                  <MDBBtn outline noRipple className="ms-1">Editar perfil</MDBBtn>
                 </div>
               </MDBCardBody>
             </MDBCard>

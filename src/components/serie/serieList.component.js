@@ -31,7 +31,7 @@ export const SerieList = () => {
     return (!respuestaBack) ? null : (
       <MDBContainer>
         <div className='welcome'>
-          <h1 className="text-center my-5">Todos los libros</h1>
+          <h1 className="text-center my-5">Todas las series</h1>
         </div>
         <MDBTable align='middle' bordered responsive className='caption-top'>
           <MDBTableHead>

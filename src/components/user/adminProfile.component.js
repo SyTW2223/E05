@@ -43,7 +43,7 @@ export const AdminProfile = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  
 
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -128,8 +128,10 @@ export const AdminProfile = () => {
               </MDBCardBody>
             </MDBCard>
             <hr></hr>
+            {/* Hay que buscar la forma de tener varios modales en la misma página porque al mostrarlo
+            juntos se ven mal*/}
             {/* Libro */}
-            {/* <div>
+            <div>
             <MDBBtn noRipple onClick={toggleShow}>Añadir Libro</MDBBtn>
             <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
               <MDBModalDialog centered>
@@ -153,7 +155,7 @@ export const AdminProfile = () => {
                         <span>{item}</span>
                       </div>
                     ))}
-                    <MDBFile id='customFile' />
+                    <MDBFile id='customFile' onChange={(e) => setImage(e.target.value)}/>
                   </form>
         
                   </MDBModalBody>
@@ -185,11 +187,11 @@ export const AdminProfile = () => {
                 </MDBModalContent>
               </MDBModalDialog>
             </MDBModal>
-            </div> */}
+            </div>
 
             {/* Pelicula */}
-            {/* <div> */}
-            {/* <MDBBtn noRipple onClick={toggleShow}>Añadir Película</MDBBtn>
+            <div>
+            <MDBBtn noRipple onClick={toggleShow}>Añadir Película</MDBBtn>
             <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
               <MDBModalDialog centered>
                 <MDBModalContent>
@@ -209,7 +211,7 @@ export const AdminProfile = () => {
                         <span>{item}</span>
                       </div>
                     ))}
-                    <MDBFile id='customFile' />
+                    <MDBFile id='customFile' onChange={(e) => setImage(e.target.value)}/>
                   </form>
         
                   </MDBModalBody>
@@ -239,11 +241,11 @@ export const AdminProfile = () => {
                 </MDBModalContent>
               </MDBModalDialog>
             </MDBModal>
-            </div> */}
+            </div>
 
             {/* Serie */}
             <div>
-            <MDBBtn noRipple onClick={toggleShow}>Añadir Serie</MDBBtn>
+            <MDBBtn noRipple onClick={handleShow}>Añadir Serie</MDBBtn>
             <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
               <MDBModalDialog centered>
                 <MDBModalContent>
@@ -264,7 +266,7 @@ export const AdminProfile = () => {
                         <span>{item}</span>
                       </div>
                     ))}
-                    <MDBFile id='customFile' />
+                    <MDBFile id='customFile' onChange={(e) => setRating(e.target.value)}/>
                   </form>
         
                   </MDBModalBody>

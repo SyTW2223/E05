@@ -43,23 +43,24 @@ export const Footer = () => {
               </li>
             </ul>
           </MDBCol>
+
+          <MDBCol lg='3' md='8' className='mb-4 mb-md-0'>
+            <h5 className='text-uppercase'>Nuestras redes sociales</h5>
+            <ul className='list-unstyled mb-0'>
+              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#ac2bac' }}>
+                <MDBIcon fab icon='instagram' size='lg'/>
+              </MDBBtn>
+              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#55acee' }}>
+                <MDBIcon fab icon='twitter' size='lg' />
+              </MDBBtn>
+              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#6441a5' }}>
+                <MDBIcon fab icon='twitch' size='1g' />
+              </MDBBtn>
+            </ul>
+          </MDBCol>
         </MDBRow>
       </MDBContainer>
 
-      <MDBCol lg='3' md='6' className='mb-4 mb-md-0'>
-        <h5 className='text-uppercase'>Nuestras redes sociales</h5>
-        <ul className='list-unstyled mb-0'>
-          <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#ac2bac' }}>
-            <MDBIcon fab icon='instagram' size='lg'/>
-          </MDBBtn>
-          <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#55acee' }}>
-            <MDBIcon fab icon='twitter' size='lg' />
-          </MDBBtn>
-          <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#6441a5' }}>
-            <MDBIcon fab icon='twitch' size='1g' />
-          </MDBBtn>
-        </ul>
-      </MDBCol>
       <div className='text-center p-3' style={{ backgroundColor: '#54B4D3' }}>
         &copy; {new Date().getFullYear()} Copyright:{' '}
         <a className='text-white' href='https://mdbootstrap.com/'>
