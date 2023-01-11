@@ -12,6 +12,8 @@ import { BookList } from "./book/bookList.components";
 import { Serie } from "./serie/serie.component";
 import { SerieList } from "./serie/serieList.component";
 import { SearchList } from "../components/navbar/searchList.component";
+import { List } from "./list/list.component";
+import { UserList } from "./list/userList.component";
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -29,5 +31,7 @@ export default {
     FilmList,
     BookList,
     SerieList,
-    SearchList
+    SearchList,
+    List,
+    UserList
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
+
 import {
   MDBCol,
   MDBContainer,
@@ -20,6 +21,7 @@ const selectorUserData = (state) => state.auth?.user?.data;
 
 export const UserProfile = () => {
 
+  const navigate = useNavigate();
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const userData = useSelector(selectorUserData);
 
@@ -117,17 +119,19 @@ export const UserProfile = () => {
             </MDBCard>
             
             <hr />
+            <MDBBtn outline onClick={() => {navigate("/list/")}} noRipple className='d-flex justify-content-between align-items-center'>
             <p className="text-center"><strong>Mis listas</strong></p>
+            </MDBBtn>
             <MDBRow>
               <MDBCol md="6">
                 <MDBCard>
                 <MDBListGroup style={{ minWidth: '22rem' }} light>
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+                  <MDBBtn outline onClick={() => {navigate("/list/")}} noRipple className='d-flex justify-content-between align-items-center'>
                     Películas pendientes
                     <MDBBadge pill light>
                       14
                     </MDBBadge>
-                  </MDBListGroupItem>
+                  </MDBBtn>
 
                   <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
                     Series pendientes

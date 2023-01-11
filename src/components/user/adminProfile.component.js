@@ -2,9 +2,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
 import {
   MDBCol,
   MDBContainer,
@@ -23,8 +20,6 @@ import {
   MDBModalFooter,
   MDBInput,
   MDBFile
-  // MDBListGroup,
-  // MDBListGroupItem,
 } from 'mdb-react-ui-kit'; 
 
 import item from "../../services/item.services";
