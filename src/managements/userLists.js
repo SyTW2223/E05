@@ -9,13 +9,11 @@ exports.createPredefinedList = (userId) =>
     return ids = names.map((name) => {
         const data = {
             name: name,
-            users: userId,
-            books: [],
-            films: [],
-            series: [],
+            users: [userId],
         }
+        console.log('data', data)
         const dataList = list.create(data);
-        console.log('datalist management', dataList)
-        return dataList._id;
+        //console.log('datalist management', dataList)
+        //return dataList._id;
     });
 }

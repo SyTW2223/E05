@@ -4,23 +4,24 @@ const bookModel = require("../models/book.model");
 // Create and Save a new book
 exports.create = async (req, res) => 
 {
-  const allowedCreated = ['description', 'rating', 'categories', 'title', 'author', 'saga', 'yearPublication'];
+  const allowedCreated = ['description', 'rating', 'genres', 'title', 'author', 'saga', 'yearPublication', 'image'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
   if (!isValidCreate) {
     return res.status(400).send({
-      error: 'Update is not permitted. Check the parameters. [title, description, categories, rating, author, yearPublication, saga]',
+      error: 'Update is not permitted. Check the parameters. [title, description, genres, rating, author, image, yearPublication, saga]',
     });
   }
   // Create a book
   const newBook = new bookModel({
     title: req.body.title,
+    image: req.body.image,
     author: req.body.author,
     saga: req.body.saga,
     yearPublication: req.body.yearPublication,
     description: req.body.description,
-    categories: req.body.categories,
+    genres: req.body.genres,
     rating: req.body.rating,
   });
   
@@ -44,7 +45,7 @@ exports.update = (req, res) =>
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['description', 'rating', 'categories', 'title', 'author', 'saga', 'yearPublication'];
+  const allowedUpdates = ['description', 'rating', 'genres', 'title', 'author', 'saga', 'image', 'yearPublication'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 

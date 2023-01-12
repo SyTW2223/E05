@@ -3,7 +3,7 @@ const filmModel = require("../models/film.model");
 
 // Create and Save a new film
 exports.create = async (req, res) => {
-  const allowedCreated = ['description', 'rating', 'categories', 'title', 'yearPublication', 'image'];
+  const allowedCreated = ['description', 'rating', 'genres', 'title', 'yearPublication', 'image'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
@@ -16,7 +16,7 @@ exports.create = async (req, res) => {
   const newFilm = new filmModel({
     title: req.body.title,
     description: req.body.description,
-    categories: req.body.categories,
+    genres: req.body.genres,
     rating: req.body.rating,
     yearPublication: req.body.yearPublication,
     image: req.body.image,
@@ -41,7 +41,7 @@ exports.update = (req, res) => {
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['description', 'rating', 'image', 'categories', 'title', 'yearPublication'];
+  const allowedUpdates = ['description', 'rating', 'image', 'genres', 'title', 'yearPublication'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 

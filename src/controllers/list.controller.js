@@ -4,19 +4,19 @@ const listModel = require("../models/list.model");
 // Create and Save a new list
 exports.create = async (req, res) => 
 {
-  const allowedUpdates = ['name'];
-  const actualUpdates = Object.keys(req.body);
-  const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
+  console.log(req.body)
+  const allowedCreated = ['name', 'users'];
+  const actualCreated = Object.keys(req.body);
+  const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
-  if (!isValidUpdate) {
+  if (!isValidCreate) {
     return res.status(400).send({
-      error: 'Update is not permitted. Check the parameters.',
+      error: 'Create is not permitted. Check the parameters. name, [users]',
     });
   }
   // Create a list
   const newList = new listModel({
     name: req.body.name,
-    items: req.body.items,
     users: req.body.users,
   });
 
@@ -52,9 +52,8 @@ exports.update = (req, res) =>
       error: 'Update is not permitted. Check the parameters.',
     });
   }
-  const id = req.params._id;
 
-  listModel.findByIdAndUpdate({id}, req.body, { new: true })
+  listModel.findByIdAndUpdate({_id: req.params._id}, req.body, { new: true })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -87,18 +86,18 @@ exports.findAll = (req, res) =>
 };
 
 // Find a list by user owner
-exports.findOne = (req, res) => 
+exports.findList = (req, res) => 
 {
-  const user = req.params.users;
-  listModel.findOne({'users': user})
+
+  listModel.findById({_id: req.params._id})
     .then(data => {
         if (!data)
-          res.status(404).send({ message: "Not found list with name " + name });
+          res.status(404).send({ message: "Not found list with name " + id });
         else res.status(200).send(data);
     })
     .catch(err => {
         res.status(500).send({ message: 
-          err.message || "Unknown error when searching for " + name });
+          err.message || "Unknown error when searching for " + id });
     });
 };
 
@@ -106,38 +105,44 @@ exports.findOne = (req, res) =>
 // Delete a list with the specified id in the request
 exports.delete = (req, res) => 
 {
-  const name = req.params.name;
 
-  listModel.findOneAndDelete({'name': name})
+  listModel.findByIdAndDelete({_id: req.params._id})
     .then(data => {
       if (!data) {
-        res.status(404).send({
-          message: `Cannot delete list with name=${name}. Maybe list was not found!`
+        res.status(404)
+        .send({
+          message: `Cannot delete list with id=${id}. Maybe list was not found!`
         });
       } else {
-        res.status(200).send({
+        res.status(200)
+        .send({
           message: "List was deleted successfully!"
         });
       }
     })
     .catch(err => {
-      res.status(500).send({
+      res.status(500)
+      .send({
         message: 
-          err.message || "Could not delete list with name=" + name
+          err.message || "Could not delete list with id=" + id
       });
     });
 };
 
+
 // Delete all lists from the database.
-exports.deleteAll = (req, res) => {
+exports.deleteAll = (req, res) => 
+{
   listModel.deleteMany({})
     .then(data => {
-      res.status(200).send({
+      res.status(200)
+      .send({
         message: `${data.deletedCount} lists were deleted successfully!`
       });
     })
     .catch(err => {
-      res.status(500).send({
+      res.status(500)
+      .send({
         message:
           err.message || "Some error occurred while removing all lists."
       });

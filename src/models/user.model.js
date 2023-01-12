@@ -33,7 +33,7 @@ const User = mongoose.model(
     },
     lists: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: "List"
+      ref: "List",
     }
   })
 );

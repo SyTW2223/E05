@@ -5,6 +5,7 @@ const crypt = require('bcryptjs');
 const config = require("../config/auth.config");
 const { schemaLogin:loginVal } = require('../validations/login.validation');
 const { schemaRegister:registerVal } = require('../validations/register.validation');
+const { createPredefinedList } = require("../managements/userLists.js");
 
 
 
@@ -36,9 +37,7 @@ exports.create = async (req, res) =>
     email: req.body.email,
     password: password,
     role: req.body.role,
-
   });
-
   // Save user in the database
   newUser.save()
   .then(() => {
@@ -51,12 +50,14 @@ exports.create = async (req, res) =>
     });
   });
 
-  const lists = createPredefinedList(newUser._id);
-  const data = {
-    username: newUser.username,
-    lists: lists,
-  }
-  this.update(data);
+  if (newUser.role.includes('USER')) {
+    const lists = createPredefinedList(newUser._id);
+    const data = {
+      username: newUser.username,
+      lists: lists,
+    }
+    this.update(data);
+  }  
 };
 
 
@@ -85,12 +86,11 @@ exports.login = async (req, res) =>
       }, config.secret, {
         expiresIn: config.jwtExpiration,
       });
-      const refreshToken = await RefreshToken.createToken(user);
+      // const refreshToken = await RefreshToken.createToken(user);
       res.status(200).header('x-access-token', token).json({
         error: null,
         data: {
           accessToken: token,
-          refreshToken: refreshToken,
           username: user.username,
           email: user.email,
           role: user.role,

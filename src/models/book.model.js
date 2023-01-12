@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const categories = require("./categories");
+const genres = require("./genres");
 // ------------------ COLECCIONES DE USUARIOS EN MONGO ------------ //
 // se puede pasar las comprobaciones al front
 const Book = mongoose.model(
@@ -28,8 +28,8 @@ const Book = mongoose.model(
       type: String,
       trim: true,
     },
-    categories: {
-      type: [categories],
+    genres: {
+      type: [genres],
       trim: true,
       required: true,
     },
