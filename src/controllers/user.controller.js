@@ -33,8 +33,8 @@ exports.create = async (req, res) =>
 
   // predefined lists
   let lists = [];
-  console.log(req.body.role)
-  if (!req.body.role.includes("ADMIN")) {
+
+  if (req.body.role === undefined || !req.body.role.includes("ADMIN")) {
     try {
       lists = await createPredefinedList();
     } catch (_err) {
