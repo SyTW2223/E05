@@ -9,10 +9,6 @@ const List = mongoose.model(
       required: true,
       trim: true,
     },
-    users: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "User",
-    },
     books: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Book",

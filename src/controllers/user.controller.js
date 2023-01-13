@@ -31,12 +31,25 @@ exports.create = async (req, res) =>
   const salt = await crypt.genSalt(10);
   const password = await crypt.hash(req.body.password, salt);
 
+  // predefined lists
+  let lists = [];
+  console.log(req.body.role)
+  if (!req.body.role.includes("ADMIN")) {
+    try {
+      lists = await createPredefinedList();
+    } catch (_err) {
+        console.log("Error al crear las listas en controller.usuario", _err);
+        return;
+    }
+  } 
+
   // create new user
   const newUser = new userModel({
     username: req.body.username,
     email: req.body.email,
     password: password,
     role: req.body.role,
+    lists: lists,
   });
   // Save user in the database
   newUser.save()
@@ -48,18 +61,8 @@ exports.create = async (req, res) =>
       message: 
         err.message || "Error created user."
     });
-  });
-
-  if (newUser.role.includes('USER')) {
-    const lists = createPredefinedList(newUser._id);
-    const data = {
-      username: newUser.username,
-      lists: lists,
-    }
-    this.update(data);
-  }  
+  }); 
 };
-
 
 
 
@@ -125,7 +128,7 @@ exports.update = (req, res) =>
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['username', 'email', 'password', 'role'];
+  const allowedUpdates = ['username', 'email', 'password', 'role', 'lists'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 
@@ -138,19 +141,19 @@ exports.update = (req, res) =>
   const username = req.params.username;
   // busca el usuario original para actualizarlo
   userModel.findOneAndUpdate({'username': username}, req.body, { new: true })
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update user with username=${username}. Maybe user was not found!`
-        });
-      } else res.send({ message: "User was updated successfully." });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: 
-          err.message || "Error updating user with username=" + username
+  .then(data => {
+    if (!data) {
+      res.status(404).send({
+        message: `Cannot update user with username=${username}. Maybe user was not found!`
       });
+    } else res.send({ message: "User was updated successfully." });
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: 
+        err.message || "Error updating user with username=" + username
     });
+  });
 };
 
 

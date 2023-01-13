@@ -4,8 +4,8 @@ const listModel = require("../models/list.model");
 // Create and Save a new list
 exports.create = async (req, res) => 
 {
-  console.log(req.body)
-  const allowedCreated = ['name', 'users'];
+  console.log(req.body) // undefined
+  const allowedCreated = ['name'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
@@ -17,7 +17,6 @@ exports.create = async (req, res) =>
   // Create a list
   const newList = new listModel({
     name: req.body.name,
-    users: req.body.users,
   });
 
   // Save list in the database
@@ -25,12 +24,12 @@ exports.create = async (req, res) =>
   .then(data => {
       res.status(201).send(data);
     })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Error create list."
-      });
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Error create list."
     });
+  });
 };
 
 
@@ -43,7 +42,7 @@ exports.update = (req, res) =>
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['name', 'books', 'films', 'series', 'users'];
+  const allowedUpdates = ['name', 'books', 'films', 'series'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 
