@@ -8,7 +8,7 @@ import { MDBTable, MDBTableHead, MDBContainer, MDBIcon } from 'mdb-react-ui-kit'
 
 
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
-// const selectorUserData = (state) => state.auth?.user?.data;
+
 
 export const FilmList = () => {
   const [isLoading, setLoading] = useState(true);
@@ -36,7 +36,7 @@ export const FilmList = () => {
             <tr className='table-secondary'>
               <th scope='col'>Título</th>
               <th scope='col'>Año</th>
-              <th scope='col'>Categoria</th>
+              <th scope='col'>Géneros</th>
               <th scope='col'>Valoración</th>
               {isLoggedIn && (
                 <>
@@ -52,7 +52,7 @@ export const FilmList = () => {
               <tr>
                 <td onClick={() => {navigate("/film/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
                 <td>{item.yearPublication}</td>
-                <td>{item.categories.map((cat) => cat + ', ')}</td>
+                <td>{item.genres.map((cat) => cat + ', ')}</td>
                 <td>{item.rating} <MDBIcon icon="fas fa-star" style={{color: '#ffed2d'}}/></td>
               </tr>
             );

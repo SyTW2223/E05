@@ -19,14 +19,14 @@ import item from "../../services/item.services";
 
 
 
-const selectorIsLoggedIn = (state) => state.auth?.isLoggedIn;
+const selectorIsAdminLoggedIn = (state) => state.auth?.isAdminLoggedIn;
 const selectorUserData = (state) => state.auth?.user?.data;
 
 export const AdminProfile = () => {
 
   const dispatch = useDispatch();
 
-  const isLoggedIn = useSelector(selectorIsLoggedIn);
+  const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn);
   const userData = useSelector(selectorUserData);
 
   // modales //
@@ -59,7 +59,7 @@ export const AdminProfile = () => {
   // ---- //
 
 
-  if (!isLoggedIn) {
+  if (!isAdminLoggedIn) {
       return <Navigate to="/login" />;
   }
 

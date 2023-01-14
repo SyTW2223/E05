@@ -4,12 +4,16 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  LOGIN_ADMIN_SUCCESS,
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const initialState = user ? { isLoggedIn: true, user } : { isLoggedIn: false, user: null };
+const initialState = user ? (
+  user.role.include("ADMIN") ? {isAdminLoggedIn: true, user } : { isLoggedIn: true, user }
+) : { isLoggedIn: false, user: null };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
@@ -28,6 +32,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: true,
+        user: payload.user,
+      };
+    case LOGIN_ADMIN_SUCCESS:
+      return {
+        ...state,
+        isAdminLoggedIn: true,
         user: payload.user,
       };
     case LOGIN_FAIL:

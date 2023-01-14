@@ -17,12 +17,14 @@ import {
 } from 'mdb-react-ui-kit';
 
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
+const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
 const selectorUserData = (state) => state.auth?.user?.data;
 
 export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector(selectorIsLoggedIn); 
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
+  const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
   const userData = useSelector(selectorUserData);
   const [showNavSecond, setShowNavSecond] = useState(false);
 
@@ -75,7 +77,7 @@ export const Navbar = () => {
         </MDBNavbarToggler>
         <MDBCollapse navbar show={showNavSecond}>
           <MDBNavbarNav>
-            { isLoggedIn && (
+            { (isLoggedIn || isAdminLoggedIn) && (
               <Button
               color="inherit"
               sx={{
@@ -86,7 +88,7 @@ export const Navbar = () => {
               >Cerrar Sesion</Button>)
             }
 
-            { isLoggedIn && (
+            { (isLoggedIn || isAdminLoggedIn) && (
               <Button
                 color="inherit"
                 sx={{
@@ -102,7 +104,7 @@ export const Navbar = () => {
               </Button>
               )
             }
-            { isLoggedIn === false && (
+            { (!isLoggedIn && !isAdminLoggedIn) && (
               <Button
                 component={Link} to="/login"
                 color="inherit"
@@ -112,7 +114,7 @@ export const Navbar = () => {
                 }}
               >Iniciar Sesion</Button>)
             }
-            { isLoggedIn === false && (
+            { (!isLoggedIn && !isAdminLoggedIn) && (
               <Button
                 component={Link} to="/register"
                 color="inherit"

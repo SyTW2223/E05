@@ -7,18 +7,17 @@ import { login } from '../../actions/auth.action';
 
 
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
-const selectorMessage = (state) => state.message;
+const selectorIsAdminLoggedIn = (state) => state.auth.isLoggedIn;
 
 
 export const Login = () => {
     const isLoggedIn = useSelector(selectorIsLoggedIn);
-    const message = useSelector(selectorMessage);
+    const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn);
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
     
 
@@ -98,7 +97,10 @@ export const Login = () => {
             </Box>
         </form>
         {isLoggedIn === true && 
-            <span>You're logged in</span>
+            <span>You're logged in USER</span>
+        }
+        {isAdminLoggedIn === true && 
+            <span>You're logged in ADMIN</span>
         }
         </div>
         

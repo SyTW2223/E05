@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -13,11 +14,13 @@ import {
   MDBIcon
 } from 'mdb-react-ui-kit';
 
-// buscar como obtener el objeto directamente desde filmList
+const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
+const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 
 export const Book = () => {
   const location = useLocation();
-  // console.log(location)
+  const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn);
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
 
   return (
     <section style={{ backgroundColor: '#f4f5f7' }}>
@@ -30,10 +33,22 @@ export const Book = () => {
                 style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
                 <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                   alt="Avatar" className="my-5" style={{ width: '120px' }} fluid />
-                  <div>
-                    <MDBBtn outline>Valorar</MDBBtn>
-                    <MDBBtn outline className="ms-1">Añadir a la lista</MDBBtn>
-                  </div>
+                  {
+                    isLoggedIn && (
+                    <div>
+                      <MDBBtn outline>Valorar</MDBBtn>
+                      <MDBBtn outline className="ms-1">Añadir a la lista</MDBBtn>
+                    </div>
+                      )
+                  }
+                  {
+                    isAdminLoggedIn && (
+                    <div>
+                      <MDBBtn outline>Borrar</MDBBtn>
+                      <MDBBtn outline className="ms-1">Modificar</MDBBtn>
+                    </div>
+                      )
+                  }
               </MDBCol>
               <MDBCol md="8">
                 <MDBCardBody className="p-4">
@@ -51,7 +66,7 @@ export const Book = () => {
                   <MDBRow className="pt-1">
                     <MDBCol size="6" className="mb-3">
                       <MDBTypography tag="h6">Géneros</MDBTypography>
-                      <MDBCardText className="text-muted">{location.state.item.categories.map((cat) => cat + ', ')}</MDBCardText>
+                      <MDBCardText className="text-muted">{location.state.item.genres.map((cat) => cat + ', ')}</MDBCardText>
                     </MDBCol>
                     <MDBCol size="6" className="mb-3">
                       <MDBTypography tag="h6">Estreno</MDBTypography>

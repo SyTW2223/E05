@@ -8,14 +8,14 @@ import { MDBTable, MDBTableHead, MDBContainer, MDBIcon } from 'mdb-react-ui-kit'
 
 
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
-// const selectorUserData = (state) => state.auth?.user?.data;
 
 export const SerieList = () => {
   const [isLoading, setLoading] = useState(true);
   const [respuestaBack, setData] = useState([]);
   const navigate = useNavigate();
 
-  const isLoggedIn = useSelector(selectorIsLoggedIn); 
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
+
 
   
   useEffect(() => {
@@ -39,7 +39,7 @@ export const SerieList = () => {
               <th scope='col'>Título</th>
               <th scope='col'>Año</th>
               <th scope='col'>Temporadas</th>
-              <th scope='col'>Categoria</th>
+              <th scope='col'>Géneros</th>
               <th scope='col'>Valoración</th>
               {isLoggedIn && (
                 <>
@@ -55,7 +55,7 @@ export const SerieList = () => {
                   <td onClick={() => {navigate("/serie/", {state: {item: item}})}}>{item.image}<b>{item.title}</b><br></br>{item.description}</td>
                   <td>{item.yearPublication}</td>
                   <td>{item.seasons}</td>
-                  <td>{item.categories.map((cat) => cat + ', ')}</td>
+                  <td>{item.genres.map((cat) => cat + ', ')}</td>
                   <td>{item.rating} <MDBIcon icon="fas fa-star" style={{color: '#ffed2d'}}/></td>
                 </tr>
               );

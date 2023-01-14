@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -13,10 +14,11 @@ import {
   MDBIcon
 } from 'mdb-react-ui-kit';
 
-// buscar como obtener el objeto directamente desde filmList
+const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
 
 export const Serie = () => {
   const location = useLocation();
+  const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
   // console.log(location)
 
   return (
@@ -51,7 +53,7 @@ export const Serie = () => {
                   <MDBRow className="pt-1">
                     <MDBCol size="6" className="mb-3">
                       <MDBTypography tag="h6">Géneros</MDBTypography>
-                      <MDBCardText className="text-muted">{location.state.item.categories.map((cat) => cat + ', ')}</MDBCardText>
+                      <MDBCardText className="text-muted">{location.state.item.genres.map((cat) => cat + ', ')}</MDBCardText>
                     </MDBCol>
                     <MDBCol size="6" className="mb-3">
                       <MDBTypography tag="h6">Estreno</MDBTypography>

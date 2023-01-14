@@ -33,5 +33,5 @@ export default {
     SerieList,
     SearchList,
     List,
-    UserList
+    UserList,
 }

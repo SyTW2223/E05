@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 import React, { useState, useEffect } from "react";
 import itemServices from "../../services/item.services";
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { MDBTable, MDBTableHead, MDBContainer } from 'mdb-react-ui-kit';
 
@@ -11,6 +11,7 @@ const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 // const selectorUserData = (state) => state.auth?.user?.data;
 
 export const UserList = () => {
+  const location = useLocation();
   const [isLoading, setLoading] = useState(true);
   const [respuestaBack, setData] = useState([]);
   const navigate = useNavigate();
@@ -19,10 +20,14 @@ export const UserList = () => {
 
   
   useEffect(() => {
-    itemServices.listItems("serie").then(response => {
-      setData(response.data);
-      setLoading(false);
+    var listas = [];
+    listas = location.map((list) => {
+      itemServices.listItems("lists" + `${String(list)}`).then(response => {
+        setData(response.data);
+        setLoading(false);
+      });
     });
+    return listas;
   }, []);
 
   function getTableBodyAsReactElement() {

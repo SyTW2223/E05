@@ -8,7 +8,7 @@ import { MDBTable, MDBTableHead, MDBContainer, MDBIcon } from 'mdb-react-ui-kit'
 
 
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
-// const selectorUserData = (state) => state.auth?.user?.data;
+
 
 export const BookList = () => {
   const [isLoading, setLoading] = useState(true);
@@ -40,7 +40,7 @@ export const BookList = () => {
                 <th scope='col'>Autor</th>
                 <th scope='col'>Año</th>
                 <th scope='col'>Saga</th>
-                <th scope='col'>Categoria</th>
+                <th scope='col'>Generos</th>
                 <th scope='col'>Valoración</th>
                 {isLoggedIn && (
                   <>
@@ -57,7 +57,7 @@ export const BookList = () => {
                   <td>{item.author}</td>
                   <td>{item.yearPublication}</td>
                   <td>{item.saga}</td>
-                  <td>{item.categories.map((cat) => cat + ', ')}</td>
+                  <td>{item.genres.map((cat) => cat + ', ')}</td>
                   <td>{item.rating} <MDBIcon icon="fas fa-star" style={{color: '#ffed2d'}}/></td>
                 </tr>
               );

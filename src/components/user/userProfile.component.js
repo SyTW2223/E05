@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import {Navigate, useNavigate} from 'react-router-dom';
-
+import itemServices from "../../services/item.services";
 import {
   MDBCol,
   MDBContainer,
@@ -24,6 +24,16 @@ export const UserProfile = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const userData = useSelector(selectorUserData);
+  const [respuestaBack, setData] = useState([]);
+
+  const listas = [];
+  listas = userData.lists.map((list) => {
+    itemServices.listItems("lists" + `${String(list)}`)
+    .then(response => {
+      return setData(response.data);
+    });
+  });
+
 
   if (!isLoggedIn) {
       return <Navigate to="/login" />;
@@ -119,7 +129,7 @@ export const UserProfile = () => {
             </MDBCard>
             
             <hr />
-            <MDBBtn outline onClick={() => {navigate("/list/")}} noRipple className='d-flex justify-content-between align-items-center'>
+            <MDBBtn outline onClick={() => {navigate("/userList/", {state: {lists: userData.lists}})}} noRipple className='d-flex justify-content-between align-items-center'>
             <p className="text-center"><strong>Mis listas</strong></p>
             </MDBBtn>
             <MDBRow>

@@ -2,6 +2,7 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     LOGIN_SUCCESS,
+    LOGIN_ADMIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
     SET_MESSAGE,
@@ -46,12 +47,20 @@ import {
   export const login = (username, password) => (dispatch) => {
     return AuthService.login(username, password).then(
       (data) => {
-        dispatch({
-          type: LOGIN_SUCCESS,
-          payload: { user: data },
-        });
-  
-        return Promise.resolve(data.data);
+        console.log()
+        if (data.data.role.includes("ADMIN")) {
+          dispatch({
+            type: LOGIN_ADMIN_SUCCESS,
+            payload: { user: data },
+          });
+          return Promise.resolve(data.data);
+        } else {
+          dispatch({
+            type: LOGIN_SUCCESS,
+            payload: { user: data },
+          });
+          return Promise.resolve(data.data);
+        }
       },
       (error) => {
         const message =

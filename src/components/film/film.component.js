@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -13,10 +14,11 @@ import {
   MDBIcon
 } from 'mdb-react-ui-kit';
 
-// buscar como obtener el objeto directamente desde filmList
+const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
 
 export const Film = () => {
   const location = useLocation();
+  const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
   // console.log(location)
 
   return (
