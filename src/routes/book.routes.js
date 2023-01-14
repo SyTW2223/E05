@@ -6,15 +6,15 @@ module.exports = app => {
 
   router
   .route("/")
-  .post([auth.verifyToken, auth.isAdmin], book.create)
+  .post(book.create)
   .get(book.findAll)
-  .delete([auth.verifyToken, auth.isAdmin], book.deleteAll);
+  .delete(book.deleteAll);
 
   router
   .route("/:title")
   .get(book.findBook)
-  .delete([auth.verifyToken, auth.isAdmin], book.delete)
-  .patch([auth.verifyToken, auth.isAdmin], book.update);
+  .delete(book.delete)
+  .patch(book.update);
 
   app.use("/book", router);
 };
