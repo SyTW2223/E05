@@ -1,5 +1,5 @@
 import http from "../http-common";
-import { AuthHeader } from './auth-header';
+// import { AuthHeader } from './auth-header';
 
 class Item {
     listItems(route) {
@@ -20,10 +20,18 @@ class Item {
 
     }
     updateItem(route, data) {
-        return http.patch("/" + route, data, { headers: AuthHeader() });
+        // return http.patch("/" + route, data, { headers: AuthHeader() });
+        return http.patch("/" + route, data);
     }
     deleteItem(route, title) {
-        return http.delete("/" + route + title, { headers: AuthHeader() });
+        // return http.delete("/" + route + title, { headers: AuthHeader() });
+        // Esto elimina todas las series, usa la función deleteAll en vez de delete
+        return http.delete("/" + route + "?title=" + title).then(res =>{
+            console.log(res.data)
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
     }
 }
 

@@ -36,16 +36,16 @@ export const Book = () => {
                   {
                     isLoggedIn && (
                     <div>
-                      <MDBBtn outline>Valorar</MDBBtn>
-                      <MDBBtn outline className="ms-1">Añadir a la lista</MDBBtn>
+                      <MDBBtn noRipple outline>Valorar</MDBBtn>
+                      <MDBBtn noRipple outline className="ms-1">Añadir a la lista</MDBBtn>
                     </div>
                       )
                   }
                   {
                     isAdminLoggedIn && (
                     <div>
-                      <MDBBtn outline>Borrar</MDBBtn>
-                      <MDBBtn outline className="ms-1">Modificar</MDBBtn>
+                      <MDBBtn noRipple outline>Borrar</MDBBtn>
+                      <MDBBtn noRipple outline className="ms-1">Modificar</MDBBtn>
                     </div>
                       )
                   }

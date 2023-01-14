@@ -15,11 +15,13 @@ import {
 } from 'mdb-react-ui-kit';
 
 const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
+const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
+
 
 export const Film = () => {
   const location = useLocation();
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
-  // console.log(location)
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
 
   return (
     <section style={{ backgroundColor: '#f4f5f7' }}>
@@ -32,10 +34,22 @@ export const Film = () => {
                 style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
                 <MDBCardImage src={require('../../assets/avatar.jpg')} 
                     alt='Cartelera Avatar 2' className="my-5" style={{ width: '120px' }} fluid />
-                  <div>
-                    <MDBBtn outline>Valorar</MDBBtn>
-                    <MDBBtn outline className="ms-1">Añadir a la lista</MDBBtn>
-                  </div>
+                  {
+                    isLoggedIn && (
+                    <div>
+                      <MDBBtn noRipple outline>Valorar</MDBBtn>
+                      <MDBBtn noRipple outline className="ms-1">Añadir a la lista</MDBBtn>
+                    </div>
+                      )
+                  }
+                  {
+                    isAdminLoggedIn && (
+                    <div>
+                      <MDBBtn noRipple outline>Borrar</MDBBtn>
+                      <MDBBtn noRipple outline className="ms-1">Modificar</MDBBtn>
+                    </div>
+                      )
+                  }
               </MDBCol>
               <MDBCol md="8">
                 <MDBCardBody className="p-4">

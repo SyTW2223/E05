@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -14,12 +14,19 @@ import {
   MDBIcon
 } from 'mdb-react-ui-kit';
 
+import item from "../../services/item.services";
+
+
 const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
+const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
+
 
 export const Serie = () => {
+  const dispatch = useDispatch();
+
   const location = useLocation();
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
-  // console.log(location)
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
 
   return (
     <section style={{ backgroundColor: '#f4f5f7' }}>
@@ -32,10 +39,36 @@ export const Serie = () => {
                 style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
                 <MDBCardImage src={require('../../assets/lcdp.jpg')}
                 alt='Cartelera La Casa de Papel 5' className="my-5" style={{ width: '120px' }} fluid />
-                  <div>
-                    <MDBBtn outline>Valorar</MDBBtn>
-                    <MDBBtn outline className="ms-1">Añadir a la lista</MDBBtn>
-                  </div>
+                     {
+                    isLoggedIn && (
+                    <div>
+                      <MDBBtn noRipple outline>Valorar</MDBBtn>
+                      <MDBBtn noRipple outline className="ms-1">Añadir a la lista</MDBBtn>
+                    </div>
+                      )
+                  }
+                  {
+                    isAdminLoggedIn && (
+                    <div>
+                      {/* <MDBBtn noRipple outline onClick={Item.deleteItem()}>Borrar</MDBBtn> */}
+                      <MDBBtn noRipple outline onClick={() => 
+                        {
+                        // const serieData = {
+                        //   "title": location.state.item.title,
+                        // }
+                        dispatch(item.deleteItem("serie", location.state.item.title))
+                        .then((data) => {
+                            console.log('Eliminada serie correctamente.');
+                            console.log(data);
+                        })
+                        .catch(() => {
+                            console.log('Error, no se ha podido eliminar la serie.');
+                        });
+                      }} >Borrar</MDBBtn>
+                      <MDBBtn noRipple outline className="ms-1">Modificar</MDBBtn>
+                    </div>
+                      )
+                  }
               </MDBCol>
               <MDBCol md="8">
                 <MDBCardBody className="p-4">
