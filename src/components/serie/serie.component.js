@@ -1,6 +1,7 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from "@mui/material";
 import {
   MDBCol,
   MDBContainer,
@@ -14,7 +15,7 @@ import {
   MDBIcon
 } from 'mdb-react-ui-kit';
 
-import item from "../../services/item.services";
+import itemServices from "../../services/item.services";
 
 
 const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
@@ -23,7 +24,7 @@ const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 
 export const Serie = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const location = useLocation();
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
   const isLoggedIn = useSelector(selectorIsLoggedIn);
@@ -50,21 +51,19 @@ export const Serie = () => {
                   {
                     isAdminLoggedIn && (
                     <div>
-                      {/* <MDBBtn noRipple outline onClick={Item.deleteItem()}>Borrar</MDBBtn> */}
-                      <MDBBtn noRipple outline onClick={() => 
-                        {
-                        // const serieData = {
-                        //   "title": location.state.item.title,
-                        // }
-                        dispatch(item.deleteItem("serie", location.state.item.title))
-                        .then((data) => {
-                            console.log('Eliminada serie correctamente.');
-                            console.log(data);
-                        })
-                        .catch(() => {
-                            console.log('Error, no se ha podido eliminar la serie.');
-                        });
-                      }} >Borrar</MDBBtn>
+                      <MDBBtn noRipple outline
+                        onClick={() => {
+                            itemServices.deleteItem('serie', location.state.item.title)
+                              .then(data => { 
+                                console.log('hola')
+                                navigate('/serieList');
+                              }).catch(err => {
+                                  console.log(err);
+                              });
+                        }}
+                      >
+                      Eliminar
+                      </MDBBtn>
                       <MDBBtn noRipple outline className="ms-1">Modificar</MDBBtn>
                     </div>
                       )

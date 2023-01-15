@@ -47,8 +47,6 @@ function App() {
             <Route path="/book" element = {<component.Book/>}/>
             <Route path="/serie" element = {<component.Serie/>}/>
             <Route path="/searchList" element = {<component.SearchList/>}/>
-            <Route path="/list" element = {<component.List/>}/>
-            <Route path="/userList" element = {<component.UserList/>}/>
           </Routes>
           <AuthVerify/>
           <component.Footer/>

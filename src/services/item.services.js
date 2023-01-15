@@ -26,7 +26,7 @@ class Item {
     deleteItem(route, title) {
         // return http.delete("/" + route + title, { headers: AuthHeader() });
         // Esto elimina todas las series, usa la función deleteAll en vez de delete
-        return http.delete("/" + route + "?title=" + title).then(res =>{
+        return http.delete("/" + route + "/" + title).then(res =>{
             console.log(res.data)
         })
         .catch((error)=>{

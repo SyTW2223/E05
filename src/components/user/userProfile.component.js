@@ -11,9 +11,11 @@ import {
   MDBCardBody,
   MDBCardImage,
   MDBBtn,
-  MDBListGroup,
   MDBListGroupItem,
-  MDBBadge
+  MDBTable, 
+  MDBTableHead,
+  MDBTableBody,
+  MDBIcon,
 } from 'mdb-react-ui-kit';
 
 const selectorIsLoggedIn = (state) => state.auth?.isLoggedIn;
@@ -21,23 +23,55 @@ const selectorUserData = (state) => state.auth?.user?.data;
 
 export const UserProfile = () => {
 
-  const navigate = useNavigate();
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const userData = useSelector(selectorUserData);
-  const [respuestaBack, setData] = useState([]);
+  const [dataItems, setDataItems] = useState([]); // contiene lista de de objetos (items de la lista)
+  const [dataList, setDataList] = useState(); // contiene objeto lista
+  const navigate = useNavigate();
 
-  const listas = [];
-  listas = userData.lists.map((list) => {
-    itemServices.listItems("lists" + `${String(list)}`)
-    .then(response => {
-      return setData(response.data);
-    });
-  });
+
+  const namesList = [
+    {ruta:'film', titulo:'Peliculas'}, 
+    {ruta:'serie', titulo:'Series'}, 
+    {ruta:'book', titulo:'Libros'}
+  ];
+
+  const typeList = [
+    {tipo:'Terminados', color:'#14A44D'}, 
+    {tipo:'Pendientes', color:'#DC4C64'}, 
+    {tipo:'Siguiendo', color:'#54B4D3'}
+  ];
+
+
+    // recibe id del item a buscar
+    const buscarItem = (ruta, _idItem) => {
+      itemServices.getItem(ruta,  `/${String(_idItem)}`)
+        .then(response => {
+          return response;
+        });
+    };
+  
+  // recibe id de la lista a buscar
+  const buscar = (ruta, _idList) => {
+    itemServices.getItem('list',  `/${String(_idList)}`)
+      .then(response => {
+        setDataList(response.data);
+        var itemsList = [];
+        itemsList = dataList.items.map(idItem => {
+          return buscarItem(ruta, idItem);
+        });
+        setDataItems(itemsList);
+      });
+      console.log(dataItems)
+  };
+
 
 
   if (!isLoggedIn) {
       return <Navigate to="/login" />;
   }
+
+
   return (
     <section style={{ backgroundColor: '#eee' }}>
       <MDBContainer className="py-5">
@@ -56,34 +90,6 @@ export const UserProfile = () => {
                   <MDBBtn outline noRipple className="ms-1">Editar perfil</MDBBtn>
                 </div>
               </MDBCardBody>
-            </MDBCard>
-
-            <MDBCard>
-            <MDBListGroup style={{ minWidth: '22rem' }} light>
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                <strong>Biblioteca</strong>
-              </MDBListGroupItem>
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                Todas las películas
-                <MDBBadge pill light>
-                  100
-                </MDBBadge>
-              </MDBListGroupItem>
-
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                Todos los libros
-                <MDBBadge pill light>
-                  100
-                </MDBBadge>
-              </MDBListGroupItem>
-
-              <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                Todas las series
-                <MDBBadge pill light>
-                  100
-                </MDBBadge>
-              </MDBListGroupItem>
-            </MDBListGroup>
             </MDBCard>
           </MDBCol>
         
@@ -119,7 +125,7 @@ export const UserProfile = () => {
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Authorities</MDBCardText>
+                    <MDBCardText>Rol</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText className="text-muted">{userData.role}</MDBCardText>
@@ -127,94 +133,69 @@ export const UserProfile = () => {
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
-            
-            <hr />
-            <MDBBtn outline onClick={() => {navigate("/userList/", {state: {lists: userData.lists}})}} noRipple className='d-flex justify-content-between align-items-center'>
-            <p className="text-center"><strong>Mis listas</strong></p>
-            </MDBBtn>
-            <MDBRow>
-              <MDBCol md="6">
-                <MDBCard>
-                <MDBListGroup style={{ minWidth: '22rem' }} light>
-                  <MDBBtn outline onClick={() => {navigate("/list/")}} noRipple className='d-flex justify-content-between align-items-center'>
-                    Películas pendientes
-                    <MDBBadge pill light>
-                      14
-                    </MDBBadge>
-                  </MDBBtn>
-
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Series pendientes
-                    <MDBBadge pill light>
-                      2
-                    </MDBBadge>
-                  </MDBListGroupItem>
-
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Libros pendientes
-                    <MDBBadge pill light>
-                      1
-                    </MDBBadge>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Series vistas
-                    <MDBBadge pill light>
-                      10
-                    </MDBBadge>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Libros favoritos
-                    <MDBBadge pill light>
-                      13
-                    </MDBBadge>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Películas para repetir
-                    <MDBBadge pill light>
-                      28
-                    </MDBBadge>
-                  </MDBListGroupItem>
-                </MDBListGroup>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol md="6">
-                <MDBCard>
-                <MDBListGroup style={{ minWidth: '22rem' }} light>
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Series que no me han gustado
-                    <MDBBadge pill light>
-                      1
-                    </MDBBadge>
-                  </MDBListGroupItem>
-
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Libros sin terminar
-                    <MDBBadge pill light>
-                      4
-                    </MDBBadge>
-                  </MDBListGroupItem>
-
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Series sin terminar
-                    <MDBBadge pill light>
-                      3
-                    </MDBBadge>
-                  </MDBListGroupItem>
-                  <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                    Películas sin terminar
-                    <MDBBadge pill light>
-                      5
-                    </MDBBadge>
-                  </MDBListGroupItem>
-                </MDBListGroup>
-                </MDBCard>
-                  
-              </MDBCol>
-            </MDBRow>
-          </MDBCol>
+            </MDBCol>
         </MDBRow>
+
+
+        <MDBRow>
+          {typeList.map((item) => {
+            return ( 
+              <div className='table-responsive col-md-4'>
+                <MDBTable>
+                  <MDBTableHead style={{ minWidth: '5rem' }} light>
+                    <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+                      <strong>{item.tipo}</strong>
+                    </MDBListGroupItem>
+                  </MDBTableHead>
+                    {
+                        namesList.map(name => {
+                          return (
+                            <MDBTableBody>
+                              <tr key={item.id}>
+                                <td onClick={(buscar(name.ruta, item))}>
+                                  <div className='ms-3'>
+                                    <MDBIcon fas icon="circle" style={{color: item.color}}/>
+                                    {name.titulo} 
+                                  </div>
+                                </td>
+                              </tr>
+                            </MDBTableBody>
+                          )
+                        })
+                      }
+                </MDBTable>
+              </div>
+            );
+          })}
+        </MDBRow>
+      </MDBContainer>
+
+
+      <MDBContainer>
+        <div className='welcome'>
+          <h3 className="text-center my-2">Mi lista</h3>
+        </div>
+        <MDBTable align='middle' bordered responsive className='caption-top'>
+          <MDBTableHead>
+              <tr className='table-secondary'>
+                <th scope='col'>Título</th>
+                <th scope='col'>Generos</th>
+                <th scope='col'>Valoración</th>
+                <th scope='col'>Tu valoración</th>
+              </tr>
+          </MDBTableHead>
+          {dataItems.map((item) => {
+            return (
+              <tr key={item.id}>
+                <td onClick={() => {navigate(`/${item.type}/`, {state: {item: item}})}}>{item.image}<b>{item.title}</b></td>
+                <td>{item.genres.map((cat) => cat + ', ')}</td>
+                <td>{item.rating} <MDBIcon icon="fas fa-star" style={{color: '#ffed2d'}}/></td>
+              </tr>
+            );
+          })}
+        </MDBTable>
       </MDBContainer>
     </section>
   );
+  
 }

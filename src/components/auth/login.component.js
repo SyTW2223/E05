@@ -68,12 +68,11 @@ export const Login = () => {
                 variant="contained"
                 color="inherit"
                 onClick={() => {
-                    dispatch(login(username, password)).then((data) => {
-                        console.log('Sesion iniciada');   
+                    dispatch(login(username, password)).then((data) => { 
                         if (data.role[0] === "ADMIN") navigate('/AdminProfile');
                         if (data.role[0] === "USER") navigate('/UserProfile');
-                    }).catch(() => {
-                        console.log('Error. La cuenta no existe, debe crearse una cuenta.');
+                    }).catch(err => {
+                        console.log('Error. La cuenta no existe, debe crearse una cuenta.', err);
                     });
                 }}
             >

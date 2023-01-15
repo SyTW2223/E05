@@ -26,8 +26,6 @@ export const BookList = () => {
   }, []);
 
   function getTableBodyAsReactElement() {
-    console.log('respuestaBack: ', respuestaBack);
-
     return (!respuestaBack) ? null : (
       <MDBContainer>
         <div className='welcome'>
