@@ -9,19 +9,8 @@ const List = mongoose.model(
       required: true,
       trim: true,
     },
-    books: {
+    items: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: "Book",
-      trim: true,
-    },
-    films: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "Film",
-      trim: true,
-    },
-    series: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "Serie",
       trim: true,
     },
   })

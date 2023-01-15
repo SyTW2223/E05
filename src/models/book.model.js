@@ -5,6 +5,10 @@ const genres = require("./genres");
 const Book = mongoose.model(
   "Book",
   new mongoose.Schema({
+    type: {
+      type: String,
+      default: "book",
+    },
     title: {
       type: String,
       unique: true,

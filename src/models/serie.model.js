@@ -5,6 +5,10 @@ const genres = require("./genres");
 const Serie = mongoose.model(
   "Serie",
   new mongoose.Schema({
+    type: {
+      type: String,
+      default: "serie",
+    },
     title: {
       type: String,
       unique: true,

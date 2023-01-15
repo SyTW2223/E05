@@ -21,6 +21,5 @@ exports.createPredefinedList = async() =>
             }
         })
     );
-    console.log('ids', idsLists)
     return idsLists;
 }
