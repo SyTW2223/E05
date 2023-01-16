@@ -21,7 +21,7 @@ class Item {
     }
     updateItem(route, data) {
         // return http.patch("/" + route, data, { headers: AuthHeader() });
-        return http.patch("/" + route, data).then(res =>{
+        return http.patch("/" + route + "/" + data.title, data).then(res =>{
             console.log(res.data)
         })
         .catch((error)=>{

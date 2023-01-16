@@ -266,7 +266,7 @@ export const AdminProfile = () => {
                         "seasons": seasons,
                         "image": image,
                       }
-                      dispatch(item.createItem("serie", serieData))
+                      dispatch(item.createItem("serie", title, serieData))
                       .then((data) => {
                           console.log('Creada serie correctamente.');
                           console.log(data);

@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -24,8 +24,6 @@ const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 
 export const Serie = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const location = useLocation();
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
   const isLoggedIn = useSelector(selectorIsLoggedIn);
@@ -149,7 +147,6 @@ export const Serie = () => {
                               }
                               itemServices.updateItem('serie', serieData)
                               .then(data => { 
-                                console.log('hola')
                                 navigate('/serieList');
                               }).catch(err => {
                                   console.log(err);
