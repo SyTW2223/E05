@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -13,12 +13,15 @@ import {
   MDBTypography,
   MDBIcon
 } from 'mdb-react-ui-kit';
+import itemServices from "../../services/item.services";
+
 
 const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 
 
 export const Film = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
   const isLoggedIn = useSelector(selectorIsLoggedIn);
@@ -45,7 +48,16 @@ export const Film = () => {
                   {
                     isAdminLoggedIn && (
                     <div>
-                      <MDBBtn noRipple outline>Borrar</MDBBtn>
+                      <MDBBtn noRipple outline
+                        onClick={() => {
+                          itemServices.deleteItem('film', location.state.item.title)
+                            .then(data => { 
+                              navigate('/filmList');
+                            }).catch(err => {
+                                console.log(err);
+                            });
+                      }}
+                      >Borrar</MDBBtn>
                       <MDBBtn noRipple outline className="ms-1">Modificar</MDBBtn>
                     </div>
                       )

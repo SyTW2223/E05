@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from "@mui/material";
+import { useSelector } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -23,7 +22,6 @@ const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
 
 
 export const Serie = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
@@ -55,7 +53,6 @@ export const Serie = () => {
                         onClick={() => {
                             itemServices.deleteItem('serie', location.state.item.title)
                               .then(data => { 
-                                console.log('hola')
                                 navigate('/serieList');
                               }).catch(err => {
                                   console.log(err);
