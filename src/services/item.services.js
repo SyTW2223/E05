@@ -21,11 +21,14 @@ class Item {
     }
     updateItem(route, data) {
         // return http.patch("/" + route, data, { headers: AuthHeader() });
-        return http.patch("/" + route, data);
+        return http.patch("/" + route, data).then(res =>{
+            console.log(res.data)
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
     }
     deleteItem(route, title) {
-        // return http.delete("/" + route + title, { headers: AuthHeader() });
-        // Esto elimina todas las series, usa la función deleteAll en vez de delete
         return http.delete("/" + route + "/" + title).then(res =>{
             console.log(res.data)
         })

@@ -31,7 +31,7 @@ export const Film = () => {
     <MDBContainer className="py-5 h-100">
       <MDBRow className="justify-content-center align-items-center h-100">
         <MDBCol lg="10" >
-          <MDBCard style={{ height: 500, borderRadius: '.5rem' }}>
+          <MDBCard style={{ height: 'auto', borderRadius: '.5rem' }}>
             <MDBRow>
               <MDBCol className="text-center"
                 style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
