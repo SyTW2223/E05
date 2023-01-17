@@ -6,14 +6,18 @@ let Film = require('../src/models/film.model');
 
 describe('API FILM succes', () => {
   let film = {
-    id: 0,
     title: "film1",
-    description: "test film1"
+    description: "test film1",
+    genres: ['Comedia'],
+    yearPublication: 2020,
+    rating: 5
   };
   let film2 = {
-    id: 1,
     title: "film2",
-    description: "test film2"
+    description: "test film2",
+    genres: ['Comedia', 'Romance'],
+    yearPublication: 2020,
+    rating: 5
   };
   it('Should successfully insert a new film', async () => {
     await supertest(app).post('/film').send(film).expect(201);
@@ -38,9 +42,11 @@ describe('API FILM succes', () => {
 
 describe('API film errors', () => {
   const filmTestError = {
-    id: 2,
-    tittle: "test",
-    description: "test filmTest"
+    title: "film test error",
+    description: "test error",
+    genre: ['Romance'],
+    yearPublication: 2020,
+    rating: 5
   };
   it('Should error at insert a new film for wrong parameters', async () => {
     await supertest(app).post('/film').send(filmTestError).expect(400);

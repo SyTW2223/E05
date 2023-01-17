@@ -5,17 +5,22 @@ let mocha = require('mocha');
 /**
  * Testing series
  */
-
 describe('API SERIE succes.', () => {
   let serie = {
-    id: 0,
     title: "serieTest1",
-    description: "test serie1"
+    description: "test serie1",
+    seasons: 3,
+    yearPublication: 2021,
+    genres: ['Accion'],
+    rating: 4
   };
   let serie2 = {
-    id: 1,
     title: "serieTest2",
-    description: "test serie2"
+    description: "test serie2",
+    seasons: 1,
+    yearPublication: 2000,
+    genres: ['Accion'],
+    rating: 9
   };
   it('Should successfully insert a new serie.', async () => {
     await supertest(app).post('/serie').send(serie).expect(201);

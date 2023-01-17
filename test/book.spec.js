@@ -5,14 +5,22 @@ let mocha = require('mocha');
 
 describe('API BOOK succes', () => {
   let book = {
-    id: 0,
     title: "book1",
-    description: "test book1"
+    description: "test book1",
+    author: "prueba",
+    saga: "prueba",
+    genres: ["Comedia"],
+    yearPublication: 2020,
+    rating: 1
   };
   let book2 = {
-    id: 1,
     title: "book2",
-    description: "test book2"
+    description: "test book2",
+    author: "prueba2",
+    saga: "prueba2",
+    genres: ["Comedia", "Romance"],
+    yearPublication: 2019,
+    rating: 9
   };
   it('Should successfully insert a new book', async () => {
     await supertest(app).post('/book').send(book).expect(201);
@@ -39,13 +47,11 @@ describe('API BOOK succes', () => {
 
 describe('API BOOK errors', () => {
   const bookTestError = {
-    id: 2,
     title: "test",
     description: "book tests"
   };
   const bookParamError = {
-    id: 2,
-    title: "test2",
+    title: "test2"
   };
   it('Should error at insert a new book because missing parameters.', async () => {
     await supertest(app).post('/book').send(bookParamError).expect(500);
