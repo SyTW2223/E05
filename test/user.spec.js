@@ -5,7 +5,6 @@ let mocha = require('mocha');
 
 describe('API USER succes', () => {
   let user = {
-    id: 0,
     username: "user1",
     email: "user1@ull.edu.es",
     password: "pasword"
@@ -47,18 +46,16 @@ describe('API USER succes', () => {
 
 describe('API USER errors', () => {
   const userTestError = {
-    id: 2,
     username: "test",
     email: "test@gmail.com",
     password: "pass"
   };
   const userTestErrorLogin = {
-    id: 2,
     username: "test",
     email: "test@gmail.com",
     password: "passwordError"
   };
-  it('Should error register user beacuse email is already exist.', async () => {
+  it('Should error register user because email is already exist.', async () => {
     await supertest(app).post(`/user/register`).send(userTestError);
     await supertest(app).delete(`/user/register`).send(userTestError).expect(404);
   });
