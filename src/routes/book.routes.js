@@ -12,9 +12,13 @@ module.exports = app => {
 
   router
   .route("/:title")
-  .get(book.findBook)
+  //.get(book.findBook)
   .delete(book.delete)
   .patch(book.update);
+
+  router
+  .route("/:_id")
+  .get(book.findBook);
 
   app.use("/book", router);
 };

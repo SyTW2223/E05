@@ -88,20 +88,19 @@ exports.findAll = (req, res) =>
     });
 };
 
-// Find a element with an title
+// Find a element with an id
 exports.findBook = async (req, res) => 
 {
-  const title = req.params.title;
-  await bookModel.find({'title': {$regex: title, $options: "i"}})
+  await bookModel.find({'_id': req.params._id})
   .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found book with title " + title });
+        res.status(404).send({ message: "Not found book with title " + data.title });
       else res.status(200).send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Unknown error when searching for " + title
+          err.message || "Unknown error when searching book"
       });
     });
 };

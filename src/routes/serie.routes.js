@@ -10,10 +10,13 @@ module.exports = app => {
 
   router
   .route("/:title")
-  .get(serie.findSerie)
-  .get(serie.findSerie)
+  //.get(serie.findSerie)
   .delete(serie.delete)
   .patch(serie.update);
+
+  router
+  .route("/:_id")
+  .get(serie.findSerie);
 
   app.use("/serie", router);
 };

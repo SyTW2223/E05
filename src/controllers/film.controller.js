@@ -87,15 +87,14 @@ exports.findAll = (req, res) =>
 // Find a element with an title 
 exports.findFilm = async (req, res) => 
 {
-  const title = req.params.title;
-  await filmModel.find({'title': {$regex: title, $options: "i"}})
+  await filmModel.findById({'_id': req.params._id})
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found film with title " + title });
+        res.status(404).send({ message: "Not found film with title " + data.title });
       else res.status(200).send(data);
     })
     .catch(err => {
-      res.status(500).send({ message: "Unknown error when searching for " + title });
+      res.status(500).send({ message: "Unknown error when searching film."});
     });
 };
 

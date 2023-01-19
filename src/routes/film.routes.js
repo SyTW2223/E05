@@ -10,9 +10,12 @@ module.exports = app => {
 
   router
   .route("/:title")
-  .get(film.findFilm)
   .delete(film.delete)
   .patch(film.update);
+
+  router
+  .route("/:_id")
+  .get(film.findFilm);
 
   app.use("/film", router);
 };
