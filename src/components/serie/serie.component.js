@@ -145,7 +145,7 @@ export const Serie = () => {
                                 "seasons": seasons,
                                 "image": image,
                               }
-                              itemServices.updateItem('serie', serieData)
+                              itemServices.updateItem('serie', location.state.item.title, serieData)
                               .then(data => { 
                                 navigate('/serieList');
                               }).catch(err => {

@@ -133,7 +133,7 @@ export const Film = () => {
                                 "genres": checked,
                                 "image": image,
                               }
-                              itemServices.updateItem('film', filmData)
+                              itemServices.updateItem('film', location.state.item.title, filmData)
                               .then(data => { 
                                 navigate('/filmList');
                               }).catch(err => {

@@ -12,6 +12,7 @@ class Item {
             console.log(error);
         }
     }
+
     async createItem(route, data) {
         try {
             await http.post("/" + route, data);

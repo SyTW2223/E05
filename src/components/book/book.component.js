@@ -146,7 +146,7 @@ export const Book = () => {
                                 "saga": saga,
                                 "image": image,
                               }
-                              itemServices.updateItem('book', bookData)
+                              itemServices.updateItem('book', location.state.item.title, bookData)
                               .then(data => { 
                                 navigate('/bookList');
                               }).catch(err => {
