@@ -90,16 +90,14 @@ exports.findAll = (req, res) =>
 // Find a element with id
 exports.findSerie = async (req, res) => 
 {
-   await serieModel.find({'_id': req.params._id})
-  .then(data => {
+  await serieModel.findById({'_id': req.params._id})
+    .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found serie with title " + data.title });
       else res.status(200).send(data);
     })
     .catch(err => {
-      res.status(500).send({ message: 
-        err.message || "Unknown error when searching for serie"
-      });
+      res.status(500).send({ message: "Unknown error when searching serie."});
     });
 };
 

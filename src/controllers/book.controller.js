@@ -91,20 +91,16 @@ exports.findAll = (req, res) =>
 // Find a element with an id
 exports.findBook = async (req, res) => 
 {
-  await bookModel.find({'_id': req.params._id})
-  .then(data => {
+  await bookModel.findById({'_id': req.params._id})
+    .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found book with title " + data.title });
       else res.status(200).send(data);
     })
     .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Unknown error when searching book"
-      });
+      res.status(500).send({ message: "Unknown error when searching book."});
     });
-};
-
+  }
 
 // Delete a book with the specified id in the request
 exports.delete = (req, res) => 
