@@ -4,7 +4,6 @@ const listModel = require("../models/list.model");
 // Create and Save a new list
 exports.create = async (req, res) => 
 {
-  console.log(req.body) // undefined
   const allowedCreated = ['name'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
@@ -52,7 +51,7 @@ exports.update = (req, res) =>
     });
   }
 
-  listModel.findByIdAndUpdate({_id: req.params._id}, req.body, { new: true })
+  listModel.findByIdAndUpdate({_id: req.params._id}, req.body, { new: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
