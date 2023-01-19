@@ -63,7 +63,6 @@ export const AdminProfile = () => {
       return <Navigate to="/login" />;
   }
 
-
   return (
     <section>
       <MDBContainer className="py-5">
@@ -93,7 +92,7 @@ export const AdminProfile = () => {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{userData.name}</MDBCardText>
+                    <MDBCardText className="text-muted">{userData.username}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />

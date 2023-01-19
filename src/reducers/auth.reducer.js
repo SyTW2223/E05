@@ -22,11 +22,13 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: false,
+        isAdminLoggedIn: false,
       };
     case REGISTER_FAIL:
       return {
         ...state,
         isLoggedIn: false,
+        isAdminLoggedIn: false,
       };
     case LOGIN_SUCCESS:
       return {
@@ -44,12 +46,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: false,
+        isAdminLoggedIn: false,
         user: null,
       };
     case LOGOUT:
       return {
         ...state,
         isLoggedIn: false,
+        isAdminLoggedIn: false,
         user: null,
       };
     default:

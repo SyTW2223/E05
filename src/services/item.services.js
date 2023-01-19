@@ -5,36 +5,33 @@ class Item {
     listItems(route) {
         return http.get("/" + route);
     }
-    getItem(route, title) {
-        return http.get("/" + route + title);
-    }
-    createItem(route, data) {
-        console.log(route,data);
-        // return http.post("/" + route, data,  { headers: AuthHeader() });
-        return http.post("/" + route, data).then(res =>{
-            console.log(res.data)
-        })
-        .catch((error)=>{
+    async getItem(route, title) {
+        try {
+            return await http.get("/" + route + "/" + title);
+        } catch (error) {
             console.log(error);
-        });
-
+        }
     }
-    updateItem(route, data) {
-        // return http.patch("/" + route, data, { headers: AuthHeader() });
-        return http.patch("/" + route + "/" + data.title, data).then(res =>{
-            console.log(res.data)
-        })
-        .catch((error)=>{
+    async createItem(route, data) {
+        try {
+            await http.post("/" + route, data);
+        } catch (error) {
             console.log(error);
-        });
+        }
     }
-    deleteItem(route, title) {
-        return http.delete("/" + route + "/" + title).then(res =>{
-            console.log(res.data)
-        })
-        .catch((error)=>{
+    async updateItem(route, data) {
+        try {
+            await http.patch("/" + route + "/" + data.title, data);
+        } catch (error) {
             console.log(error);
-        });
+        }
+    }
+    async deleteItem(route, title) {
+        try {
+            await http.delete("/" + route + "/" + title);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import {Navigate, useNavigate} from 'react-router-dom';
 import itemServices from "../../services/item.services";
@@ -21,56 +21,56 @@ import {
 const selectorIsLoggedIn = (state) => state.auth?.isLoggedIn;
 const selectorUserData = (state) => state.auth?.user?.data;
 
+
 export const UserProfile = () => {
 
   const isLoggedIn = useSelector(selectorIsLoggedIn);
   const userData = useSelector(selectorUserData);
+
   const [dataItems, setDataItems] = useState([]); // contiene lista de de objetos (items de la lista)
-  const [dataList, setDataList] = useState(); // contiene objeto lista
+  const [dataLists, setDataLists] = useState([]); // contiene las listas del ususario como objetos
   const navigate = useNavigate();
 
 
-  const namesList = [
-    {ruta:'film', titulo:'Peliculas'}, 
-    {ruta:'serie', titulo:'Series'}, 
-    {ruta:'book', titulo:'Libros'}
-  ];
-
-  const typeList = [
-    {tipo:'Terminados', color:'#14A44D'}, 
-    {tipo:'Pendientes', color:'#DC4C64'}, 
-    {tipo:'Siguiendo', color:'#54B4D3'}
-  ];
-
-
-    // recibe id del item a buscar
-    const buscarItem = (ruta, _idItem) => {
-      itemServices.getItem(ruta,  `/${String(_idItem)}`)
-        .then(response => {
-          return response;
-        });
-    };
   
-  // recibe id de la lista a buscar
-  const buscar = (ruta, _idList) => {
-    itemServices.getItem('list',  `/${String(_idList)}`)
-      .then(response => {
-        setDataList(response.data);
-        var itemsList = [];
-        itemsList = dataList.items.map(idItem => {
-          return buscarItem(ruta, idItem);
-        });
-        setDataItems(itemsList);
+  // busca las listas del ususario al entrar a la pagina de perfil
+  useEffect(() => {
+    async function getListData() {
+      let objectLists;
+      objectLists = userData.lists.map(async id => {
+        try {
+          const res = await itemServices.getItem("list", id);
+          return res.data;
+        } catch (err) {
+          return err;
+        }
       });
-      console.log(dataItems)
-  };
-
-
+      objectLists = await Promise.all(objectLists);
+      setDataLists(objectLists);
+    }
+    getListData();
+  }, []);
 
   if (!isLoggedIn) {
-      return <Navigate to="/login" />;
+    return <Navigate to="/login" />;
   }
-
+  
+  // recibe id del item a buscar
+  const buscarItems = async (ruta, items) => {
+    var itemsObject;
+    itemsObject = await Promise.all(
+      items.map(async item => {
+        try {
+          const response = await itemServices.getItem(ruta, item);
+          return response.data;
+        } catch (err) {
+          return err;
+        }
+      })
+    )
+    console.log(itemsObject)
+    setDataItems(itemsObject);
+  };
 
   return (
     <section style={{ backgroundColor: '#eee' }}>
@@ -138,35 +138,31 @@ export const UserProfile = () => {
 
 
         <MDBRow>
-          {typeList.map((item) => {
-            return ( 
-              <div className='table-responsive col-md-4'>
-                <MDBTable>
-                  <MDBTableHead style={{ minWidth: '5rem' }} light>
-                    <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                      <strong>{item.tipo}</strong>
-                    </MDBListGroupItem>
-                  </MDBTableHead>
-                    {
-                        namesList.map(name => {
-                          return (
-                            <MDBTableBody>
-                              <tr key={item.id}>
-                                <td onClick={(buscar(name.ruta, item))}>
-                                  <div className='ms-3'>
-                                    <MDBIcon fas icon="circle" style={{color: item.color}}/>
-                                    {name.titulo} 
-                                  </div>
-                                </td>
-                              </tr>
-                            </MDBTableBody>
-                          )
-                        })
-                      }
-                </MDBTable>
-              </div>
-            );
-          })}
+          <div className='table-responsive col-md-4'>
+            <MDBTable>
+              <MDBTableHead style={{ minWidth: '5rem' }} light>
+                <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+                  <strong>Listas</strong>
+                </MDBListGroupItem>
+              </MDBTableHead>
+                {
+                  dataLists.map(list => {
+                    return (
+                      <MDBTableBody>
+                        <tr key="">
+                          <td onClick={() => (buscarItems(list.itemsTypes, list.items))}>
+                            <div className='ms-3'>
+                              <MDBIcon fas icon="circle" style={{color: '#14A44D'}}/>
+                              {list.name} 
+                            </div>
+                          </td>
+                        </tr>
+                      </MDBTableBody>
+                    ) 
+                  }) 
+                }
+            </MDBTable>
+          </div>
         </MDBRow>
       </MDBContainer>
 
@@ -177,7 +173,7 @@ export const UserProfile = () => {
         </div>
         <MDBTable align='middle' bordered responsive className='caption-top'>
           <MDBTableHead>
-              <tr className='table-secondary'>
+              <tr key="" className='table-secondary'>
                 <th scope='col'>Título</th>
                 <th scope='col'>Generos</th>
                 <th scope='col'>Valoración</th>

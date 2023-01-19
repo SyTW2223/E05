@@ -77,7 +77,17 @@ export const Navbar = () => {
         </MDBNavbarToggler>
         <MDBCollapse navbar show={showNavSecond}>
           <MDBNavbarNav>
-            { (isLoggedIn || isAdminLoggedIn) && (
+            { isLoggedIn && (
+              <Button
+              color="inherit"
+              sx={{
+                color: 'inherit',
+                backgroundColor: 'primary.main'
+              }}
+              onClick={() => {dispatch(logout())}}
+              >Cerrar Sesion</Button>)
+            }
+            { isAdminLoggedIn && (
               <Button
               color="inherit"
               sx={{
@@ -88,7 +98,23 @@ export const Navbar = () => {
               >Cerrar Sesion</Button>)
             }
 
-            { (isLoggedIn || isAdminLoggedIn) && (
+            { isLoggedIn  && (
+              <Button
+                color="inherit"
+                sx={{
+                  color: 'inherit',
+                  backgroundColor: 'primary.main'
+                }}
+                onClick={() => {
+                  if (userData.role[0] === "ADMIN") navigate('/AdminProfile');
+                  if (userData.role[0] === "USER") navigate('/UserProfile');
+                }}
+                >
+                Mi Perfil
+              </Button>
+              )
+            }
+            { isAdminLoggedIn && (
               <Button
                 color="inherit"
                 sx={{
