@@ -20,9 +20,9 @@ class Item {
             console.log(error);
         }
     }
-    async updateItem(route, data) {
+    async updateItem(route, title, data) {
         try {
-            await http.patch("/" + route + "/" + data.title, data);
+            await http.patch("/" + route + "/" + title, data);
         } catch (error) {
             console.log(error);
         }

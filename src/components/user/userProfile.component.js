@@ -46,10 +46,18 @@ export const UserProfile = () => {
         }
       });
       objectLists = await Promise.all(objectLists);
+      var bookList = objectLists.splice(6);
+      var serieList = objectLists.splice(3);
+      var filmList = objectLists;
+      objectLists = [
+        {'type':'book', 'list': bookList},
+        {'type':'film', 'list': filmList},
+        {'type':'serie', 'list': serieList},
+      ]
       setDataLists(objectLists);
     }
     getListData();
-  }, []);
+  }, [userData.lists]);
 
   if (!isLoggedIn) {
     return <Navigate to="/login" />;
@@ -68,7 +76,6 @@ export const UserProfile = () => {
         }
       })
     )
-    console.log(itemsObject)
     setDataItems(itemsObject);
   };
 
@@ -138,39 +145,42 @@ export const UserProfile = () => {
 
 
         <MDBRow>
-          <div className='table-responsive col-md-4'>
-            <MDBTable>
-              <MDBTableHead style={{ minWidth: '5rem' }} light>
-                <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
-                  <strong>Listas</strong>
-                </MDBListGroupItem>
-              </MDBTableHead>
-                {
-                  dataLists.map(list => {
-                    return (
-                      <MDBTableBody>
-                        <tr key="">
-                          <td onClick={() => (buscarItems(list.itemsTypes, list.items))}>
-                            <div className='ms-3'>
-                              <MDBIcon fas icon="circle" style={{color: '#14A44D'}}/>
-                              {list.name} 
-                            </div>
-                          </td>
-                        </tr>
-                      </MDBTableBody>
-                    ) 
-                  }) 
-                }
-            </MDBTable>
-          </div>
+          {
+            dataLists.map(lists => {
+              return (
+                <div className='table-responsive col-md-4'>
+                  <MDBTable>
+                    <MDBTableHead style={{ minWidth: '5rem' }} light>
+                      <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
+                        <strong>{lists.type}s</strong>
+                      </MDBListGroupItem>
+                    </MDBTableHead>
+                    {
+                      lists.list.map(list => {
+                        return (
+                          <MDBTableBody>
+                            <tr key="">
+                              <td onClick={() => (buscarItems(lists.type, list.items))}>
+                                <div className='ms-3'>
+                                  <MDBIcon fas icon="circle" style={{color: '#14A44D'}}/>
+                                  {list.name} 
+                                </div>
+                              </td>
+                            </tr>
+                          </MDBTableBody>
+                        )
+                      })
+                    }
+                  </MDBTable>
+                </div>
+              ) 
+            })
+          }
         </MDBRow>
       </MDBContainer>
 
 
       <MDBContainer>
-        <div className='welcome'>
-          <h3 className="text-center my-2">Mi lista</h3>
-        </div>
         <MDBTable align='middle' bordered responsive className='caption-top'>
           <MDBTableHead>
               <tr key="" className='table-secondary'>
