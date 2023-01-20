@@ -38,7 +38,6 @@ export const Book = () => {
   const [description, setDescription] = useState();
   const [author, setAuthor] = useState();
   const [saga, setSaga] = useState("");
-
   const [year, setYear] = useState();
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
@@ -47,7 +46,7 @@ export const Book = () => {
   const [addBook, setAddBook] = useState();
 
   const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
-  const listsNames = ['Libros leidos', 'Lbros para leer', 'Libros leyendo'];
+  const listsNames = ['Libros leidos', 'Libros para leer', 'Libros leyendo'];
 
 
   const handleCheck = (event) => {

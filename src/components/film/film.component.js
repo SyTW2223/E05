@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -11,32 +11,40 @@ import {
   MDBCardImage,
   MDBBtn,
   MDBTypography,
-  MDBIcon
+  MDBIcon,
+  MDBRadio
 } from 'mdb-react-ui-kit';
 import { Button, Modal, Form } from 'react-bootstrap';
-
 import itemServices from "../../services/item.services";
 
 
 const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
-
+const selectorUserData = (state) => state.auth?.user?.data;
 
 export const Film = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn); 
   const isLoggedIn = useSelector(selectorIsLoggedIn);
+  const userData = useSelector(selectorUserData);
 
   const [modifyFilm, setMF] = useState(false);
-
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [year, setYear] = useState();
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
+  const [checkedList, setCheckedList] = useState("");
+  
+  const [addFilm, setAddFilm] = useState();
 
+  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
+  const listsNames = ['Peliculas vistas', 'Peliculas para ver', 'Peliculas viendo'];
 
+  
   const handleCheck = (event) => {
     var updatedList = [...checked];
     if (event.target.checked) {
@@ -47,7 +55,6 @@ export const Film = () => {
     setChecked(updatedList);
   };
 
-  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
   return (
     <section style={{ backgroundColor: '#f4f5f7' }}>
     <MDBContainer className="py-5 h-100">
@@ -61,11 +68,60 @@ export const Film = () => {
                     alt='Cartelera Avatar 2' className="my-5" style={{ width: '120px' }} fluid />
                   {
                     isLoggedIn && (
-                    <div>
-                      <MDBBtn noRipple outline>Valorar</MDBBtn>
-                      <MDBBtn noRipple outline className="ms-1">Añadir a la lista</MDBBtn>
-                    </div>
-                      )
+                    <>
+                      <MDBBtn key='addFilm'noRipple outline className="ms-1" onClick={() => setAddFilm(true)}>
+                        Añadir a la lista
+                      </MDBBtn>
+
+                      <Modal show={addFilm}  onHide={() => setAddFilm(false)}>
+                      <Modal.Header>
+                        <Modal.Title>Mis listas</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form>
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <br></br>
+                            {listsNames.map((item, index) => (
+                              <div key={index}>
+                                <MDBRadio 
+                                  name='flexRadioDefault' 
+                                  id='flexRadioDefault1' 
+                                  label={item} 
+                                  value={item}
+                                  onChange={(e) => setCheckedList(e.target.value)}
+                                  />
+                              </div>
+                            ))}
+                            <br></br>
+                          </Form.Group>
+                        </Form>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="primary" onClick={() => 
+                          {
+                            var idList = "";
+                            userData.lists.forEach(id => {
+                              if (id["name"] === checkedList) idList =  id["_id"];
+                            });
+                            const addData = {
+                              "_id": idList,
+                              "items": location.state.item._id,
+                            }
+                            console.log(addData)
+                            dispatch(itemServices.addItem("list", addData))
+                              .then(data => {
+                                  console.log('data', data);
+                              })
+                              .catch(err => {
+                                  return err;
+                              });
+                          }} 
+                          >Guardar
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                    </>
+                    )
                   }
                   {
                     isAdminLoggedIn && (
