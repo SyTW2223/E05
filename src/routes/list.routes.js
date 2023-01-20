@@ -6,7 +6,8 @@ module.exports = app => {
   .route("/")
   .post(list.create)
   .get(list.findAll)
-  .delete(list.deleteAll);
+  .delete(list.deleteAll)
+  .patch(list.addItem);
 
   router
   .route("/:_id")

@@ -8,7 +8,7 @@ module.exports = app => {
   .route("/")
   .post(book.create)
   .get(book.findAll)
-  .delete(book.deleteAll);
+  .delete(auth.verifyToken, auth.isAdmin, book.deleteAll);
 
   router
   .route("/:title")

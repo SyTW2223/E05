@@ -32,7 +32,7 @@ const User = mongoose.model(
       default: Date.now,
     },
     lists: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [{"_id": mongoose.Schema.Types.ObjectId, "name": String }],
       ref: "List",
     }
   })

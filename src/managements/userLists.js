@@ -15,7 +15,7 @@ exports.createPredefinedList = async() =>
                 name: name,
             });
             try {
-                return (await newList.save())._id;
+                return { "_id": (await newList.save())._id, "name": name};
             } catch (err) {
                 console.log("Error al crear lista " + name);
                 return;
