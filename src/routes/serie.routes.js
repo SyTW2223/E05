@@ -1,5 +1,7 @@
 module.exports = app => {
   const serie = require("../controllers/serie.controller");
+  const auth = require("../middlewares/authJwt");
+
   var router = require("express").Router();
 
   router
@@ -11,7 +13,7 @@ module.exports = app => {
   router
   .route("/:title")
   //.get(serie.findSerie)
-  .delete(serie.delete)
+  .delete([auth.verifyToken, auth.isAdmin] , serie.delete)
   .patch(serie.update);
 
   router

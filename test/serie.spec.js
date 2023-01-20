@@ -22,12 +22,29 @@ describe('API SERIE succes.', () => {
     genres: ['Accion'],
     rating: 9
   };
+  var dataSerie;
+  var dataSerie2;
+  var obj = {};
+  var obj2 = {};
+
   it('Should successfully insert a new serie.', async () => {
-    await supertest(app).post('/serie').send(serie).expect(201);
-    await supertest(app).post('/serie').send(serie2).expect(201);
+    dataSerie = await supertest(app).post('/serie').send(serie).expect(201);
+    dataSerie2 = await supertest(app).post('/serie').send(serie2).expect(201);
+
+    // para obtener _id
+    dataSerie = dataSerie.text.replace('{', '').replace('}','').replaceAll('"', '').split(',')
+    for (var i = 0; i < dataSerie.length; i++) {
+        var split = dataSerie[i].split(':');
+        obj[split[0].trim()] = split[1].trim();
+    }
+
+    for (var i = 0; i < dataSerie.length; i++) {
+        var split = dataSerie[i].split(':');
+        obj2[split[0].trim()] = split[1].trim();
+    }
   });
   it('Should successfully get a serie2.', async () => {
-    await supertest(app).get(`/serie/${serie.title}`).send().expect(200);
+    await supertest(app).get(`/serie/${obj2._id}`).send().expect(200);
   });
   it('Should successfully get all series.', async () => {
     await supertest(app).get('/serie').send().expect(200);

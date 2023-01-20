@@ -19,12 +19,29 @@ describe('API FILM succes', () => {
     yearPublication: 2020,
     rating: 5
   };
-  it('Should successfully insert a new film', async () => {
-    await supertest(app).post('/film').send(film).expect(201);
-    await supertest(app).post('/film').send(film2).expect(201);
+  var dataFilm;
+  var dataFilm2;
+  var obj = {};
+  var obj2 = {};
+
+  it('Should successfully insert a new film.', async () => {
+    dataFilm = await supertest(app).post('/film').send(film).expect(201);
+    dataFilm2 = await supertest(app).post('/film').send(film2).expect(201);
+
+    // para obtener _id
+    dataFilm = dataFilm.text.replace('{', '').replace('}','').replaceAll('"', '').split(',')
+    for (var i = 0; i < dataFilm.length; i++) {
+        var split = dataFilm[i].split(':');
+        obj[split[0].trim()] = split[1].trim();
+    }
+
+    for (var i = 0; i < dataFilm.length; i++) {
+        var split = dataFilm[i].split(':');
+        obj2[split[0].trim()] = split[1].trim();
+    }
   });
   it('Should successfully get a film2', async () => {
-    await supertest(app).get(`/film/${film.title}`).send().expect(200);
+    await supertest(app).get(`/film/${obj2._id}`).send().expect(200);
   });
   it('Should successfully get all films', async () => {
     await supertest(app).get('/film').send().expect(200);

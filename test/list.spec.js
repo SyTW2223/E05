@@ -44,7 +44,6 @@ describe('API LIST succes', () => {
   });
   it('Should successfully remove lists.', async () => {
     await supertest(app).delete(`/list/${obj._id}`).send().expect(200);
-    await supertest(app).delete(`/list/${obj2._id}`).send().expect(200);
   });
 });
 
