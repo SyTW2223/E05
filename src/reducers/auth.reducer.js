@@ -5,9 +5,11 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   LOGIN_ADMIN_SUCCESS,
+  //GET_LIST_SUCCESS,
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
+//const listsUser = JSON.parse(localStorage.getItem("listUser"));
 
 const initialState = user ? (
   user.role.include("ADMIN") ? {isAdminLoggedIn: true, user } : { isLoggedIn: true, user }
@@ -55,7 +57,12 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
         isAdminLoggedIn: false,
         user: null,
-      };
+      };/*
+    case GET_LIST_SUCCESS:
+      return {
+        ...state,
+        listsUser: payload.listsUser,
+      };*/
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   MDBCol,
   MDBContainer,
@@ -11,29 +11,43 @@ import {
   MDBCardImage,
   MDBBtn,
   MDBTypography,
-  MDBIcon
+  MDBIcon,
+  MDBRadio
 } from 'mdb-react-ui-kit';
 import itemServices from "../../services/item.services";
 import { Button, Modal, Form } from 'react-bootstrap';
 
+
+
+
 const selectorIsAdminLoggedIn = (state) => state.auth.isAdminLoggedIn;
 const selectorIsLoggedIn = (state) => state.auth.isLoggedIn;
+const selectorUserData = (state) => state.auth?.user?.data;
 
 export const Book = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  // usuarios logueados
   const isAdminLoggedIn = useSelector(selectorIsAdminLoggedIn);
   const isLoggedIn = useSelector(selectorIsLoggedIn);
+  const userData = useSelector(selectorUserData);
 
   const [modifyBook, setMB] = useState(false);
-
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [author, setAuthor] = useState();
   const [saga, setSaga] = useState("");
+
   const [year, setYear] = useState();
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
+  const [checkedList, setCheckedList] = useState("");
+
+  const [addBook, setAddBook] = useState();
+
+  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
+  const listsNames = ['Libros leidos', 'Lbros para leer', 'Libros leyendo'];
 
 
   const handleCheck = (event) => {
@@ -45,8 +59,7 @@ export const Book = () => {
     }
     setChecked(updatedList);
   };
-
-  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
+   
   return (
     <section style={{ backgroundColor: '#f4f5f7' }}>
     <MDBContainer className="py-5 h-100">
@@ -60,106 +73,155 @@ export const Book = () => {
                   alt="Avatar" className="my-5" style={{ width: '120px' }} fluid />
                   {
                     isLoggedIn && (
-                    <div>
-                      <MDBBtn noRipple outline>Valorar</MDBBtn>
-                      <MDBBtn noRipple outline className="ms-1">Añadir a la lista</MDBBtn>
-                    </div>
-                      )
-                  }
-                  {
-                    isAdminLoggedIn && (
-                    <div>
-                      <MDBBtn key='deleteBook' noRipple outline
-                        onClick={() => {
-                          itemServices.deleteItem('book', location.state.item.title)
+                    <>
+                      <MDBBtn key='addBook' noRipple outline className="ms-1" onClick={() => setAddBook(true)}>
+                        Añadir a lista
+                      </MDBBtn>  
+
+                      <Modal show={addBook}  onHide={() => setAddBook(false)}>
+                      <Modal.Header>
+                        <Modal.Title>Mis listas</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form>
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <br></br>
+                            {listsNames.map((item, index) => (
+                              <div key={index}>
+                                <MDBRadio 
+                                  name='flexRadioDefault' 
+                                  id='flexRadioDefault1' 
+                                  label={item} 
+                                  value={item}
+                                  onChange={(e) => setCheckedList(e.target.value)}
+                                  />
+                              </div>
+                            ))}
+                            <br></br>
+                          </Form.Group>
+                        </Form>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="primary" onClick={() => 
+                          {
+                            var idList = "";
+                            userData.lists.forEach(id => {
+                              if (id["name"] === checkedList) idList =  id["_id"];
+                            });
+                            const addData = {
+                              "_id": idList,
+                              "items": location.state.item._id,
+                            }
+                            console.log(addData)
+                            dispatch(itemServices.addItem("list", addData))
+                              .then(data => {
+                                  console.log('data', data);
+                              })
+                              .catch(err => {
+                                  return err;
+                              });
+                          }} 
+                          >Guardar
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                  </>    
+                  )
+                }
+                {
+                  isAdminLoggedIn && (
+                  <div>
+                    <MDBBtn key='deleteBook' noRipple outline
+                      onClick={() => {
+                        itemServices.deleteItem('book', location.state.item.title)
+                          .then(data => { 
+                            navigate('/bookList');
+                          }).catch(err => {
+                              console.log(err);
+                          });
+                    }}
+                    >Borrar</MDBBtn>
+                    <MDBBtn key='modififyBook' noRipple outline className="ms-1" onClick={() => setMB(true)}>
+                      Modificar
+                    </MDBBtn>                      
+                    {/* Modal Modificar */}
+                    <Modal show={modifyBook}  onHide={() => setMB(false)}>
+                      <Modal.Header>
+                        <Modal.Title>Modificar Libro</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Form>
+                          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Control
+                              type="text"
+                              placeholder="Titulo"
+                              autoFocus
+                              onChange={(e) => setTitle(e.target.value)}
+                            /><br></br>
+                            <Form.Control 
+                              as="textarea" 
+                              rows={3}
+                              placeholder="Descripción"
+                              onChange={(e) => setDescription(e.target.value)}
+                              /><br></br>
+                            <Form.Control
+                              type="text"
+                              placeholder="Autor"
+                              autoFocus
+                              onChange={(e) => setAuthor(e.target.value)}
+                            /><br></br>
+                              <Form.Control
+                              type="text"
+                              placeholder="Saga"
+                              autoFocus
+                              onChange={(e) => setSaga(e.target.value)}
+                            /><br></br>
+                            <Form.Control
+                              type="text"
+                              placeholder="Año Publicación"
+                              autoFocus
+                              onChange={(e) => setYear(e.target.value)}
+                            /><br></br>
+                            {checkList.map((item, index) => (
+                              <div key={index}>
+                                <input value={item} type="checkbox" onChange={handleCheck}/>
+                                <span>{item}</span>
+                              </div>
+                            ))}
+                            <br></br>
+                          <Form.Control 
+                            type="file"
+                            onChange={(e) => setImage(e.target.value)}
+                            /><br></br>
+                          </Form.Group>
+                        </Form>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="primary" onClick={() => 
+                          {
+                            const bookData = {
+                              "title": title,
+                              "description": description,
+                              "yearPublication": Number(year),
+                              "genres": checked,
+                              "author": author,
+                              "saga": saga,
+                              "image": image,
+                            }
+                            itemServices.updateItem('book', location.state.item.title, bookData)
                             .then(data => { 
                               navigate('/bookList');
                             }).catch(err => {
                                 console.log(err);
                             });
-                      }}
-                      >Borrar</MDBBtn>
-                      <MDBBtn key='modififyBook' noRipple outline className="ms-1" onClick={() => setMB(true)}>
-                        Modificar
-                      </MDBBtn>                      
-                      {/* Modal Modificar */}
-                      <Modal show={modifyBook}  onHide={() => setMB(false)}>
-                        <Modal.Header>
-                          <Modal.Title>Modificar Libro</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Form>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                              <Form.Control
-                                type="text"
-                                placeholder="Titulo"
-                                autoFocus
-                                onChange={(e) => setTitle(e.target.value)}
-                              /><br></br>
-                              <Form.Control 
-                                as="textarea" 
-                                rows={3}
-                                placeholder="Descripción"
-                                onChange={(e) => setDescription(e.target.value)}
-                                /><br></br>
-                              <Form.Control
-                                type="text"
-                                placeholder="Autor"
-                                autoFocus
-                                onChange={(e) => setAuthor(e.target.value)}
-                              /><br></br>
-                                <Form.Control
-                                type="text"
-                                placeholder="Saga"
-                                autoFocus
-                                onChange={(e) => setSaga(e.target.value)}
-                              /><br></br>
-                              <Form.Control
-                                type="text"
-                                placeholder="Año Publicación"
-                                autoFocus
-                                onChange={(e) => setYear(e.target.value)}
-                              /><br></br>
-                              {checkList.map((item, index) => (
-                                <div key={index}>
-                                  <input value={item} type="checkbox" onChange={handleCheck}/>
-                                  <span>{item}</span>
-                                </div>
-                              ))}
-                              <br></br>
-                            <Form.Control 
-                              type="file"
-                              onChange={(e) => setImage(e.target.value)}
-                              /><br></br>
-                            </Form.Group>
-                          </Form>
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="primary" onClick={() => 
-                            {
-                              const bookData = {
-                                "title": title,
-                                "description": description,
-                                "yearPublication": Number(year),
-                                "genres": checked,
-                                "author": author,
-                                "saga": saga,
-                                "image": image,
-                              }
-                              itemServices.updateItem('book', location.state.item.title, bookData)
-                              .then(data => { 
-                                navigate('/bookList');
-                              }).catch(err => {
-                                  console.log(err);
-                              });
-                            }} 
-                            >Guardar
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
-                    </div>
-                      )
-                  }
+                          }} 
+                          >Guardar
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                  </div>
+                    )
+                }
               </MDBCol>
               <MDBCol md="8">
                 <MDBCardBody className="p-4">

@@ -6,7 +6,6 @@ const selectorUserData = (state) => state.auth?.user?.data;
 export const AuthHeader = () => {
   
   const user = useSelector(selectorUserData);
-  // const user = JSON.parse(localStorage.getItem('user'));
   console.log('user', user)
 
   if (user && user.accessToken) {

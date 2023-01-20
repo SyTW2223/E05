@@ -14,7 +14,7 @@ import {
   MDBBtn,
 } from 'mdb-react-ui-kit'; 
 
-import item from "../../services/item.services";
+import itemServices from "../../services/item.services";
 
 
 
@@ -194,7 +194,7 @@ export const AdminProfile = () => {
                         "saga": saga,
                         "image": image,
                       }
-                      dispatch(item.createItem("book", bookData))
+                      dispatch(itemServices.createItem("book", bookData))
                       .then((data) => {
                           console.log('Creado libro correctamente.');
                           console.log(data);
@@ -265,7 +265,7 @@ export const AdminProfile = () => {
                         "seasons": seasons,
                         "image": image,
                       }
-                      dispatch(item.createItem("serie", title, serieData))
+                      dispatch(itemServices.createItem("serie", title, serieData))
                       .then((data) => {
                           console.log('Creada serie correctamente.');
                           console.log(data);
@@ -329,7 +329,7 @@ export const AdminProfile = () => {
                       "genres": checked,
                       "image": image,
                     }
-                    dispatch(item.createItem("film", filmData))
+                    dispatch(itemServices.createItem("film", filmData))
                     .then((data) => {
                         console.log('Creado libro correctamente.');
                         console.log(data);

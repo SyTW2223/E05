@@ -21,25 +21,32 @@ import {
 const selectorIsLoggedIn = (state) => state.auth?.isLoggedIn;
 const selectorUserData = (state) => state.auth?.user?.data;
 
+/*
+export const UserProfile = () => {
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
+  if (!isLoggedIn) {
+    console.log('adios')
+    return <Navigate to="/login" />;
+  } else {
+    return UserProfileAccept();
+  }
+}*/
+
 
 export const UserProfile = () => {
-
-  const isLoggedIn = useSelector(selectorIsLoggedIn);
   const userData = useSelector(selectorUserData);
-
-  const [dataItems, setDataItems] = useState([]); // contiene lista de de objetos (items de la lista)
+  const isLoggedIn = useSelector(selectorIsLoggedIn);
+  const [dataItems, setDataItems] = useState([]); // contiene lista de objetos (items de la lista)
   const [dataLists, setDataLists] = useState([]); // contiene las listas del ususario como objetos
   const navigate = useNavigate();
 
-
-  
   // busca las listas del ususario al entrar a la pagina de perfil
   useEffect(() => {
     async function getListData() {
       let objectLists;
       objectLists = userData.lists.map(async id => {
         try {
-          const res = await itemServices.getItem("list", id);
+          const res = await itemServices.getItem("list", id["_id"]);
           return res.data;
         } catch (err) {
           return err;
@@ -60,9 +67,10 @@ export const UserProfile = () => {
   }, [userData.lists]);
 
   if (!isLoggedIn) {
+    console.log('adios')
     return <Navigate to="/login" />;
   }
-  
+
   // recibe id del item a buscar
   const buscarItems = async (ruta, items) => {
     var itemsObject;
@@ -79,6 +87,7 @@ export const UserProfile = () => {
     setDataItems(itemsObject);
   };
 
+  
   return (
     <section style={{ backgroundColor: '#eee' }}>
       <MDBContainer className="py-5">

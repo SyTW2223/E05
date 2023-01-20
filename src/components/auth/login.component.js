@@ -72,7 +72,7 @@ export const Login = () => {
                         if (data.role[0] === "ADMIN") navigate('/AdminProfile');
                         if (data.role[0] === "USER") navigate('/UserProfile');
                     }).catch(err => {
-                        console.log('Error. La cuenta no existe, debe crearse una cuenta.', err);
+                        return err;
                     });
                 }}
             >

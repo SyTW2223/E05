@@ -1,5 +1,5 @@
 import http from "../http-common";
-// import { AuthHeader } from './auth-header';
+//import { AuthHeader } from './auth-header';
 
 class Item {
     listItems(route) {
@@ -30,6 +30,13 @@ class Item {
     async deleteItem(route, title) {
         try {
             await http.delete("/" + route + "/" + title);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    async addItem(route, data) {
+        try {
+            await http.patch("/" + route, data);
         } catch (error) {
             console.log(error);
         }
