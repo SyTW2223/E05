@@ -13,7 +13,7 @@ module.exports = app => {
   router
   .route("/:title")
   //.get(serie.findSerie)
-  .delete([auth.verifyToken, auth.isAdmin] , serie.delete)
+  .delete(serie.delete)
   .patch(serie.update);
 
   router
