@@ -2,9 +2,9 @@ const serieModel = require("../models/serie.model");
 
 
 // Create and Save a new serie
-exports.create = async (req, res) => {
-  //console.log('esto es create en serie.controler');
-  const allowedCreated = ['description', 'rating', 'id', 'categories', 'title', 'seasons'];
+exports.create = async (req, res) => 
+{
+  const allowedCreated = ['description', 'rating', 'yearPublication', 'genres', 'title', 'image', 'seasons'];
   const actualCreated = Object.keys(req.body);
   const isValidCreate = actualCreated.every((create) => allowedCreated.includes(create));
 
@@ -15,12 +15,13 @@ exports.create = async (req, res) => {
   }
   // Create a serie
   const newSerie = new serieModel({
-    id: req.body.id,
     title: req.body.title,
+    image: req.body.image,
     description: req.body.description,
     seasons: req.body.seasons,
-    categories: req.body.categories,
+    genres: req.body.genres,
     rating: req.body.rating,
+    yearPublication: req.body.yearPublication,
   });
 
   // Save Serie in the database
@@ -36,15 +37,14 @@ exports.create = async (req, res) => {
 
 
 // Update a serie by the title in the request
-exports.update = (req, res) => {
-  //console.log('esto es update en serie.controler');
-  // si no hay datos nuevos no podra actualizarse
+exports.update = (req, res) => 
+{
   if (Object.keys(req.body).length === 0) {
     res.status(400).send({
       message: "Data to update can not be empty!"
     });
   }
-  const allowedUpdates = ['description', 'rating', 'id', 'categories', 'title', 'seasons'];
+  const allowedUpdates = ['description', 'rating', 'image', 'genres', 'title', 'seasons', 'yearPublication'];
   const actualUpdates = Object.keys(req.body);
   const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
 
@@ -73,13 +73,13 @@ exports.update = (req, res) => {
 
 
 // Retrieve all elements from the database.
-exports.findAll = (req, res) => {
-  //console.log('esto es findAll en serie.controler');
-  
+exports.findAll = (req, res) => 
+{
   serieModel.find()
     .then(data => {
       res.status(200).send(data);
-    }).catch(err => {
+    })
+    .catch(err => {
       res.status(500).send({
         message:
           err.message || "Error found series."
@@ -87,26 +87,24 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a element with an title
-exports.findOne = (req, res) => {
-  //console.log('esto es findOne en serie.controler');
-  const title = req.params.title;
-  serieModel.findOne({'title': title}).then(data => {
+// Find a element with id
+exports.findSerie = async (req, res) => 
+{
+  await serieModel.findById({'_id': req.params._id})
+    .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found serie with title " + title });
+        res.status(404).send({ message: "Not found serie with title " + data.title });
       else res.status(200).send(data);
-    }).catch(err => {
-      res.status(500).send({ message: 
-        err.message || "Unknown error when searching for " + title 
-      });
+    })
+    .catch(err => {
+      res.status(500).send({ message: "Unknown error when searching serie."});
     });
 };
 
 
 // Delete a serie with the specified id in the request
-exports.delete = (req, res) => {
-  //console.log('esto es delete en serie.controler');
-  
+exports.delete = (req, res) => 
+{
   const title = req.params.title;
 
   serieModel.findOneAndDelete({'title': title})
@@ -128,9 +126,8 @@ exports.delete = (req, res) => {
 };
 
 // Delete all series from the database.
-exports.deleteAll = (req, res) => {
-  //console.log('esto es deleteAll en serie.controler');
-  
+exports.deleteAll = (req, res) => 
+{  
   serieModel.deleteMany({})
     .then(data => {
       res.status(200).send({

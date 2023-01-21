@@ -1,25 +1,18 @@
-module.exports = app => {
-  const list = require("../controllers/list.controler");
-
+module.exports = app => {  const list = require("../controllers/list.controller");
   var router = require("express").Router();
 
-  // Create a new list
-  router.post("/", list.create);
+  router
+  .route("/")
+  .post(list.create)
+  .get(list.findAll)
+  .delete(list.deleteAll)
+  .patch(list.addItem);
 
-  // Retrieve all list
-  router.get("/", list.findAll);
-
-  // Retrieve a single list with id
-  router.get("/:name", list.findOne);
-
-  // Update a list with name
-  router.patch("/:name", list.update);
-
-  // Delete a list with name
-  router.delete("/:name", list.delete);
-
-  // Delete all lists database
-  router.delete("/", list.deleteAll);
+  router
+  .route("/:_id")
+  .get(list.findList)
+  .delete(list.delete)
+  .patch(list.update);
 
   app.use("/list", router);
 };

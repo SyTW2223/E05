@@ -5,7 +5,6 @@ let mocha = require('mocha');
 
 describe('API USER succes', () => {
   let user = {
-    id: 0,
     username: "user1",
     email: "user1@ull.edu.es",
     password: "pasword"
@@ -15,7 +14,6 @@ describe('API USER succes', () => {
     password: "pasword"
   };
   let user2 = {
-    id: 1,
     username: "user2",
     email: "user2@ull.edu.es",
     password: "pasword"
@@ -48,7 +46,6 @@ describe('API USER succes', () => {
 
 describe('API USER errors', () => {
   const userTestError = {
-    id: 0,
     username: "test",
     email: "test@gmail.com",
     password: "pass"
@@ -58,7 +55,7 @@ describe('API USER errors', () => {
     email: "test@gmail.com",
     password: "passwordError"
   };
-  it('Should error register user beacuse email is already exist.', async () => {
+  it('Should error register user because email is already exist.', async () => {
     await supertest(app).post(`/user/register`).send(userTestError);
     await supertest(app).delete(`/user/register`).send(userTestError).expect(404);
   });
@@ -67,7 +64,7 @@ describe('API USER errors', () => {
   });
   it('Should error get update user.', async () => {
     await supertest(app).patch(`/user/${userTestError.username}`).send({usernname: "patchtest"}).expect(400);
-    await supertest(app).delete(`/user/test`).send();
+    await supertest(app).delete(`/user/userTestError`).send();
   });
   it('Should error with get when path is wrong.', async () => {
     await supertest(app).get('/hola').send().expect(404);

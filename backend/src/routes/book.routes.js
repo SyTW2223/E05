@@ -1,25 +1,22 @@
+const book = require("../controllers/book.controller");
+var router = require("express").Router();
+const auth = require("../middlewares/authJwt");
+
 module.exports = app => {
-  const book = require("../controllers/book.controler");
+  router
+  .route("/")
+  .post([auth.verifyToken, auth.isAdmin], book.create)  // solo admin
+  .get(book.findAll)  // publico
+  .delete([auth.verifyToken, auth.isAdmin], book.deleteAll);  // solo admin
 
-  var router = require("express").Router();
+  router
+  .route("/:title")
+  .delete([auth.verifyToken, auth.isAdmin], book.delete) // solo para admin
+  .patch([auth.verifyToken, auth.isAdmin], book.update); // solo para admin
 
-  // Create a new book
-  router.post("/", book.create);
-
-  // Retrieve all book
-  router.get("/", book.findAll);
-
-  // Retrieve a single book with id
-  router.get("/:title", book.findOne);
-
-  // Update a book with title
-  router.patch("/:title", book.update);
-
-  // Delete a book with title
-  router.delete("/:title", book.delete);
-
-  // Delete all books database
-  router.delete("/", book.deleteAll);
+  router
+  .route("/:_id")
+  .get(book.findBook); // publico
 
   app.use("/book", router);
 };

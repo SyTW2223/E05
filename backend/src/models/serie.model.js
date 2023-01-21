@@ -1,21 +1,22 @@
 const mongoose = require("mongoose");
-const categories = require("./categories");
+const genres = require("./genres");
 // ------------------ COLECCIONES DE USUARIOS EN MONGO ------------ //
 // se puede pasar las comprobaciones al front
 const Serie = mongoose.model(
   "Serie",
   new mongoose.Schema({
-    id: {
-      type: Number,
-      unique: true,
-      required: true,
-      trim: true,
+    type: {
+      type: String,
+      default: "serie",
     },
     title: {
       type: String,
       unique: true,
       required: true,
       trim: true,
+    },
+    image: {
+      type: String,
     },
     description: {
       type: String,
@@ -26,8 +27,12 @@ const Serie = mongoose.model(
       type: Number,
       trim: true,  
     },
-    categories: {
-      type: [categories],
+    yearPublication: {
+      type: Number,
+      required: true,
+    },
+    genres: {
+      type: [genres],
       trim: true,
     },
     rating: {

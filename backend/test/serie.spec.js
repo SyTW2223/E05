@@ -5,24 +5,46 @@ let mocha = require('mocha');
 /**
  * Testing series
  */
-
 describe('API SERIE succes.', () => {
   let serie = {
-    id: 0,
     title: "serieTest1",
-    description: "test serie1"
+    description: "test serie1",
+    seasons: 3,
+    yearPublication: 2021,
+    genres: ['Accion'],
+    rating: 4
   };
   let serie2 = {
-    id: 1,
     title: "serieTest2",
-    description: "test serie2"
+    description: "test serie2",
+    seasons: 1,
+    yearPublication: 2000,
+    genres: ['Accion'],
+    rating: 9
   };
+  var dataSerie;
+  var dataSerie2;
+  var obj = {};
+  var obj2 = {};
+
   it('Should successfully insert a new serie.', async () => {
-    await supertest(app).post('/serie').send(serie).expect(201);
-    await supertest(app).post('/serie').send(serie2).expect(201);
+    dataSerie = await supertest(app).post('/serie').send(serie).expect(201);
+    dataSerie2 = await supertest(app).post('/serie').send(serie2).expect(201);
+
+    // para obtener _id
+    dataSerie = dataSerie.text.replace('{', '').replace('}','').replaceAll('"', '').split(',')
+    for (var i = 0; i < dataSerie.length; i++) {
+        var split = dataSerie[i].split(':');
+        obj[split[0].trim()] = split[1].trim();
+    }
+
+    for (var i = 0; i < dataSerie.length; i++) {
+        var split = dataSerie[i].split(':');
+        obj2[split[0].trim()] = split[1].trim();
+    }
   });
   it('Should successfully get a serie2.', async () => {
-    await supertest(app).get(`/serie/${serie.title}`).send().expect(200);
+    await supertest(app).get(`/serie/${obj2._id}`).send().expect(200);
   });
   it('Should successfully get all series.', async () => {
     await supertest(app).get('/serie').send().expect(200);

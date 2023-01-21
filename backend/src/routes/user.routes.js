@@ -1,37 +1,25 @@
-/*
-  Rutas de autorizacion para los usuarios, que recursos son accesibles para cada uno
-    -> GET /api/test/all
-    -> GET /api/test/user for loggedin users (user/admin)
-    -> GET /api/test/admin for admin
-*/
+const auth = require("../middlewares/authJwt");
+const user = require("../controllers/user.controller");
+var router = require("express").Router();
+
 module.exports = app => {
-  const user = require("../controllers/user.controller");
+  router
+  .route("/")
+  .post(user.create)
+  .get(user.findAll)
+  .delete([auth.verifyToken, auth.isAdmin], user.deleteAll);
 
-  var router = require("express").Router();
+  router
+  .route("/:username")
+  .get(user.findOne)
+  .delete([auth.verifyToken, auth.isAdmin], user.delete)
+  .patch(user.update);
 
-  // Create a new user
-  router.post("/", user.create);
-
-  // Register user
   router.post("/register", user.create);
-
-  // Login user
   router.post("/login", user.login);
+  router.post("/logout", user.logout);
 
-  // Retrieve all user
-  router.get("/", user.findAll);
-
-  // Retrieve a single user with id
-  router.get("/:username", user.findOne);
-
-  // Update a user with username
-  router.patch("/:username", user.update);
-
-  // Delete a user with username
-  router.delete("/:username", user.delete);
-
-  // Delete all users database
-  router.delete("/", user.deleteAll);
-
+  
   app.use("/user", router);
 };
+

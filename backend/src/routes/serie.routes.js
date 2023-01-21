@@ -1,25 +1,23 @@
+var router = require("express").Router();
+const serie = require("../controllers/serie.controller");
+const auth = require("../middlewares/authJwt");
+
+
 module.exports = app => {
-  const serie = require("../controllers/serie.controler");
+  router
+  .route("/")
+  .post([auth.verifyToken, auth.isAdmin], serie.create)
+  .get(serie.findAll)
+  .delete([auth.verifyToken, auth.isAdmin], serie.deleteAll);
 
-  var router = require("express").Router();
+  router
+  .route("/:title")
+  .delete([auth.verifyToken, auth.isAdmin], serie.delete)
+  .patch([auth.verifyToken, auth.isAdmin], serie.update);
 
-  // Create a new serie
-  router.post("/", serie.create);
-
-  // Retrieve all serie
-  router.get("/", serie.findAll);
-
-  // Retrieve a single serie with id
-  router.get("/:title", serie.findOne);
-
-  // Update a serie with title
-  router.patch("/:title", serie.update);
-
-  // Delete a serie with title
-  router.delete("/:title", serie.delete);
-
-  // Delete all series database
-  router.delete("/", serie.deleteAll);
+  router
+  .route("/:_id")
+  .get(serie.findSerie);
 
   app.use("/serie", router);
 };

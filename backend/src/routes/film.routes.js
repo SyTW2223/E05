@@ -1,25 +1,23 @@
+const film = require("../controllers/film.controller");
+var router = require("express").Router();
+const auth = require("../middlewares/authJwt");
+
 module.exports = app => {
-  const film = require("../controllers/film.controler");
 
-  var router = require("express").Router();
+  router
+  .route("/")
+  .post([auth.verifyToken, auth.isAdmin], film.create)
+  .get(film.findAll)
+  .delete([auth.verifyToken, auth.isAdmin], film.deleteAll);
 
-  // Create a new film
-  router.post("/", film.create);
+  router
+  .route("/:title")
+  .delete([auth.verifyToken, auth.isAdmin], film.delete)
+  .patch([auth.verifyToken, auth.isAdmin], film.update);
 
-  // Retrieve all film
-  router.get("/", film.findAll);
-
-  // Retrieve a single film with id
-  router.get("/:title", film.findOne);
-
-  // Update a film with title
-  router.patch("/:title", film.update);
-
-  // Delete a film with title
-  router.delete("/:title", film.delete);
-
-  // Delete all films database
-  router.delete("/", film.deleteAll);
+  router
+  .route("/:_id")
+  .get(film.findFilm);
 
   app.use("/film", router);
 };

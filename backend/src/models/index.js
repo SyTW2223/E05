@@ -9,10 +9,10 @@ db.url = dbConfig.url;
 db.HOST = dbConfig.HOST;
 db.PORT = dbConfig.PORT;
 db.DB = dbConfig.DB;
+db.USER = dbConfig.USER;
+db.PASSWORD = dbConfig.PASSWORD;
 
 db.user = require("./user.model");
-db.ROLES = ["user", "admin"];
-
 db.book = require("./book.model")(mongoose);
 db.film = require("./film.model")(mongoose);
 db.serie = require("./serie.model")(mongoose);
