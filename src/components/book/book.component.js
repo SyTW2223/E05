@@ -109,7 +109,7 @@ export const Book = () => {
                             });
                             const addData = {
                               "_id": idList,
-                              "items": location.state.item._id,
+                              "items": [location.state.item._id],
                             }
                             console.log(addData)
                             dispatch(itemServices.addItem("list", addData))

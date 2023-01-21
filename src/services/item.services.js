@@ -36,7 +36,7 @@ class Item {
     }
     async addItem(route, data) {
         try {
-            await http.patch("/" + route, data, { headers: AuthHeader() });
+            await http.patch("/" + route, data);
         } catch (error) {
             console.log(error);
         }
