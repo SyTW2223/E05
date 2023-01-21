@@ -9,11 +9,12 @@ import {
 } from "../actions/types";
 
 const user = JSON.parse(localStorage.getItem("user"));
-//const listsUser = JSON.parse(localStorage.getItem("listUser"));
-
+/*
 const initialState = user ? (
   user.role.include("ADMIN") ? {isAdminLoggedIn: true, user } : { isLoggedIn: true, user }
-) : { isLoggedIn: false, user: null };
+) : { isLoggedIn: false, user: null };*/
+
+const initialState = user;
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
@@ -57,12 +58,7 @@ export default function (state = initialState, action) {
         isLoggedIn: false,
         isAdminLoggedIn: false,
         user: null,
-      };/*
-    case GET_LIST_SUCCESS:
-      return {
-        ...state,
-        listsUser: payload.listsUser,
-      };*/
+      };
     default:
       return state;
   }

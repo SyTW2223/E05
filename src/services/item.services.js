@@ -1,5 +1,5 @@
 import http from "../http-common";
-//import { AuthHeader } from './auth-header';
+import { AuthHeader } from "./auth-header";
 
 class Item {
     listItems(route) {
@@ -15,21 +15,21 @@ class Item {
 
     async createItem(route, data) {
         try {
-            await http.post("/" + route, data);
+            await http.post("/" + route, data, { headers: AuthHeader() });
         } catch (error) {
             console.log(error);
         }
     }
     async updateItem(route, title, data) {
         try {
-            await http.patch("/" + route + "/" + title, data);
+            await http.patch("/" + route + "/" + title, data, { headers: AuthHeader() });
         } catch (error) {
             console.log(error);
         }
     }
     async deleteItem(route, title) {
         try {
-            await http.delete("/" + route + "/" + title);
+            await http.delete("/" + route + "/" + title, { headers: AuthHeader() });
         } catch (error) {
             console.log(error);
         }

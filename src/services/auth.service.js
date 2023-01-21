@@ -15,18 +15,16 @@ class Authentication {
         return http.post("/user/register", data);
     }
 
-    login(username, pass) {
+    async login(username, pass) {
         let data = {
             "username": username,
             "password": pass
         }
-        return http.post(`/user/login`, data)
-            .then((response) => {
-                if (response.data.accessToken) {
-                    localStorage.setItem("user", JSON.stringify(response.data));
-                }
-                return response.data;
-            })
+        const response = await http.post(`/user/login`, data);
+        if (response.data.data.accessToken) {
+            localStorage.setItem("user", JSON.stringify(response.data.data));
+        }
+        return response.data;
     }
 
     logout() {
