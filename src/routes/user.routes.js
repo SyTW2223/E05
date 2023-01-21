@@ -22,12 +22,3 @@ module.exports = app => {
   
   app.use("/user", router);
 };
-
-/*
-
-  // Dashboard route
-  router.get('/adminBoard', [auth.verifyToken, auth.isAdmin], user.adminBoard);
-
-  // Dashboard route
-  router.get('/userBoard', [auth.verifyToken], user.userBoard);
-*/

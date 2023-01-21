@@ -1,17 +1,19 @@
+const film = require("../controllers/film.controller");
+var router = require("express").Router();
+const auth = require("../middlewares/authJwt");
+
 module.exports = app => {
-  const film = require("../controllers/film.controller");
-  var router = require("express").Router();
 
   router
   .route("/")
-  .post(film.create)
+  .post([auth.verifyToken, auth.isAdmin], film.create)
   .get(film.findAll)
-  .delete(film.deleteAll);
+  .delete([auth.verifyToken, auth.isAdmin], film.deleteAll);
 
   router
   .route("/:title")
-  .delete(film.delete)
-  .patch(film.update);
+  .delete([auth.verifyToken, auth.isAdmin], film.delete)
+  .patch([auth.verifyToken, auth.isAdmin], film.update);
 
   router
   .route("/:_id")

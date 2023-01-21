@@ -1,20 +1,19 @@
+var router = require("express").Router();
+const serie = require("../controllers/serie.controller");
+const auth = require("../middlewares/authJwt");
+
+
 module.exports = app => {
-  const serie = require("../controllers/serie.controller");
-  const auth = require("../middlewares/authJwt");
-
-  var router = require("express").Router();
-
   router
   .route("/")
-  .post(serie.create)
+  .post([auth.verifyToken, auth.isAdmin], serie.create)
   .get(serie.findAll)
-  .delete(serie.deleteAll);
+  .delete([auth.verifyToken, auth.isAdmin], serie.deleteAll);
 
   router
   .route("/:title")
-  //.get(serie.findSerie)
-  .delete(serie.delete)
-  .patch(serie.update);
+  .delete([auth.verifyToken, auth.isAdmin], serie.delete)
+  .patch([auth.verifyToken, auth.isAdmin], serie.update);
 
   router
   .route("/:_id")
