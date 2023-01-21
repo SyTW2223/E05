@@ -39,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --env=jsdom --coverage",
+    "test": "jest --config=jest.config.js --env=jsdom --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -71,15 +71,5 @@
     "jest-dev-server": "^6.2.0",
     "react-test-renderer": "^18.2.0",
     "redux-devtools-extension": "^2.13.9"
-  },
-  "jest": {
-    "transformIgnorePatterns": [
-      "node_modules/(?!axios)"
-    ],
-    "testEnvironment": "jsdom",
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
-    }
   }
 }
