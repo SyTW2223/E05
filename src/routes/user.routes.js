@@ -7,12 +7,12 @@ module.exports = app => {
   .route("/")
   .post(user.create)
   .get(user.findAll)
-  .delete(user.deleteAll);
+  .delete([auth.verifyToken, auth.isAdmin], user.deleteAll);
 
   router
   .route("/:username")
   .get(user.findOne)
-  .delete(user.delete)
+  .delete([auth.verifyToken, auth.isAdmin], user.delete)
   .patch(user.update);
 
   router.post("/register", user.create);
@@ -22,3 +22,4 @@ module.exports = app => {
   
   app.use("/user", router);
 };
+
