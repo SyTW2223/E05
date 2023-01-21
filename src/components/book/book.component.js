@@ -34,18 +34,18 @@ export const Book = () => {
   const userData = useSelector(selectorUserData);
 
   const [modifyBook, setMB] = useState(false);
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [author, setAuthor] = useState();
-  const [saga, setSaga] = useState("");
-  const [year, setYear] = useState();
+  const [title, setTitle] = useState(location.state.item.title);
+  const [description, setDescription] = useState(location.state.item.description);
+  const [author, setAuthor] = useState(location.state.item.author);
+  const [saga, setSaga] = useState(location.state.item.saga);
+  const [year, setYear] = useState(location.state.item.yearPublication);
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
   const [checkedList, setCheckedList] = useState("");
 
   const [addBook, setAddBook] = useState();
 
-  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
+  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion", "Terror"];
   const listsNames = ['Libros leidos', 'Libros para leer', 'Libros leyendo'];
 
 
@@ -154,6 +154,7 @@ export const Book = () => {
                             <Form.Control
                               type="text"
                               placeholder="Titulo"
+                              defaultValue={location.state.item.title}
                               autoFocus
                               onChange={(e) => setTitle(e.target.value)}
                             /><br></br>
@@ -161,23 +162,27 @@ export const Book = () => {
                               as="textarea" 
                               rows={3}
                               placeholder="Descripción"
+                              defaultValue={location.state.item.description}
                               onChange={(e) => setDescription(e.target.value)}
                               /><br></br>
                             <Form.Control
                               type="text"
                               placeholder="Autor"
+                              defaultValue={location.state.item.author}
                               autoFocus
                               onChange={(e) => setAuthor(e.target.value)}
                             /><br></br>
                               <Form.Control
                               type="text"
                               placeholder="Saga"
+                              defaultValue={location.state.item.saga}
                               autoFocus
                               onChange={(e) => setSaga(e.target.value)}
                             /><br></br>
                             <Form.Control
                               type="text"
                               placeholder="Año Publicación"
+                              defaultValue={location.state.item.yearPublication}
                               autoFocus
                               onChange={(e) => setYear(e.target.value)}
                             /><br></br>

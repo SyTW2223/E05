@@ -32,16 +32,16 @@ export const Film = () => {
   const userData = useSelector(selectorUserData);
 
   const [modifyFilm, setMF] = useState(false);
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [year, setYear] = useState();
+  const [title, setTitle] = useState(location.state.item.title);
+  const [description, setDescription] = useState(location.state.item.description);
+  const [year, setYear] = useState(location.state.item.yearPublication);
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
   const [checkedList, setCheckedList] = useState("");
   
   const [addFilm, setAddFilm] = useState();
 
-  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
+  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion", "Terror"];
   const listsNames = ['Peliculas vistas', 'Peliculas para ver', 'Peliculas viendo'];
 
   
@@ -64,12 +64,12 @@ export const Film = () => {
             <MDBRow>
               <MDBCol className="text-center"
                 style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
-                <MDBCardImage src={require('../../assets/avatar.jpg')} 
-                    alt='Cartelera Avatar 2' className="my-5" style={{ width: '120px' }} fluid />
-                  {
+                <MDBCardImage src={require('../../assets/lcdp.jpg')}
+                alt='Cartelera La Casa de Papel 5' className="my-5" style={{ width: '120px' }} fluid />
+                     {
                     isLoggedIn && (
                     <>
-                      <MDBBtn key='addFilm'noRipple outline className="ms-1" onClick={() => setAddFilm(true)}>
+                      <MDBBtn key='addFilm' noRipple outline className="ms-1" onClick={() => setAddFilm(true)}>
                         Añadir a la lista
                       </MDBBtn>
 
@@ -121,21 +121,23 @@ export const Film = () => {
                       </Modal.Footer>
                     </Modal>
                     </>
-                    )
+                      )
                   }
-                  {
+                 {
                     isAdminLoggedIn && (
                     <div>
                       <MDBBtn key='deleteFilm' noRipple outline
                         onClick={() => {
-                          itemServices.deleteItem('film', location.state.item.title)
-                            .then(data => { 
-                              navigate('/filmList');
-                            }).catch(err => {
-                                console.log(err);
-                            });
-                      }}
-                      >Borrar</MDBBtn>
+                            itemServices.deleteItem('film', location.state.item.title)
+                              .then(data => { 
+                                navigate('/filmList');
+                              }).catch(err => {
+                                  console.log(err);
+                              });
+                        }}
+                      >
+                      Eliminar
+                      </MDBBtn>
                       <MDBBtn key='modififyFilm' noRipple outline className="ms-1" onClick={() => setMF(true)}>
                         Modificar
                       </MDBBtn>
@@ -151,23 +153,29 @@ export const Film = () => {
                                 type="text"
                                 placeholder="Titulo"
                                 autoFocus
+                                defaultValue={location.state.item.title}
                                 onChange={(e) => setTitle(e.target.value)}
                               /><br></br>
                               <Form.Control 
                                 as="textarea" 
                                 rows={3}
                                 placeholder="Descripción"
+                                defaultValue={location.state.item.description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 /><br></br>
                               <Form.Control
                                 type="text"
                                 placeholder="Año Publicación"
                                 autoFocus
+                                defaultValue={location.state.item.yearPublication}
                                 onChange={(e) => setYear(e.target.value)}
                               /><br></br>
                               {checkList.map((item, index) => (
                                 <div key={index}>
-                                  <input value={item} type="checkbox" onChange={handleCheck}/>
+                                  <input value={item} 
+                                  type="checkbox" 
+                                  defaultValue={location.state.item.genres}
+                                  onChange={handleCheck}/>
                                   <span>{item}</span>
                                 </div>
                               ))}
@@ -203,43 +211,45 @@ export const Film = () => {
                     </div>
                       )
                   }
-              </MDBCol>
-              <MDBCol md="8">
-                <MDBCardBody className="p-4">
-                  <MDBTypography tag="h6"><strong>{location.state.item.title}</strong></MDBTypography>
-                  <hr className="mt-0 mb-4" />
-                  <MDBRow className="pt-1">
-                    <MDBCol size="10" className="mb-3">
-                      <MDBTypography tag="h6">Sipnosis</MDBTypography>
-                      <MDBCardText className="text-muted">{location.state.item.description}</MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-    
-                  <MDBTypography tag="h6">Detalles</MDBTypography>
-                  <hr className="mt-0 mb-4" />
-                  <MDBRow className="pt-1">
-                    <MDBCol size="6" className="mb-3">
-                      <MDBTypography tag="h6">Géneros</MDBTypography>
-                      <MDBCardText className="text-muted">{location.state.item.categories.map((cat) => cat + ', ')}</MDBCardText>
-                    </MDBCol>
-                    <MDBCol size="6" className="mb-3">
-                      <MDBTypography tag="h6">Estreno</MDBTypography>
-                      <MDBCardText className="text-muted">{location.state.item.yearPublication}</MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-                  <MDBRow className="pt-1">
-                    <MDBCol size="6" className="mb-3">
-                      <MDBTypography tag="h6">Valoración</MDBTypography>
-                      <MDBCardText className="text-muted">{location.state.item.rating} <MDBIcon icon="fas fa-star"  style={{color: '#ffed2d'}}/></MDBCardText>
-                    </MDBCol>
-                  </MDBRow>
-                </MDBCardBody>
-              </MDBCol>
-            </MDBRow>
-          </MDBCard>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+             </MDBCol>
+
+
+            <MDBCol md="8">
+              <MDBCardBody className="p-4">
+                <MDBTypography tag="h6"><strong>{location.state.item.title}</strong></MDBTypography>
+                <hr className="mt-0 mb-4" />
+                <MDBRow className="pt-1">
+                  <MDBCol size="10" className="mb-3">
+                    <MDBTypography tag="h6">Sipnosis</MDBTypography>
+                    <MDBCardText className="text-muted">{location.state.item.description}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+
+                <MDBTypography tag="h6">Detalles</MDBTypography>
+                <hr className="mt-0 mb-4" />
+                <MDBRow className="pt-1">
+                  <MDBCol size="6" className="mb-3">
+                    <MDBTypography tag="h6">Géneros</MDBTypography>
+                    <MDBCardText className="text-muted">{location.state.item.genres.map((cat) => cat + ', ')}</MDBCardText>
+                  </MDBCol>
+                  <MDBCol size="6" className="mb-3">
+                    <MDBTypography tag="h6">Estreno</MDBTypography>
+                    <MDBCardText className="text-muted">{location.state.item.yearPublication}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow className="pt-1">
+                  <MDBCol size="6" className="mb-3">
+                    <MDBTypography tag="h6">Valoración</MDBTypography>
+                    <MDBCardText className="text-muted">{location.state.item.rating} <MDBIcon icon="fas fa-star"  style={{color: '#ffed2d'}}/></MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+              </MDBCardBody>
+            </MDBCol>
+              </MDBRow>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     </section> 
   );
 }

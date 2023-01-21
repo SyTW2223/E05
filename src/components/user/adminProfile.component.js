@@ -55,7 +55,7 @@ export const AdminProfile = () => {
     setChecked(updatedList);
   };
 
-  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
+  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion", "Terror"];
   // ---- //
 
 
@@ -265,7 +265,7 @@ export const AdminProfile = () => {
                         "seasons": seasons,
                         "image": image,
                       }
-                      dispatch(itemServices.createItem("serie", title, serieData))
+                      dispatch(itemServices.createItem("serie", serieData))
                       .then((data) => {
                           console.log('Creada serie correctamente.');
                           console.log(data);

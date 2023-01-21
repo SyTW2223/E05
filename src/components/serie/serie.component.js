@@ -33,17 +33,17 @@ export const Serie = () => {
   const userData = useSelector(selectorUserData);
 
   const [modifySerie, setMS] = useState(false);
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
-  const [seasons, setSeasons] = useState("");
-  const [year, setYear] = useState();
+  const [title, setTitle] = useState(location.state.item.title);
+  const [description, setDescription] = useState(location.state.item.description);
+  const [seasons, setSeasons] = useState(location.state.item.seasons);
+  const [year, setYear] = useState(location.state.item.yearPublication);
   const [image, setImage] = useState("");
   const [checked, setChecked] = useState([]);
   const [checkedList, setCheckedList] = useState("");
   
   const [addSerie, setAddSerie] = useState();
 
-  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion"];
+  const checkList = ["Fantasia", "Accion", "Aventuras", "Drama", "Historica", "Comedia", "Romance", "Ciencia Ficcion", "Terror"];
   const listsNames = ['Series vistas', 'Series para ver', 'Series viendo'];
 
   const handleCheck = (event) => {
@@ -154,29 +154,36 @@ export const Serie = () => {
                                 type="text"
                                 placeholder="Titulo"
                                 autoFocus
+                                defaultValue={location.state.item.title}
                                 onChange={(e) => setTitle(e.target.value)}
                               /><br></br>
                               <Form.Control 
                                 as="textarea" 
                                 rows={3}
                                 placeholder="Descripción"
+                                defaultValue={location.state.item.description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 /><br></br>
                               <Form.Control
                                 type="text"
                                 placeholder="Temporadas"
                                 autoFocus
+                                defaultValue={location.state.item.seasons}
                                 onChange={(e) => setSeasons(e.target.value)}
                               /><br></br>
                               <Form.Control
                                 type="text"
                                 placeholder="Año Publicación"
                                 autoFocus
+                                defaultValue={location.state.item.yearPublication}
                                 onChange={(e) => setYear(e.target.value)}
                               /><br></br>
                               {checkList.map((item, index) => (
                                 <div key={index}>
-                                  <input value={item} type="checkbox" onChange={handleCheck}/>
+                                  <input value={item} 
+                                  type="checkbox" 
+                                  defaultValue={location.state.item.genres}
+                                  onChange={handleCheck}/>
                                   <span>{item}</span>
                                 </div>
                               ))}
