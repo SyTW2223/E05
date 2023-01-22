@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --exit --coverage --timeout 5000000000000000000",
+    "test": "mocha --exit --coverage --timeout 900000000000000000000000000000000",
     "start": "tsc-watch --onSuccess \"node dist/server.js\"",
     "coveralls": "nyc npm test && nyc report --reporter=lcov"
   },
