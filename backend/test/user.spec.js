@@ -73,7 +73,7 @@ describe('API USER errors', () => {
   });
   it('Should error get update user.', async () => {
     await supertest(app).patch(`/user/${userTestError.username}`).send({usernname: "patchtest"}).expect(400);
-    await supertest(app).delete(`/user/userTestError`).send();
+    await supertest(app).delete(`/user/${userTestError.username}`).send();
   });
   it('Should error with get when path is wrong.', async () => {
     await supertest(app).get('/hola').send().expect(404);
