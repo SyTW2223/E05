@@ -57,13 +57,20 @@ describe('API USER errors', () => {
   const userTestError = {
     username: "test",
     email: "test@gmail.com",
-    password: "pass"
+    password: "pass",
+    role: ["ADMIN"]
+  };
+  const userLogin = {
+    username: "test",
+    password: "pass",
   };
   const userTestErrorLogin = {
     username: "test",
     email: "test@gmail.com",
     password: "passwordError"
   };
+  var dataUser;
+  
   it('Should error register user because email is already exist.', async () => {
     await supertest(app).post(`/user/register`).send(userTestError);
     await supertest(app).post(`/user/register`).send(userTestErrorLogin).expect(400);
@@ -72,8 +79,11 @@ describe('API USER errors', () => {
     await supertest(app).post(`/user/login`).send(userTestErrorLogin).expect(400);
   });
   it('Should error get update user.', async () => {
+    dataUser = await supertest(app).post(`/user/login`).send(userLogin);
+    const token = dataUser.body.data.accessToken;
+    
     await supertest(app).patch(`/user/${userTestError.username}`).send({usernname: "patchtest"}).expect(400);
-    await supertest(app).delete(`/user/${userTestError.username}`).send();
+    await supertest(app).delete(`/user/${userTestError.username}`).set("x-access-token", token).send();
   });
   it('Should error with get when path is wrong.', async () => {
     await supertest(app).get('/hola').send().expect(404);
