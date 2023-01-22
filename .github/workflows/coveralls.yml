@@ -16,7 +16,7 @@ jobs:
     
     defaults:
       run:
-        working-directory:  'frontend' # Here the path to the folder where package-lock.json is located.
+        working-directory:  ('frontend' && 'backend')
 
     steps:
     - name: Cloning repo
@@ -25,7 +25,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: 16.x
-        cache-dependency-path: frontend/package-lock.json
+        cache-dependency-path: frontend/package-lock.json, backend/package-lock.json
     - name: Installing dependencies
       run: npm install
     - name: Generating coverage information
