@@ -21,7 +21,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: 'frontend' # Here the path to the folder where package-lock.json is located. 
+        working-directory: 'backend' # Here the path to the folder where package-lock.json is located. 
         # working-directory:  ./${{ matrix.folder }}
 
     steps:
@@ -40,5 +40,5 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ${{ github.workspace }}/${{ matrix.folder }}/coverage/lcov.info
+        path-to-lcov: ${{ github.workspace }}/backend/coverage/lcov.info
 
