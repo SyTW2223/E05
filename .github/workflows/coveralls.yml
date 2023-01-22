@@ -21,7 +21,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: 'backend' # Here the path to the folder where package-lock.json is located. 
+        working-directory: 'frontend' # Here the path to the folder where package-lock.json is located. 
         # working-directory:  ./${{ matrix.folder }}
 
     steps:
