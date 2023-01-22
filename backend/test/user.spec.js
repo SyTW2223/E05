@@ -78,4 +78,10 @@ describe('API USER errors', () => {
   it('Should error with get when path is wrong.', async () => {
     await supertest(app).get('/hola').send().expect(404);
   });
+  it('Should error with delete user when the token is not sent.', async () => {
+    await supertest(app).delete(`/user/${userTestError.username}`).send().expect(403);
+  });
+  it('Should error with delete user when the token is empty.', async () => {
+    await supertest(app).delete(`/user/${userTestError.username}`).set("x-access-token", "").send().expect(403);
+  });
 });
