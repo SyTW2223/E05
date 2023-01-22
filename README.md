@@ -27,10 +27,11 @@ interactuar con ellos. Los ítems consisten en una carátula, título y una
 descripción.
 Lo que la app permite hacer es:
 - Registrarse: esto será obligatorio para todos los usuarios que quieran crear
-listas y valorar elementos.
+listas y valorar elementos. En la aplicación hay dos tipos de usuarios: usuario normal e usuario administrador. Los que se registran a través de la página web son usuarios normales, ya que los administradores se crean directamente en la base de datos.
 - Buscar elementos: la base de datos estará dividida en categorías,
 libros/series/libros que a su vez pueden dividirse en subcategorías como
 terror, comedia, fantasía...
+- Añadir elementos: Los usuarios administradores podrán añadir una película, serie y libro.
 - Marcar como leído/visto: una vez un usuario marca un ítem con esta
 opción, el ítem pasará a una lista predeterminada de cada usuario. Existirá
 una lista para películas, otra para series y otra para libros.
@@ -42,5 +43,3 @@ cualquier elemento de ella.
 - Eliminar listas: se permite al usuario eliminar las listas predeterminadas y
 las creadas por el mismo.
 - Añadir elementos a las listas.
-- Valorar ítem: los usuarios pueden valorar ítems para poder recordar
-cuánto le gustó.
