@@ -13,16 +13,10 @@ jobs:
   coveralls:
 
     runs-on: ubuntu-latest
-#    strategy:
-#      matrix:
-#        folder:
-#          - 'backend'
-#          - 'frontend'
-    
+
     defaults:
       run:
-        working-directory: 'backend' # Here the path to the folder where package-lock.json is located. 
-        # working-directory:  ./${{ matrix.folder }}
+        working-directory: 'frontend' # Here the path to the folder where package-lock.json is located. 
 
     steps:
     - name: Cloning repo
@@ -40,5 +34,5 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ${{ github.workspace }}/backend/coverage/lcov.info
+        path-to-lcov: ${{ github.workspace }}/frontend/coverage/lcov.info
 
