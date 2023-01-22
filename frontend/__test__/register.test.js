@@ -55,11 +55,4 @@ describe("Register Tests", () => {
     const loginButton= screen.getByRole('button', {name: /registrarse/i});
     expect(loginButton).toBeInTheDocument();
   });
-
-
-
-  it("Se recibe error por ..", () => {
-    const response = Register();
-    expect(response).resolves.toEqual(userMock);
-  });
 });
