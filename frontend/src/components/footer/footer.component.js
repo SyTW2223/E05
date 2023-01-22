@@ -25,18 +25,18 @@ export const Footer = () => {
           <MDBCol lg='3' md='6' className='mb-4 mb-md-0'>
             <h5 className='text-uppercase'>Acerca de nosotros</h5>
 
-            <ul className='list-unstyled mb-0'>
-              <li key="{profile-andrea}">
+            <ul className='list-unstyled mb-0' title='contributors'>
+              <li key="{profile-andrea}" title='andrea'>
                 <a href='#!' className='text-white'>
                   Andrea Hernández Martín
                 </a>
               </li>
-              <li key="{profile-ainoa}">
+              <li key="{profile-ainoa}" title='ainoa'>
                 <a href='#!' className='text-white'>
                   Ainoa Iglesias Dasilva
                 </a>
               </li>
-              <li key="{profile-karina}">
+              <li key="{profile-karina}" title='karina'>
                 <a href='#!' className='text-white'>
                   Karina Kalwani Israni
                 </a>
@@ -46,14 +46,14 @@ export const Footer = () => {
 
           <MDBCol lg='3' md='8' className='mb-4 mb-md-0'>
             <h5 className='text-uppercase'>Nuestras redes sociales</h5>
-            <ul className='list-unstyled mb-0'>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#ac2bac' }}>
+            <ul className='list-unstyled mb-0' title='socialMedia'>
+              <MDBBtn title='instagram' tag='a' color='none' className='m-1' style={{ color: '#ac2bac' }}>
                 <MDBIcon fab icon='instagram' size='lg'/>
               </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#55acee' }}>
+              <MDBBtn title='twitter' tag='a' color='none' className='m-1' style={{ color: '#55acee' }}>
                 <MDBIcon fab icon='twitter' size='lg' />
               </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#6441a5' }}>
+              <MDBBtn title='twitch' tag='a' color='none' className='m-1' style={{ color: '#6441a5' }}>
                 <MDBIcon fab icon='twitch' size='1g' />
               </MDBBtn>
             </ul>
