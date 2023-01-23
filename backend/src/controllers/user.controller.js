@@ -89,7 +89,6 @@ exports.login = async (req, res) =>
       }, config.secret, {
         expiresIn: config.jwtExpiration,
       });
-      // const refreshToken = await RefreshToken.createToken(user);
       res.status(200).header('x-access-token', token).json({
         error: null,
         data: {
