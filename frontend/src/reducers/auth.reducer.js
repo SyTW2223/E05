@@ -11,10 +11,9 @@ import {
 const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = user ? (
-  user.role.include("ADMIN") ? {isAdminLoggedIn: true, user } : { isLoggedIn: true, user }
+  user.role.includes("ADMIN") ? {isAdminLoggedIn: true, user } : { isLoggedIn: true, user }
 ) : { isLoggedIn: false, user: null };
 
-// const initialState = user;
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (state = initialState, action) {
