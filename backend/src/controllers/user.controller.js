@@ -182,7 +182,7 @@ exports.findAll = (req, res) =>
 // Find a element with an username
 exports.findOne = async (req, res) => 
 {
-  const username =  { username: req.body.username.toString() };
+  const username =  { username: req.params.username.toString() };
   userModel.findOne(username)
   .then(data => {
       if (!data)
