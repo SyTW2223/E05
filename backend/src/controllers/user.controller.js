@@ -23,7 +23,8 @@ exports.create = async (req, res) =>
     return res.status(400).json({error: "Email already exist."});
   };
   // check email exist and send error
-  const isUsernameExist = await userModel.findOne({"username": req.body.username});
+  const username =  { username: req.body.username.toString() };
+  const isUsernameExist = await userModel.findOne(username);
   if (isUsernameExist) {
     return res.status(400).json({error: "Username already exist."});
   };
@@ -75,7 +76,8 @@ exports.login = async (req, res) =>
   if (error) return res.status(400).json({ error: error.details[0].message })
 
   // find a username
-  const user = await userModel.findOne({ username: req.body.username });
+  const username =  { username: req.body.username.toString() };
+  const user = await userModel.findOne(username);
   if (!user) return res.status(400).json({ error: 'User not found.' });
 
   // if user found, check password and send tokenJWT
@@ -90,6 +92,7 @@ exports.login = async (req, res) =>
       }, config.secret, {
         expiresIn: config.jwtExpiration,
       });
+      // const refreshToken = await RefreshToken.createToken(user);
       res.status(200).header('x-access-token', token).json({
         error: null,
         data: {
@@ -179,8 +182,8 @@ exports.findAll = (req, res) =>
 // Find a element with an username
 exports.findOne = async (req, res) => 
 {
-  const username = req.params.username;
-  userModel.findOne({'username': username})
+  const username =  { username: req.body.username.toString() };
+  userModel.findOne(username)
   .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found user with username " + username });
@@ -238,4 +241,3 @@ exports.deleteAll = (req, res) =>
       });
     });
 };
-
