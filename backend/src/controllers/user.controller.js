@@ -17,7 +17,8 @@ exports.create = async (req, res) =>
     return res.status(400).json({error: error.details[0].message})
   }
   // check email exist and send error
-  const isEmailExist = await userModel.findOne({"email": req.body.email});
+  const email = req.body.email;
+  const isEmailExist = await userModel.findOne({"email": email});
   if (isEmailExist) {
     return res.status(400).json({error: "Email already exist."});
   };
